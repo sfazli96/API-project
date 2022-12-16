@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-    
+
     static getCurrentUserById(id) {
       return User.scope("currentUser").findByPk(id);
     }
@@ -64,6 +64,14 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       }
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     email: {
       type: DataTypes.STRING,
