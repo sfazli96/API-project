@@ -54,7 +54,7 @@ module.exports = {
     options.tableName = 'Spots'
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['Bootcamp test', 'Long Island Test', 'Bootcamp test'] }
+      name: { [Op.in]: ['BootCamp test', 'Long Island Test', 'BootCamp test 2'] }
     }, {})
   }
 };

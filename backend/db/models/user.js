@@ -108,6 +108,13 @@ module.exports = (sequelize, DataTypes) => {
       loginUser: {
         attributes: {}
       }
+    },
+    ownerId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Spots',
+        key: 'id'
+      }
     }
   });
   return User;
