@@ -15,15 +15,19 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       spotId: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       userId: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       review: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       stars: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       createdAt: {

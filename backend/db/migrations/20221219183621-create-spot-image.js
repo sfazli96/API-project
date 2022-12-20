@@ -15,12 +15,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       spotId: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       url: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       preview: {
+        allowNull: false,
         type: Sequelize.BOOLEAN
       },
       createdAt: {
