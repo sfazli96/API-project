@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       )
       User.hasMany(models.Review, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true })
-      User.hasMany(models.Spots, { foreignKey: 'ownerId', onDelete: 'CASCADE', hooks: true })
+      User.hasMany(models.Spot, { foreignKey: 'ownerId', onDelete: 'CASCADE', hooks: true })
     }
 
     static getCurrentUserById(id) {
