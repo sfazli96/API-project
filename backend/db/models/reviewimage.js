@@ -1,9 +1,10 @@
 'use strict';
+const bcrypt = require('bcryptjs');
 const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Review extends Model {
+  class ReviewImage extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,26 +12,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Review.belongsTo(models.User, { foreignKey: 'reviewId' })
-      Review.belongsTo(models.Spot, { foreignKey: 'spotId' })
-
     }
   }
-  Review.init({
-    spotId: {
+  ReviewImage.init({
+    reviewId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    review: {
+    url: {
       type: DataTypes.STRING,
-      allowNull: false
-    },
-    stars: {
-      type: DataTypes.INTEGER,
       allowNull: false
     },
     createdAt: {
@@ -43,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Review',
+    modelName: 'ReviewImage',
   });
-  return Review;
+  return ReviewImage;
 };

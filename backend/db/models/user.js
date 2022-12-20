@@ -12,13 +12,16 @@ module.exports = (sequelize, DataTypes) => {
     validatePassword(password) {
       return bcrypt.compareSync(password, this.hashedPassword.toString());
     }
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // define association here
+      User.belongsToMany(models.Spot, {
+          through: models.Booking,
+          foreignKey: 'userId',
+          otherKey: 'spotId'
+        }
+      )
+      User.hasMany(models.Review, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true })
+      User.hasMany(models.Spots, { foreignKey: 'ownerId', onDelete: 'CASCADE', hooks: true })
     }
 
     static getCurrentUserById(id) {
