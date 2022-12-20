@@ -32,15 +32,6 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
-      reviewId: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        references: {
-          model: 'Reviews',
-          key: 'id'
-        },
-        onDelete: 'CASCADE'
-      },
       review: {
         type: Sequelize.STRING,
         allowNull: false

@@ -14,21 +14,18 @@ module.exports = {
       {
         userId: 1,
         spotId: 1,
-        reviewId: 1,
         review: "This was an awesome spot!",
         stars: 5,
       },
       {
         userId: 2,
         spotId: 2,
-        reviewId: 2,
         review: "This was an ok spot!",
         stars: 3,
       },
       {
         userId: 3,
         spotId: 3,
-        reviewId: 3,
         review: "This was an decent spot!",
         stars: 2,
       },

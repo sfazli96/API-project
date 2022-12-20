@@ -28,14 +28,6 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    reviewId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Reviews',
-        key: 'id'
-      }
-    },
     review: {
       type: DataTypes.STRING,
       allowNull: false
