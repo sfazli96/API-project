@@ -30,6 +30,15 @@ router.post('/', validateLogin, async (req, res, next) => {
         return next(err);
     }
 
+    // if (!req.body) {
+    //   const err = new Error("Validation error")
+    //   err.status = 400;
+    //   err.title = 'Validation error'
+    //   err.errors = ['Email or username is required'];
+    //   return next(err)
+    // }
+
+
     await setTokenCookie(res, user);
 
     return res.json({

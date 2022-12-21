@@ -79,6 +79,14 @@ module.exports = (sequelize, DataTypes) => {
         isNumeric: true
       }
     },
+    avgRating: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    },
+    previewImage: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
