@@ -1,18 +1,63 @@
 const express = require('express')
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Spot } = require('../../db/models');
 const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { SpotImage } = require('../../db/models')
-const { User } = require('../../db/models');
+const { SpotImage, User, Spot, Review, sequelize } = require('../../db/models')
+const { Op } = require("sequelize");
+const review = require('../../db/models/review');
 
 
 
 // Get all spots
 router.get('/', async (req, res, next) => {
-    const spots = await Spot.findAll()
+    // const spots = await Spot.findAll()
+    const spots = await Spot.findAll({
+        attributes: {
+            include: [
+                [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"]
+            ]
+        },
+        include: [
+            {
+                model: Review,
+                attributes: []
+            }
+        ],
+    })
     res.json(spots)
+    // const spots = await Spot.findAll({
+    //     include: [
+    //         {
+    //             model: Review
+    //         },
+    //         {
+    //             model: SpotImage
+    //         }
+    //     ]
+    // })
+    // let ele = []
+    // spots.forEach(spot => {
+    //     ele.push(spot.toJSON())
+    // });
+    // ele.forEach(spot => {
+    //     spot.SpotImages.forEach(img => {
+    //         if (img.preview === true) {
+    //             spot.previewImage === img.url
+    //         }
+    //     });
+    // });
+
+    // ele.forEach(object => {
+    //     let stars = object.Reviews
+    //     stars.forEach(rev => {
+    //         let num = rev.stars
+    //         let sum = 0
+    //         let total = sum += num
+    //         let average = total / ele.length
+    //     });
+    // });
+    // res.json(ele)
 })
 
 

@@ -22,8 +22,6 @@ module.exports = {
       name: "BootCamp test",
       description: "This is a bootcamp test place",
       price: 633,
-      avgRating: 4.2,
-      previewImage: 'image url'
     },
     {
       ownerId: 2,
@@ -36,8 +34,6 @@ module.exports = {
       name: "Long Island Test",
       description: "This is a long island test place",
       price: 153,
-      avgRating: 3.2,
-      previewImage: 'image url 2'
     },
     {
       ownerId: 3,
@@ -50,8 +46,6 @@ module.exports = {
       name: "BootCamp test 2",
       description: "This is a bootcamp test place",
       price: 633,
-      avgRating: 2.5,
-      previewImage: 'image url 3'
     },
    ], {});
   },
