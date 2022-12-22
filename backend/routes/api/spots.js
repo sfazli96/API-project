@@ -11,53 +11,62 @@ const review = require('../../db/models/review');
 
 // Get all spots
 router.get('/', async (req, res, next) => {
-    // const spots = await Spot.findAll()
-    const spots = await Spot.findAll({
-        attributes: {
-            include: [
-                [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"]
-            ]
-        },
-        include: [
-            {
-                model: Review,
-                attributes: []
-            }
-        ],
-    })
-    res.json(spots)
     // const spots = await Spot.findAll({
+    //     attributes: {
+    //         include: [
+    //             [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"]
+    //         ]
+    //     },
     //     include: [
     //         {
-    //             model: Review
-    //         },
-    //         {
-    //             model: SpotImage
+    //             model: Review,
+    //             attributes: []
     //         }
-    //     ]
+    //     ],
     // })
-    // let ele = []
-    // spots.forEach(spot => {
-    //     ele.push(spot.toJSON())
-    // });
-    // ele.forEach(spot => {
-    //     spot.SpotImages.forEach(img => {
-    //         if (img.preview === true) {
-    //             spot.previewImage === img.url
-    //         }
-    //     });
-    // });
+    // res.json(spots)
+    const spots = await Spot.findAll({
+        include: [
+            {
+                model: Review
+            },
+            {
+                model: SpotImage
+            }
+        ]
+    })
+    let ele = []
+    spots.forEach(spot => {
+        ele.push(spot.toJSON())
+    });
+    ele.forEach(spot => {
+        spot.SpotImages.forEach(img => {
+            if (img.preview === true) {
+                spots.previewImage === img.url
+            }
+        });
+        if (spots.previewImage) {
+            spots.previewImage = "No Spot image found"
+        }
+        delete spots.previewImage
+    });
+    for (let i = 0; i < stars.length; i++) {
+        let count = stars[i]
+        let starNum = count.stars
+        let length = ele.length;
+        let total = sum += starNum;
+        let avg = total / length
 
+    }
     // ele.forEach(object => {
     //     let stars = object.Reviews
+    //     numArr = []
     //     stars.forEach(rev => {
-    //         let num = rev.stars
-    //         let sum = 0
-    //         let total = sum += num
-    //         let average = total / ele.length
+    //         let starNum = rev.stars
+    //         console.log(starNum)
     //     });
     // });
-    // res.json(ele)
+    res.json(ele)
 })
 
 
@@ -94,10 +103,82 @@ router.get('/:spotId', async(req, res, next) => {
     res.json(spots)
 })
 
-// // Create a Spot
-// router.post('/', requireAuth, async(req, res, next) => {
-//     const spotBody = req.body
+// Create a Spot
+router.post('/', requireAuth, async(req, res, next) => {
+    const id = req.user.id
+    const { address, city, state, country, lat, lng, name, description, price } = req.body
+
+    const spots = await Spot.create({
+        ownerId: id,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    })
+    res.json(spots)
+})
+
+// Add an Image to a Spot based on the Spot's id
+router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+    const id = req.user.id
+    const { url, preview } = req.body
+
+    const img = await SpotImage.create({
+        spotId: id,
+        url,
+        preview
+    })
+    if (!img) {
+        const err = new Error("Spot couldn't be found")
+        err.status = 404
+        res.json({
+            message: err.message,
+            statusCode: err.status
+        })
+    }
+    res.json(img)
+})
+
+// Edit a Spot
+router.post('/:spotId', requireAuth, async (req, res, next) => {
+    try {
+    const id = req.params.id
+    const { address, city, state, country, lat, lng, name, description, price } = req.body
+
+    const spots = await Spot.findByPk(id)
+    spots.set({
+        address: address,
+        city: city,
+        state: state,
+        country: country,
+        lat: lat,
+        lng: lng,
+        name: name,
+        description: description,
+        price: price
+    })
+    await spots.save()
+    res.json(spots)
+    } catch(err) {
+        next({
+            message: "Spot couldn't be found",
+            statusCode: 404,
+            details: err.errors ? err.errors.map(item => item.message).join(', ') : err.message
+        })
+    }
+})
+
+// Delete a spot
+// router.post('/:spotId', requireAuth, async (req, res, next) => {
+//     const id = req.params.id
+//     const spots = await Spot.findByPk(id)
 // })
+
 
 
 module.exports = router;
