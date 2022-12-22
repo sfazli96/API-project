@@ -120,6 +120,14 @@ router.post('/', requireAuth, async(req, res, next) => {
         description,
         price
     })
+    // if (!spots) {
+    //     const err = new Error("Validation error")
+    //     err.status = 400,
+    //     res.json({
+    //         message: err.message,
+    //         statusCode: err.status
+    //     })
+    // }
     res.json(spots)
 })
 
@@ -145,39 +153,51 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 })
 
 // Edit a Spot
-router.post('/:spotId', requireAuth, async (req, res, next) => {
-    try {
-    const id = req.params.id
+router.put('/:spotId', requireAuth, async (req, res, next) => {
+    const id = req.user.id
     const { address, city, state, country, lat, lng, name, description, price } = req.body
-
-    const spots = await Spot.findByPk(id)
-    spots.set({
-        address: address,
-        city: city,
-        state: state,
-        country: country,
-        lat: lat,
-        lng: lng,
-        name: name,
-        description: description,
-        price: price
+    const spots = await Spot.findOne({
+        where: {
+            ownerId: id
+        }
     })
+    spots.address = address
+    spots.city = city
+    spots.state = state
+    spots.country = country
+    spots.lat = lat
+    spots.lng = lng
+    spots.name = name
+    spots.description = description
+    spots.price = price
     await spots.save()
-    res.json(spots)
-    } catch(err) {
-        next({
-            message: "Spot couldn't be found",
-            statusCode: 404,
-            details: err.errors ? err.errors.map(item => item.message).join(', ') : err.message
+    if (!spots) {
+        const err = new Error("Spot couldn't be found")
+        err.status = 404
+        res.json({
+            message: err.message,
+            statusCode: err.status
         })
     }
+    res.json(spots)
 })
 
 // Delete a spot
-// router.post('/:spotId', requireAuth, async (req, res, next) => {
-//     const id = req.params.id
-//     const spots = await Spot.findByPk(id)
-// })
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
+    const id = req.params.spotId
+    const spots = await Spot.findByPk(id)
+    await spots.destroy()
+    res.json({
+        statusCode: 200,
+        message: "successfully deleted"
+    })
+    if (!spots) {
+        next({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+})
 
 
 
