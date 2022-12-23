@@ -7,24 +7,44 @@ const { SpotImage, User, Spot, Review, sequelize } = require('../../db/models')
 const { Op } = require("sequelize");
 const review = require('../../db/models/review');
 
+const validateSpotError = [
+    check('address')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('Street address is required'),
+    check('city')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('City is required'),
+    check('country')
+      .not()
+      .notEmpty()
+      .withMessage('Country is required'),
+    check('lat')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('Latitude is not valid'),
+    check('lng')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('Longitude is not valid'),
+    check('description')
+      .exists({ checkFalsy: true })
+      .withMessage('Description is required'),
+    check('price')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('Price per day is required'),
+    check('name')
+      .exists({ checkFalsy: true })
+      .isLength({ max: 50 })
+      .withMessage('Name must be less than 50 characters'),
+    handleValidationErrors
+  ];
 
 
 // Get all spots
 router.get('/', async (req, res, next) => {
-    // const spots = await Spot.findAll({
-    //     attributes: {
-    //         include: [
-    //             [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"]
-    //         ]
-    //     },
-    //     include: [
-    //         {
-    //             model: Review,
-    //             attributes: []
-    //         }
-    //     ],
-    // })
-    // res.json(spots)
     const spots = await Spot.findAll({
         include: [
             {
@@ -33,47 +53,113 @@ router.get('/', async (req, res, next) => {
             {
                 model: SpotImage
             }
-        ]
+        ],
+        group: ["Spot.id", "Reviews.id", "SpotImages.id"]
     })
+
     let ele = []
     spots.forEach(spot => {
         ele.push(spot.toJSON())
-    });
-    ele.forEach(spot => {
-        spot.SpotImages.forEach(img => {
-            if (img.preview === true) {
-                spots.previewImage === img.url
-            }
-        });
-        if (spots.previewImage) {
-            spots.previewImage = "No Spot image found"
-        }
-        delete spots.previewImage
-    });
-    for (let i = 0; i < stars.length; i++) {
-        let count = stars[i]
-        let starNum = count.stars
-        let length = ele.length;
-        let total = sum += starNum;
-        let avg = total / length
+    })
 
+    for (let i = 0; i < ele.length; i++) {
+        let spot = ele[i]
+
+        const reviews = await Review.findAll({
+            where: {
+                spotId: spot.id
+            },
+            attributes: {
+                include: [
+                    [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
+                ]
+            },
+        })
+        spot.avgRating = reviews[0].dataValues.avgRating
+        spot.SpotImages.forEach(img => {
+
+            if(img.preview === true) {
+                spot.previewImage = img.url
+            }
+        })
+        spot.Reviews.forEach(element => {
+            spot.avgRating = element.stars
+        });
+        if(!spots.previewImage) {
+            spots.previewImage = 'no image found'
+        }
+        if (!spot.avgRating) {
+            spot.avgRating = "no reviews are found"
+        }
+        delete spot.SpotImages
+        delete spot.Reviews
     }
-    // ele.forEach(object => {
-    //     let stars = object.Reviews
-    //     numArr = []
-    //     stars.forEach(rev => {
-    //         let starNum = rev.stars
-    //         console.log(starNum)
-    //     });
-    // });
-    res.json(ele)
+    res.json({
+        Spots: ele
+    })
 })
 
 
 // Get all spots owned by current User
 router.get('/current', requireAuth, async(req, res, next) => {
-    const spots = await Spot.findOne(req.params.id)
-    res.json(spots)
+    // const spots = await Spot.findOne(req.params.id)
+    // res.json(spots)
+    const id = req.user.id
+    const spots = await Spot.findAll({
+        where: {
+            ownerId: id
+        },
+        include: [
+            {
+                model: Review
+            },
+            {
+                model: SpotImage
+            }
+        ],
+        group: ["Spot.id", "Reviews.id", "SpotImages.id"]
+    })
+
+    let ele = []
+    spots.forEach(spot => {
+        ele.push(spot.toJSON())
+    })
+
+    for (let i = 0; i < ele.length; i++) {
+        let spot = ele[i]
+
+        const reviews = await Review.findAll({
+            where: {
+                spotId: spot.id
+            },
+            attributes: {
+                include: [
+                    [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
+                ]
+            },
+        })
+        spot.avgRating = reviews[0].dataValues.avgRating
+        spot.SpotImages.forEach(img => {
+
+            if(img.preview === true) {
+                spot.previewImage = img.url
+            }
+        })
+        spot.Reviews.forEach(element => {
+            spot.avgRating = element.stars
+        });
+        if(!spots.previewImage) {
+            spots.previewImage = 'no image found'
+        }
+        if (!spot.avgRating) {
+            spot.avgRating = "no reviews are found"
+        }
+        delete spot.SpotImages
+        delete spot.Reviews
+    }
+    res.json({
+        Spots: ele
+    })
 })
 
 // Get details of a Spot from an id
@@ -104,7 +190,7 @@ router.get('/:spotId', async(req, res, next) => {
 })
 
 // Create a Spot
-router.post('/', requireAuth, async(req, res, next) => {
+router.post('/', requireAuth, validateSpotError, async(req, res, next) => {
     const id = req.user.id
     const { address, city, state, country, lat, lng, name, description, price } = req.body
 
@@ -120,28 +206,16 @@ router.post('/', requireAuth, async(req, res, next) => {
         description,
         price
     })
-    // if (!spots) {
-    //     const err = new Error("Validation error")
-    //     err.status = 400,
-    //     res.json({
-    //         message: err.message,
-    //         statusCode: err.status
-    //     })
-    // }
     res.json(spots)
 })
 
 // Add an Image to a Spot based on the Spot's id
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
-    const id = req.user.id
+    // const id = req.user.id
+    const { spotId } = req.params
     const { url, preview } = req.body
-
-    const img = await SpotImage.create({
-        spotId: id,
-        url,
-        preview
-    })
-    if (!img) {
+    const spots = await Spot.findByPk(spotId)
+    if (!spots) {
         const err = new Error("Spot couldn't be found")
         err.status = 404
         res.json({
@@ -149,11 +223,20 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
             statusCode: err.status
         })
     }
-    res.json(img)
+    const img = await SpotImage.create({
+        spotId: spotId,
+        url,
+        preview
+    })
+    res.json({
+        id: img.id,
+        url: img.url,
+        preview: img.preview
+    })
 })
 
 // Edit a Spot
-router.put('/:spotId', requireAuth, async (req, res, next) => {
+router.put('/:spotId', requireAuth, validateSpotError, async (req, res, next) => {
     const id = req.user.id
     const { address, city, state, country, lat, lng, name, description, price } = req.body
     const spots = await Spot.findOne({
@@ -186,17 +269,18 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
     const id = req.params.spotId
     const spots = await Spot.findByPk(id)
+    if (!spots) {
+        next({
+            title: "Spot couldn't be found",
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
     await spots.destroy()
     res.json({
         statusCode: 200,
         message: "successfully deleted"
     })
-    if (!spots) {
-        next({
-            message: "Spot couldn't be found",
-            statusCode: 404
-        })
-    }
 })
 
 
