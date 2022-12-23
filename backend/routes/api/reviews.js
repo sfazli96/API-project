@@ -7,23 +7,34 @@ const { SpotImage, User, Spot, Review, ReviewImage, sequelize } = require('../..
 const { Op } = require("sequelize");
 
 // Get all Reviews of the current User (need to finish)
-// router.get('/current', requireAuth, async(req, res, next) => {
-//     const reviews = await Review.findAll({
-//         include: [
-//             {
-//                 model: User,
-//                 attributes: ['id', 'firstName', 'lastName']
-//             },
-//             {
-//                 model: Spot,
-//                 attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
-//             },
-//             {
-//                 model: ReviewImage,
-//                 attributes: ['id', 'url']
-//             }
-//         ]
-//     })
+router.get('/current', requireAuth, async(req, res, next) => {
+    const id = req.user.id
+    const reviews = await Spot.findOne({
+        where: {
+            ownerId: id
+        },
+        include: [
+            {
+                model: Review
+            }
+        ]
+    })
+    // const reviews = await Review.findAll({
+    //     include: [
+    //         {
+    //             model: User,
+    //             attributes: ['id', 'firstName', 'lastName']
+    //         },
+    //         {
+    //             model: Spot,
+    //             attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
+    //         },
+    //         {
+    //             model: ReviewImage,
+    //             attributes: ['id', 'url']
+    //         }
+    //     ]
+    // })
     // const everyReview = []
     // let reviewEle = []
     // reviews.forEach(ele => {
@@ -45,14 +56,13 @@ const { Op } = require("sequelize");
     // return res.json({
     //     Review: everyReview
     // })
-//     res.json(reviews)
-// })
+    res.json(reviews)
+})
 
-
-// Get all Reviews by a Spot's id
-// router.get('/:spotId/reviews', async(req, res, next) => {
-
-// })
+// Add an image toa Review based on the Review's id
+router.post('/:reviewId/images', requireAuth, async(req, res, next) => {
+    
+})
 
 
 

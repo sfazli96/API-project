@@ -54,6 +54,7 @@ router.get('/', async (req, res, next) => {
                 model: SpotImage
             }
         ],
+        group: ["Spot.id", "Reviews.id", "SpotImages.id"]
     })
 
     let ele = []
@@ -69,24 +70,30 @@ router.get('/', async (req, res, next) => {
                 spotId: spot.id
             },
             attributes: {
-                include: [
-                    [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
-                ],
-                group: ["Spot.id", "Reviews.id", "SpotImages.id"]
+                // include: [
+                //     [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
+                // ],
+                attributes: ["stars"],
+                raw: true
             },
         })
-        spot.avgRating = reviews[0].dataValues.avgRating
+        // spot.avgRating = reviews[0].dataValues.avgRating
         spot.SpotImages.forEach(img => {
-
             if(img.preview === true) {
                 spot.previewImage = img.url
             }
         })
+        let countRating = 0
         spot.Reviews.forEach(element => {
-            spot.avgRating = element.stars
+            // spot.avgRating = element.stars
+            countRating += element.stars
         });
+        let average = countRating / reviews.length
         if(!spots.previewImage) {
             spots.previewImage = 'no image found'
+        }
+        else {
+            spot.avgRating = average
         }
         if (!spot.avgRating) {
             spot.avgRating = "no reviews are found"
@@ -117,6 +124,7 @@ router.get('/current', requireAuth, async(req, res, next) => {
                 model: SpotImage
             }
         ],
+        group: ["Spot.id", "Reviews.id", "SpotImages.id"]
     })
 
     let ele = []
@@ -132,25 +140,32 @@ router.get('/current', requireAuth, async(req, res, next) => {
                 spotId: spot.id
             },
             attributes: {
-                include: [
-                    [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
-                ],
-                group: ["Spot.id", "Reviews.id", "SpotImages.id"]
+                // include: [
+                //     [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
+                // ],
+                attributes: ["stars"],
+                raw: true
             },
 
         })
-        spot.avgRating = reviews[0].dataValues.avgRating
+        // spot.avgRating = reviews[0].dataValues.avgRating
         spot.SpotImages.forEach(img => {
 
             if(img.preview === true) {
                 spot.previewImage = img.url
             }
         })
+        let countRating = 0
         spot.Reviews.forEach(element => {
-            spot.avgRating = element.stars
+            // spot.avgRating = element.stars
+            countRating += element.stars
         });
+        let average = countRating / reviews.length
         if(!spots.previewImage) {
             spots.previewImage = 'no image found'
+        }
+        else {
+            spot.avgRating = average
         }
         if (!spot.avgRating) {
             spot.avgRating = "no reviews are found"
@@ -283,6 +298,51 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
         message: "successfully deleted"
     })
 })
+
+// Get all Reviews by a Spot's id (almost there, error still happens)
+router.get('/:spotId/reviews', async(req, res, next) => {
+    const spotId = req.user.id
+    const reviews = await Spot.findAll({
+        where: {
+            spot: spotId
+        },
+        include: [
+            {
+                model: Review
+            }
+        ]
+    })
+    const spot = await spot.findByPk(spotId)
+    res.json(reviews)
+})
+
+// Create a Review for a Spot based on the Spot's id (super close, fix 404 and 403 error)
+router.post('/:spotId/reviews', requireAuth, async(req, res, next) => {
+    const spotId = req.user.id
+    const userId = req.user.id
+    const { review, stars } = req.body
+    const spots = await Spot.findByPk(spotId)
+    if (!spots) {
+        const err = new Error("Spot couldn't be found")
+        err.status = 404
+        res.json({
+            message: err.message,
+            statusCode: err.status
+        })
+    }
+    const reviewComment = await Review.create({
+        userId,
+        spotId,
+        review,
+        stars
+    })
+
+    res.json({reviewComment})
+})
+
+
+
+
 
 
 
