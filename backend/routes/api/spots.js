@@ -54,7 +54,7 @@ router.get('/', async (req, res, next) => {
                 model: SpotImage
             }
         ],
-        group: ["Spot.id", "Reviews.id", "SpotImages.id"]
+        group: ["Spots.id", "Reviews.id", "SpotImages.id"]
     })
 
     let ele = []
