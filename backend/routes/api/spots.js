@@ -54,7 +54,6 @@ router.get('/', async (req, res, next) => {
                 model: SpotImage
             }
         ],
-        group: ["Review.id"]
     })
 
     let ele = []
@@ -74,6 +73,7 @@ router.get('/', async (req, res, next) => {
                     [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
                 ]
             },
+            group: ["Review.id"]
         })
         spot.avgRating = reviews[0].dataValues.avgRating
         spot.SpotImages.forEach(img => {
@@ -117,7 +117,6 @@ router.get('/current', requireAuth, async(req, res, next) => {
                 model: SpotImage
             }
         ],
-        group: ["Reviews.id"]
     })
 
     let ele = []
@@ -137,6 +136,7 @@ router.get('/current', requireAuth, async(req, res, next) => {
                     [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
                 ]
             },
+            group: ["Reviews.id"]
         })
         spot.avgRating = reviews[0].dataValues.avgRating
         spot.SpotImages.forEach(img => {
