@@ -71,9 +71,9 @@ router.get('/', async (req, res, next) => {
             attributes: {
                 include: [
                     [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
-                ]
+                ],
+                group: ["Spot.id", "Reviews.id", "SpotImages.id"]
             },
-            group: ["Review.id"]
         })
         spot.avgRating = reviews[0].dataValues.avgRating
         spot.SpotImages.forEach(img => {
@@ -134,9 +134,10 @@ router.get('/current', requireAuth, async(req, res, next) => {
             attributes: {
                 include: [
                     [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
-                ]
+                ],
+                group: ["Spot.id", "Reviews.id", "SpotImages.id"]
             },
-            group: ["Reviews.id"]
+
         })
         spot.avgRating = reviews[0].dataValues.avgRating
         spot.SpotImages.forEach(img => {
