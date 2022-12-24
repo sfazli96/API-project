@@ -16,10 +16,36 @@ router.get('/current', requireAuth, async(req, res, next) => {
             userId: userId.id
         },
         include: {
-            model: Spot
+            model: Spot,
+            attributes: [
+                "id", "ownerId", "address", "city", "state", "country", "lat", "lng", "name", "price"
+            ]
         }
     })
-    res.json(bookings)
+
+    const spots = await Spot.findAll({
+        include: {
+            model: SpotImage
+        },
+    })
+
+    let ele = []
+    spots.forEach(element => {
+        ele.push(element.toJSON())
+    });
+    for (let i = 0; i < ele.length; i++) {
+        let spot = ele[i]
+        spot.SpotImages.forEach(img => {
+            if(img.preview === true) {
+                bookings.forEach(element => {
+                    element.Spot.dataValues.previewImage = img.url
+                })
+            }
+        }
+    )};
+    res.json({
+        Bookings: bookings
+    })
 })
 
 // Edit a Booking

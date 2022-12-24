@@ -336,7 +336,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     })
 })
 
-// Get all Reviews by a Spot's id
+// Get all Reviews by a Spot's id (still fixing extra reviews)
 router.get('/:spotId/reviews', async (req,res, next)=> {
     const { spotId } = req.params
 
@@ -410,7 +410,7 @@ router.post('/:spotId/reviews', requireAuth, reviewValidateError, async(req, res
 
 // Get all Bookings for a Spot based on the Spot's id
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
-
+    
 })
 
 
