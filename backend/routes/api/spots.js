@@ -495,13 +495,11 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
             spotId: spotId
         }
     })
-    // for (let i = 0; i < allBookings.length; i++) {
-    //     let currBooking = allBookings[i]
-    //     console.log(currBooking)
-    //     if (new Date.toString(startDate)) {
-    //         console.log(startDate)
-    //     }
-    // }
+    for (let i = 0; i < allBookings.length; i++) {
+        let currBooking = allBookings[i]
+        console.log(currBooking)
+        
+    }
     res.json(creatingBookings)
 })
 

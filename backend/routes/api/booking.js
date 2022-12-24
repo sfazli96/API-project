@@ -48,7 +48,7 @@ router.get('/current', requireAuth, async(req, res, next) => {
     })
 })
 
-// Edit a Booking
+// Edit a Booking (fix 403 error when booking already exist)
 router.put('/:bookingId', requireAuth, async(req, res, next) => {
     const id = req.user.id
     const { startDate, endDate } = req.body
@@ -76,6 +76,27 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         err.statusCode = 404
         next(err)
     }
+    // if (endDate <= bookings.endDate) {
+    //     const err = {}
+    //     err.title = "Past booking can't be modified"
+    //     err.status = 403;
+    //     err.errors = ["Past booking can't be modified"]
+    //     err.statusCode = 403
+    //     next(err)
+    // }
+    
+    // const checkRev = await Review.findAll()
+    // for (let i = 0; i < checkRev.length; i++) {
+    //     let rev = checkRev[i]
+    //     if(rev.dataValues.userId === userId) {
+    //         const err = {}
+    //         err.title = 'User already has a review for this spot'
+    //         err.status = 403;
+    //         err.errors = ["User already has a review for this spot"]
+    //         err.statusCode = 403
+    //         return next(err)
+    //     }
+    // }
     res.json(bookings)
 })
 
