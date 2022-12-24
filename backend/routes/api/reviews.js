@@ -18,36 +18,28 @@ const reviewValidateError = [
     handleValidationErrors
   ]
 
-// Get all Reviews of the current User (need to finish)
+// Get all Reviews of the current User (need to finish, previewImage is missing)
 router.get('/current', requireAuth, async(req, res, next) => {
     const id = req.user.id
-    const reviews = await Spot.findOne({
+    const reviews = await Review.findOne({
         where: {
-            ownerId: id
+            userId: id
         },
         include: [
             {
-                model: Review
+                model: User,
+                attributes: ["id", "firstName", "lastName"]
+            },
+            {
+                model: Spot,
+                attributes: ["id", "ownerId", "address", "city", "state", "country", "lat", "lng", "name", "price"]
+            },
+            {
+                model: ReviewImage
             }
+
         ]
     })
-    // const reviews = await Review.findAll({
-    //     include: [
-    //         {
-    //             model: User,
-    //             attributes: ['id', 'firstName', 'lastName']
-    //         },
-    //         {
-    //             model: Spot,
-    //             attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
-    //         },
-    //         {
-    //             model: ReviewImage,
-    //             attributes: ['id', 'url']
-    //         }
-    //     ]
-    // })
-    // const everyReview = []
     // let reviewEle = []
     // reviews.forEach(ele => {
     //     reviewEle.push(ele.toJSON())
@@ -75,39 +67,47 @@ router.get('/current', requireAuth, async(req, res, next) => {
 router.post('/:reviewId/images', requireAuth, async(req, res, next) => {
     const { reviewId } = req.params
     const { url } = req.body
-    const reviews = await Review.findByPk(reviewId)
-    if(!reviews) {
-        const err = new Error('Review does not exist')
-        err.title = 'Review couldn\'t be found'
-        err.status = 404;
-        err.errors = [{
-            message: "Review couldn't be found",
-            statusCode: 404
-        }]
-    }
     const revImage = await ReviewImage.create({
         reviewId: reviewId,
         url
     })
+    const reviews = await Review.findByPk(reviewId)
+    if(!reviews) {
+        const err = {}
+        err.title = 'Review couldn\'t be found'
+        err.status = 404;
+        err.errors = ["Review couldn't be found"]
+        err.statusCode = 404
+        return next(err)
+    }
     res.json({
         id: revImage.id,
         url: revImage.url
     })
 })
 
-// Edit a Review (still have to fix stars must be an integer from 1 to 5 error)
+// Edit a Review
 router.put('/:reviewId', requireAuth, reviewValidateError, async(req, res, next) => {
     // const id = req.user.id
     const { reviewId } = req.params
     const { review, stars } = req.body
     const reviews = await Review.findByPk(reviewId)
-    if (!reviews) {
-        const err = new Error("Review couldn't be found")
-        err.status = 404
-        res.json({
-            message: err.message,
-            statusCode: err.status
-        })
+    if(!reviews) {
+        const err = {}
+        err.title = 'Review couldn\'t be found'
+        err.status = 404;
+        err.errors = ["Review couldn't be found"]
+        err.statusCode = 404
+        return next(err)
+    }
+    if (!parseFloat(stars) || stars < 1 || stars > 5) {
+        const err = new Error("Validation Error")
+        err.title = "Validation error"
+            err.status = 400;
+            err.errors = [{
+                message: 'Stars must be an integer from 1 to 5'
+            }]
+        return next(err)
     }
     reviews.review = review
     reviews.stars = stars
@@ -119,12 +119,13 @@ router.put('/:reviewId', requireAuth, reviewValidateError, async(req, res, next)
 router.delete('/:reviewId', requireAuth, async(req, res, next) => {
     const id = req.params.reviewId
     const reviews = await Review.findByPk(id)
-    if (!reviews) {
-        next({
-            title: "Spot couldn't be found",
-            message: "Spot couldn't be found",
-            statusCode: 404
-        })
+    if(!reviews) {
+        const err = {}
+        err.title = 'Review couldn\'t be found'
+        err.status = 404;
+        err.errors = ["Review couldn't be found"]
+        err.statusCode = 404
+        next(err)
     }
     await reviews.destroy()
     res.json({
