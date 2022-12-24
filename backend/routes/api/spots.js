@@ -64,7 +64,7 @@ router.get('/', async (req, res, next) => {
                 model: SpotImage
             }
         ],
-        group: ["Spot.id", "Reviews.id", "SpotImages.SpotId"]
+        group: ["Spot.id", "Reviews.id", "SpotImages.id"]
     })
 
     let ele = []
@@ -410,7 +410,7 @@ router.post('/:spotId/reviews', requireAuth, reviewValidateError, async(req, res
 
 // Get all Bookings for a Spot based on the Spot's id
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
-    
+
 })
 
 
