@@ -79,7 +79,7 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     res.json(bookings)
 })
 
-// Delete a bookings
+// Delete a bookings (fix 403 error)
 router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     const id = req.params.bookingId
     const bookings = await Booking.findByPk(id)

@@ -20,10 +20,10 @@ const reviewValidateError = [
 
 // Get all Reviews of the current User (need to finish, previewImage is missing)
 router.get('/current', requireAuth, async(req, res, next) => {
-    const id = req.user.id
-    const reviews = await Review.findOne({
+    const id = req.user
+    const reviews = await Review.findAll({
         where: {
-            userId: id
+            userId: id.id
         },
         include: [
             {
@@ -36,31 +36,31 @@ router.get('/current', requireAuth, async(req, res, next) => {
             },
             {
                 model: ReviewImage
-            }
-
+            },
         ]
     })
-    // let reviewEle = []
-    // reviews.forEach(ele => {
-    //     reviewEle.push(ele.toJSON())
-    // })
-    // reviewEle.forEach(rev => {
-    //     rev.Spot.SpotImage.forEach(img => {
-    //         if (!img.preview) {
-    //             rev.Spot.previewImage = "No preview image is available"
-    //         }
-
-    //         if (img.preview) {
-    //             rev.Spot.previewImage = img.url
-    //         }
-    //     })
-    //     delete rev.Spot.SpotImage
-    //     everyReview.push(rev)
-    // });
-    // return res.json({
-    //     Review: everyReview
-    // })
-    res.json(reviews)
+    const spots = await Spot.findAll({
+        include: {
+            model: SpotImage
+        }
+    })
+    let ele = []
+    spots.forEach(element => {
+        ele.push(element.toJSON())
+    });
+    for (let i = 0; i < ele.length; i++) {
+        let spot = ele[i]
+        spot.SpotImages.forEach(img => {
+            if(img.preview === true) {
+                bookings.forEach(element => {
+                    element.Spot.dataValues.previewImage = img.url
+                })
+            }
+        }
+    )};
+    res.json({
+        Review: reviews
+    })
 })
 
 // Add an image to a Review based on the Review's id
@@ -72,12 +72,26 @@ router.post('/:reviewId/images', requireAuth, async(req, res, next) => {
         url
     })
     const reviews = await Review.findByPk(reviewId)
+    const revImg2 = await ReviewImage.findAll({
+        where: {
+            reviewId: reviewId
+        }
+    })
     if(!reviews) {
         const err = {}
         err.title = 'Review couldn\'t be found'
         err.status = 404;
         err.errors = ["Review couldn't be found"]
         err.statusCode = 404
+        return next(err)
+    }
+
+    if (revImg2.length > 10) {
+        const err = {}
+        err.title = 'Maximum number of images for this resource was reached'
+        err.status = 403
+        err.errors = ["Maximum number of images for this resource was reached"]
+        err.statusCode = 403
         return next(err)
     }
     res.json({

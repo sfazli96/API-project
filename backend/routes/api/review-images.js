@@ -6,21 +6,21 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
 
-// Delete a Spot Image
+// Delete a Review Image
 router.delete('/:imageId', requireAuth, async(req, res, next) => {
-    const imageId = req.params.imageId
-    const images = await SpotImage.findByPk(imageId)
-    if(!images) {
-        const err = new Error('Image does not exist')
-        err.title = 'Image couldn\'t be found'
+    const { reviewId } = req.user
+    const reviewImages = await ReviewImage.findByPk(reviewId)
+    if(!reviewImages) {
+        const err = new Error('Review Image does not exist')
+        err.title = 'Review Image couldn\'t be found'
         err.status = 404
         err.error = [{
-            message: "Image couldn't be found",
+            message: "Review Image couldn't be found",
             statusCode: 404
         }]
         return next(err)
        }
-   await images.destroy()
+   await reviewImages.destroy()
    res.json(({
         message: "Successfully deleted",
         statusCode: 200

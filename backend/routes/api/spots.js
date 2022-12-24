@@ -336,17 +336,14 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     })
 })
 
-// Get all Reviews by a Spot's id (still fixing extra reviews)
+// Get all Reviews by a Spot's id
 router.get('/:spotId/reviews', async (req,res, next)=> {
     const { spotId } = req.params
 
-    const reviews = await Spot.findAll({
+    const reviews = await Review.findAll({
         where: {
             id: spotId
         },
-        include: [
-        {
-            model: Review,
             include: [
                 {
                     model: User,
@@ -357,9 +354,7 @@ router.get('/:spotId/reviews', async (req,res, next)=> {
                     model: ReviewImage,
                     attributes: ["id", "url"]
                 }
-            ]
-        },
-    ]
+        ]
     })
     const spot = await Spot.findByPk(spotId)
     if(!spot) {
@@ -375,7 +370,7 @@ router.get('/:spotId/reviews', async (req,res, next)=> {
     })
 })
 
-// Create a Review for a Spot based on the Spot's id (need to fix 403 error)
+// Create a Review for a Spot based on the Spot's id (I think 403 error works)
 router.post('/:spotId/reviews', requireAuth, reviewValidateError, async(req, res, next) => {
     const { spotId } = req.params
     const userId = req.user.id
@@ -398,6 +393,19 @@ router.post('/:spotId/reviews', requireAuth, reviewValidateError, async(req, res
             }]
         return next(err)
     }
+
+    const checkRev = await Review.findAll()
+    for (let i = 0; i < checkRev.length; i++) {
+        let rev = checkRev[i]
+        if(rev.dataValues.userId === userId) {
+            const err = {}
+            err.title = 'User already has a review for this spot'
+            err.status = 403;
+            err.errors = ["User already has a review for this spot"]
+            err.statusCode = 403
+            return next(err)
+        }
+    }
     const reviewComment = await Review.create({
         userId,
         spotId,
@@ -408,9 +416,45 @@ router.post('/:spotId/reviews', requireAuth, reviewValidateError, async(req, res
     res.json(reviewComment)
 })
 
-// Get all Bookings for a Spot based on the Spot's id
+// Get all Bookings for a Spot based on the Spot's id (have to exclude createdAt and updatedAt plus somehow get id 1 for if we are the owner of the spot)
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
-
+    const userId = req.user.id
+    const { spotId } = req.params
+    const spot = await Spot.findByPk(spotId)
+    if(!spot) {
+        const err = {}
+        err.title = 'Spot couldn\'t be found'
+        err.status = 404;
+        err.errors = ["Spot couldn't be found"]
+        err.statusCode = 404
+        return next(err)
+    }
+    if (userId === spot.ownerId) {
+        const bookings = await Booking.findAll({
+            where: {
+                id: spotId
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: ["id", "firstName", "lastName"]
+                }
+            ]
+        })
+        res.json({
+            Bookings: bookings
+        })
+    }
+    if (userId !== spot.ownerId) {
+        const bookings2 = await Booking.findAll({
+            where: {
+                id: spotId
+            },
+        })
+        res.json({
+            Bookings: bookings2
+        })
+    }
 })
 
 
@@ -446,6 +490,18 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         err.statusCode = 400
         return next(err)
     }
+    const allBookings = await Booking.findAll({
+        where: {
+            spotId: spotId
+        }
+    })
+    // for (let i = 0; i < allBookings.length; i++) {
+    //     let currBooking = allBookings[i]
+    //     console.log(currBooking)
+    //     if (new Date.toString(startDate)) {
+    //         console.log(startDate)
+    //     }
+    // }
     res.json(creatingBookings)
 })
 
