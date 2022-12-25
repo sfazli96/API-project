@@ -18,7 +18,7 @@ const reviewValidateError = [
     handleValidationErrors
   ]
 
-// Get all Reviews of the current User (need to finish, previewImage is missing)
+// Get all Reviews of the current User
 router.get('/current', requireAuth, async(req, res, next) => {
     const id = req.user
     const reviews = await Review.findAll({
@@ -35,7 +35,8 @@ router.get('/current', requireAuth, async(req, res, next) => {
                 attributes: ["id", "ownerId", "address", "city", "state", "country", "lat", "lng", "name", "price"]
             },
             {
-                model: ReviewImage
+                model: ReviewImage,
+                attributes: ["id", "url"]
             },
         ]
     })
@@ -52,7 +53,7 @@ router.get('/current', requireAuth, async(req, res, next) => {
         let spot = ele[i]
         spot.SpotImages.forEach(img => {
             if(img.preview === true) {
-                bookings.forEach(element => {
+                reviews.forEach(element => {
                     element.Spot.dataValues.previewImage = img.url
                 })
             }
@@ -75,7 +76,7 @@ router.post('/:reviewId/images', requireAuth, async(req, res, next) => {
     const revImg2 = await ReviewImage.findAll({
         where: {
             reviewId: reviewId
-        }
+        },
     })
     if(!reviews) {
         const err = {}

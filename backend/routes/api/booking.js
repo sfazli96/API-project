@@ -8,19 +8,20 @@ const { Op } = require("sequelize");
 
 
 
-// Get all of the current users bookings
+// Get all of the current users bookings (I think its working)
 router.get('/current', requireAuth, async(req, res, next) => {
-    const userId  = req.user
+    const userId  = req.user.id
     const bookings = await Booking.findAll({
         where: {
-            userId: userId.id
+            userId: userId
         },
         include: {
             model: Spot,
             attributes: [
                 "id", "ownerId", "address", "city", "state", "country", "lat", "lng", "name", "price"
             ]
-        }
+        },
+        attributes: ["id", "spotId", "userId", "startDate", "endDate", "createdAt", "updatedAt"]
     })
 
     const spots = await Spot.findAll({
@@ -48,7 +49,7 @@ router.get('/current', requireAuth, async(req, res, next) => {
     })
 })
 
-// Edit a Booking (fix 403 error when booking already exist)
+// Edit a Booking (fix 403 and 404 error when booking already exist)
 router.put('/:bookingId', requireAuth, async(req, res, next) => {
     const id = req.user.id
     const { startDate, endDate } = req.body
@@ -84,8 +85,33 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     //     err.statusCode = 403
     //     next(err)
     // }
-    
-    // const checkRev = await Review.findAll()
+
+    // const checkBooking = await Booking.findByPk(req.params.bookingId)
+    // console.log(checkBooking)
+    // let ele = checkBooking.dataValues.startDate
+    // console.log(ele)
+    // // const bookDate = new Date(checkBooking.startDate.toDateString()).getTime();
+
+    // if (Date.parse(ele) <= Date.now()) {
+    //     console.log(parseInt(ele))
+    //     console.log(Date.parse(ele))
+    //     const err = {}
+    //     err.title = "Past booking can't be modified"
+    //     err.status = 403;
+    //     err.errors = ["Past booking can't be modified"]
+    //     err.statusCode = 403
+    //     next(err)
+    // }
+
+    // for (let i = 0; i < checkBooking.length; i++) {
+    //     let booking = checkBooking[i]
+    //     if (booking.dataValues.startDate <= booking.dataValues.endDate) {
+    //         console.log(booking.dataValues.startDate)
+
+    //     }
+    // }
+
+
     // for (let i = 0; i < checkRev.length; i++) {
     //     let rev = checkRev[i]
     //     if(rev.dataValues.userId === userId) {
@@ -118,6 +144,8 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
             message: "successfully deleted"
         })
     }
+    const today = new Date(new Date().toDateString()).getTime();
+    console.log(today)
 })
 
 

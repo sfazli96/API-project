@@ -416,7 +416,7 @@ router.post('/:spotId/reviews', requireAuth, reviewValidateError, async(req, res
     res.json(reviewComment)
 })
 
-// Get all Bookings for a Spot based on the Spot's id (have to exclude createdAt and updatedAt plus somehow get id 1 for if we are the owner of the spot)
+// Get all Bookings for a Spot based on the Spot's id (get id 1 for if we are the owner of the spot)
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const userId = req.user.id
     const { spotId } = req.params
@@ -429,27 +429,43 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
         err.statusCode = 404
         return next(err)
     }
+    // If I am the owner of the spot
     if (userId === spot.ownerId) {
         const bookings = await Booking.findAll({
             where: {
-                id: spotId
+                id: userId
             },
+            attributes: ["id", "spotId", "userId", "startDate", "endDate", "createdAt", "updatedAt"],
             include: [
                 {
-                    model: User,
-                    attributes: ["id", "firstName", "lastName"]
+                    model: User
                 }
             ]
+            // where: {
+            //     id: spotId
+            // },
+            // include: [
+            //     {
+            //         model: User,
+            //         // attributes: ["id", "firstName", "lastName"]
+            //         attributes: {
+            //             exclude: ["username", "hashedPassword", "email", "createdAt", "updatedAt"]
+            //         }
+            //     },
+            // ],
+            // attributes: ["id"]
         })
         res.json({
             Bookings: bookings
         })
     }
+    // If i am NOT the owner of the spot
     if (userId !== spot.ownerId) {
         const bookings2 = await Booking.findAll({
             where: {
                 id: spotId
             },
+            attributes: ["spotId", "startDate", "endDate"]
         })
         res.json({
             Bookings: bookings2
@@ -460,19 +476,13 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
 
 
-// Create a Booking from a Spot based on Spot's id (fix 403 )
+// Create a Booking from a Spot based on Spot's id (fix 403 and 400)
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const userId = req.user.id
     const { spotId } = req.params
     const { startDate, endDate } = req.body
 
-    const bookings = await Booking.findByPk(spotId)
-    const creatingBookings = await Booking.create({
-        userId: userId,
-        spotId: spotId,
-        startDate,
-        endDate
-    })
+    // const bookings = await Booking.findByPk(spotId)
     const spots = await Spot.findByPk(spotId)
     if(!spots) {
         const err = {}
@@ -490,16 +500,18 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         err.statusCode = 400
         return next(err)
     }
-    const allBookings = await Booking.findAll({
-        where: {
-            spotId: spotId
-        }
+    // const allBookings = await Booking.findAll({
+    //     where: {
+    //         spotId: spotId
+    //     }
+    // })
+    // let newStartTime = new Date(startDate)
+    const creatingBookings = await Booking.create({
+        userId: userId,
+        spotId: parseInt(spotId),
+        startDate,
+        endDate
     })
-    for (let i = 0; i < allBookings.length; i++) {
-        let currBooking = allBookings[i]
-        console.log(currBooking)
-        
-    }
     res.json(creatingBookings)
 })
 
