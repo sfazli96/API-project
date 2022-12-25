@@ -70,29 +70,29 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         err.statusCode = 400
         return next(err)
     }
-    const conflictBooking = await Booking.findAll({
-        spotId: req.params.spotId,
-        startDate,
-        endDate
-    })
-    let eleConflictBooking = false
-    console.log(eleConflictBooking)
-    for (let i = 0; i < conflictBooking.length; i++) {
-        let eleBooking = conflictBooking[i]
-        if (eleBooking.dataValues.startDate < eleBooking.dataValues.endDate) {
-            eleConflictBooking = true
-        }
-    }
-    if (eleConflictBooking === true) {
-        const err = {}
-        err.message = "Sorry, this spot is already booked for the specified dates"
-        err.status = 400
-        err.errors = {
-            startDate: "Start date conflicts with an existing booking",
-            endDate: "End date conflicts with an existing booking"
-        }
-        return next(err)
-    }
+    // const conflictBooking = await Booking.findAll({
+    //     spotId: req.params.spotId,
+    //     startDate,
+    //     endDate
+    // })
+    // let eleConflictBooking = false
+    // console.log(eleConflictBooking)
+    // for (let i = 0; i < conflictBooking.length; i++) {
+    //     let eleBooking = conflictBooking[i]
+    //     if (eleBooking.dataValues.startDate < eleBooking.dataValues.endDate) {
+    //         eleConflictBooking = true
+    //     }
+    // }
+    // if (eleConflictBooking === true) {
+    //     const err = {}
+    //     err.message = "Sorry, this spot is already booked for the specified dates"
+    //     err.status = 400
+    //     err.errors = {
+    //         startDate: "Start date conflicts with an existing booking",
+    //         endDate: "End date conflicts with an existing booking"
+    //     }
+    //     return next(err)
+    // }
 
     const bookings = await Booking.findOne({
         where: {
@@ -105,7 +105,7 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     res.json(bookings)
 })
 
-// Delete a bookings (fix 403 error)
+// Delete a bookings (fixing 403 error)
 router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     const id = req.params.bookingId
     const bookings = await Booking.findByPk(id)

@@ -53,6 +53,7 @@ const validateSpotError = [
     handleValidationErrors
   ]
 
+  // Working on querying
 // Get all spots
 router.get('/', async (req, res, next) => {
     let {page, size} = req.query
@@ -495,7 +496,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
 
 
-// Create a Booking from a Spot based on Spot's id (fix 403)
+// Create a Booking from a Spot based on Spot's id (still fixing 403)
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const userId = req.user.id
     const { spotId } = req.params
