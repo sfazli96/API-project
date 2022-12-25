@@ -8,7 +8,7 @@ const { Op } = require("sequelize");
 
 
 
-// Get all of the current users bookings (I think its working)
+// Get all of the current users bookings
 router.get('/current', requireAuth, async(req, res, next) => {
     const userId  = req.user.id
     const bookings = await Booking.findAll({
