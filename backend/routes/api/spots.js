@@ -276,7 +276,11 @@ router.post('/', requireAuth, validateSpotError, async(req, res, next) => {
         description,
         price
     })
-    res.json(spots)
+    if (spots) {
+        res.status(201)
+        res.json(spots)
+    }
+
 })
 
 // Add an Image to a Spot based on the Spot's id
@@ -293,6 +297,16 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         err.statusCode = 404
         return next(err)
     }
+    // if (req.user.id !== spots.ownerId) {
+    //     const err = {}
+    //     err.title = 'Require proper authorization'
+    //     err.status = 403;
+    //     err.errors = {
+    //         message: "Forbidden"
+    //     }
+    //     err.statusCode = 403
+    //     return next(err)
+    // }
     const img = await SpotImage.create({
         spotId: spotId,
         url,
@@ -316,6 +330,16 @@ router.put('/:spotId', requireAuth, validateSpotError, async (req, res, next) =>
         err.status = 404;
         err.errors = ["Spot couldn't be found"]
         err.statusCode = 404
+        return next(err)
+    }
+    if (id !== spot.ownerId) {
+        const err = {}
+        err.title = 'Require proper authorization'
+        err.status = 403;
+        err.errors = {
+            message: "Forbidden"
+        }
+        err.statusCode = 403
         return next(err)
     }
     const spots = await Spot.findOne({
@@ -346,6 +370,16 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
         err.status = 404;
         err.errors = ["Spot couldn't be found"]
         err.statusCode = 404
+        return next(err)
+    }
+    if (req.user.id !== spots.ownerId) {
+        const err = {}
+        err.title = 'Require proper authorization'
+        err.status = 403;
+        err.errors = {
+            message: "Forbidden"
+        }
+        err.statusCode = 403
         return next(err)
     }
     await spots.destroy()
