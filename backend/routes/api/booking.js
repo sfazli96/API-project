@@ -49,7 +49,7 @@ router.get('/current', requireAuth, async(req, res, next) => {
     })
 })
 
-// Edit a Booking (fix 403 and 404 error when booking already exist)
+// Edit a Booking (fix 403, Past bookings cant be modified and 404 error when booking already exist)
 router.put('/:bookingId', requireAuth, async(req, res, next) => {
     const id = req.user.id
     const { startDate, endDate } = req.body
@@ -62,14 +62,6 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         err.statusCode = 404
         next(err)
     }
-    const bookings = await Booking.findOne({
-        where: {
-            userId: id
-        }
-    })
-    bookings.startDate = startDate
-    bookings.endDate = endDate
-    await bookings.save()
     if (endDate <= startDate) {
         const err = {}
         err.title = "endDate can't be on or before startDate"
@@ -78,39 +70,38 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         err.statusCode = 400
         return next(err)
     }
-    // if (endDate <= bookings.endDate) {
-    //     const err = {}
-    //     err.title = "Past booking can't be modified"
-    //     err.status = 403;
-    //     err.errors = ["Past booking can't be modified"]
-    //     err.statusCode = 403
-    //     next(err)
-    // }
+    const conflictBooking = await Booking.findAll({
+        spotId: req.params.spotId,
+        startDate,
+        endDate
+    })
+    let eleConflictBooking = false
+    console.log(eleConflictBooking)
+    for (let i = 0; i < conflictBooking.length; i++) {
+        let eleBooking = conflictBooking[i]
+        if (eleBooking.dataValues.startDate < eleBooking.dataValues.endDate) {
+            eleConflictBooking = true
+        }
+    }
+    if (eleConflictBooking === true) {
+        const err = {}
+        err.message = "Sorry, this spot is already booked for the specified dates"
+        err.status = 400
+        err.errors = {
+            startDate: "Start date conflicts with an existing booking",
+            endDate: "End date conflicts with an existing booking"
+        }
+        return next(err)
+    }
 
-    // const checkBooking = await Booking.findByPk(req.params.bookingId)
-    // console.log(checkBooking)
-    // let ele = checkBooking.dataValues.startDate
-    // console.log(ele)
-    // // const bookDate = new Date(checkBooking.startDate.toDateString()).getTime();
-
-    // if (Date.parse(ele) <= Date.now()) {
-    //     console.log(parseInt(ele))
-    //     console.log(Date.parse(ele))
-    //     const err = {}
-    //     err.title = "Past booking can't be modified"
-    //     err.status = 403;
-    //     err.errors = ["Past booking can't be modified"]
-    //     err.statusCode = 403
-    //     next(err)
-    // }
-
-    // for (let i = 0; i < checkBooking.length; i++) {
-    //     let booking = checkBooking[i]
-    //     if (booking.dataValues.startDate <= booking.dataValues.endDate) {
-    //         console.log(booking.dataValues.startDate)
-
-    //     }
-    // }
+    const bookings = await Booking.findOne({
+        where: {
+            userId: id
+        }
+    })
+    bookings.startDate = startDate
+    bookings.endDate = endDate
+    await bookings.save()
     res.json(bookings)
 })
 
@@ -118,6 +109,9 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
 router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     const id = req.params.bookingId
     const bookings = await Booking.findByPk(id)
+
+    const today = new Date(new Date().toDateString()).getTime();
+    console.log(today)
     if(!bookings) {
         const err = {}
         err.title = 'Booking couldn\'t be found'
@@ -132,8 +126,6 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
             message: "successfully deleted"
         })
     }
-    const today = new Date(new Date().toDateString()).getTime();
-    console.log(today)
 })
 
 

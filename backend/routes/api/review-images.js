@@ -20,7 +20,7 @@ router.delete('/:imageId', requireAuth, async(req, res, next) => {
             statusCode: 404
         }]
         return next(err)
-       }
+    }
    await reviewImages.destroy()
    res.json(({
         message: "Successfully deleted",
