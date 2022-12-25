@@ -416,7 +416,7 @@ router.post('/:spotId/reviews', requireAuth, reviewValidateError, async(req, res
     res.json(reviewComment)
 })
 
-// Get all Bookings for a Spot based on the Spot's id (get id 1 for if we are the owner of the spot)
+// Get all Bookings for a Spot based on the Spot's id (issue: resolved)
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const userId = req.user.id
     const { spotId } = req.params
