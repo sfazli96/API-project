@@ -53,6 +53,15 @@ router.get('/current', requireAuth, async(req, res, next) => {
 router.put('/:bookingId', requireAuth, async(req, res, next) => {
     const id = req.user.id
     const { startDate, endDate } = req.body
+    const checkBooking = await Booking.findByPk(req.params.bookingId)
+    if(!checkBooking) {
+        const err = {}
+        err.title = 'Booking couldn\'t be found'
+        err.status = 404;
+        err.errors = ['Booking couldn\'t be found']
+        err.statusCode = 404
+        next(err)
+    }
     const bookings = await Booking.findOne({
         where: {
             userId: id
@@ -68,14 +77,6 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         err.errors = ["endDate can't be on or before startDate"]
         err.statusCode = 400
         return next(err)
-    }
-    if(!bookings) {
-        const err = {}
-        err.title = 'Booking couldn\'t be found'
-        err.status = 404;
-        err.errors = ['Booking couldn\'t be found']
-        err.statusCode = 404
-        next(err)
     }
     // if (endDate <= bookings.endDate) {
     //     const err = {}
@@ -108,19 +109,6 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     //     if (booking.dataValues.startDate <= booking.dataValues.endDate) {
     //         console.log(booking.dataValues.startDate)
 
-    //     }
-    // }
-
-
-    // for (let i = 0; i < checkRev.length; i++) {
-    //     let rev = checkRev[i]
-    //     if(rev.dataValues.userId === userId) {
-    //         const err = {}
-    //         err.title = 'User already has a review for this spot'
-    //         err.status = 403;
-    //         err.errors = ["User already has a review for this spot"]
-    //         err.statusCode = 403
-    //         return next(err)
     //     }
     // }
     res.json(bookings)

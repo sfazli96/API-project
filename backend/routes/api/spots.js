@@ -196,11 +196,21 @@ router.get('/:spotId', async(req, res, next) => {
         raw: true
     })
 
+    if(!spots) {
+        const err = {}
+        err.title = 'Spot couldn\'t be found'
+        err.status = 404;
+        err.errors = ["Spot couldn't be found"]
+        err.statusCode = 404
+        return next(err)
+    }
+    
     const userOwner = await User.findOne({
         where: {
             id: ownerId
         },
-        attributes: ["id", "firstName", "lastName"]
+        model: User,
+        attributes: ["id", "firstName", "lastName"],
     })
     spots.Owner = userOwner
 
@@ -228,15 +238,6 @@ router.get('/:spotId', async(req, res, next) => {
     })
 
     spots.SpotImages = spot_image
-
-    if(!spots) {
-        const err = {}
-        err.title = 'Spot couldn\'t be found'
-        err.status = 404;
-        err.errors = ["Spot couldn't be found"]
-        err.statusCode = 404
-        return next(err)
-    }
 
     res.json(spots)
 })
@@ -306,7 +307,8 @@ router.put('/:spotId', requireAuth, validateSpotError, async (req, res, next) =>
     spots.description = description
     spots.price = price
     await spots.save()
-    if(!spots) {
+    const spot = await Spot.findByPk(req.params.spotId)
+    if(!spot) {
         const err = {}
         err.title = 'Spot couldn\'t be found'
         err.status = 404;
@@ -438,7 +440,8 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
             attributes: ["id", "spotId", "userId", "startDate", "endDate", "createdAt", "updatedAt"],
             include: [
                 {
-                    model: User
+                    model: User,
+                    attributes: ["id", "firstName", "lastName"]
                 }
             ]
             // where: {

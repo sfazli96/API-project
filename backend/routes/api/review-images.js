@@ -8,8 +8,9 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 // Delete a Review Image
 router.delete('/:imageId', requireAuth, async(req, res, next) => {
-    const { reviewId } = req.user
-    const reviewImages = await ReviewImage.findByPk(reviewId)
+    // const { reviewId } = req.user
+    const reviewImageId = req.params.imageId
+    const reviewImages = await ReviewImage.findByPk(reviewImageId)
     if(!reviewImages) {
         const err = new Error('Review Image does not exist')
         err.title = 'Review Image couldn\'t be found'

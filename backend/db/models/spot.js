@@ -22,10 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     ownerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'Users',
-        key: 'id'
-      }
+      // references: {
+      //   model: 'Users',
+      //   key: 'id'
+      // }
     },
     address: {
       type: DataTypes.STRING,
