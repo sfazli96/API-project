@@ -53,6 +53,19 @@ const validateSpotError = [
     handleValidationErrors
   ]
 
+//   const validateQueryError = [
+//     check('page')
+//       .exists({ checkFalsy: true })
+//       .optional()
+//       .isInt({ min: 1})
+//       .withMessage('Page must be greater than or equal to 1'),
+//     check('size')
+//       .exists({ checkFalsy: true })
+//       .isInt({ min: 1})
+//       .withMessage('Size must be greater than or equal to 1'),
+//     handleValidationErrors
+//   ]
+
   // Working on querying
 // Get all spots
 router.get('/', async (req, res, next) => {
@@ -423,7 +436,7 @@ router.get('/:spotId/reviews', async (req,res, next)=> {
     })
 })
 
-// Create a Review for a Spot based on the Spot's id 
+// Create a Review for a Spot based on the Spot's id
 router.post('/:spotId/reviews', requireAuth, reviewValidateError, async(req, res, next) => {
     const { spotId } = req.params
     const userId = req.user.id
@@ -530,7 +543,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
 
 
-// Create a Booking from a Spot based on Spot's id (still fixing 403)
+// Create a Booking from a Spot based on Spot's id (still fixing 403, I think it works?!)
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const userId = req.user.id
     const { spotId } = req.params
@@ -555,18 +568,22 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         return next(err)
     }
     const conflictBooking = await Booking.findAll({
-        spotId: spotId,
+        where: {
+            spotId: spotId,
+        },
         startDate,
         endDate
     })
     let eleConflictBooking = false
     // for (let i = 0; i < conflictBooking.length; i++) {
-        for (const conflictBooked of conflictBooking) {
+        for (let conflictBooked of conflictBooking) {
             if (conflictBooked.dataValues.startDate < conflictBooked.dataValues.endDate) {
+                console.log(conflictBooked.dataValues.startDate)
+                console.log(conflictBooked.dataValues.endDate)
                 eleConflictBooking = true
             }
         }
-        // let eleBooking = conflictBooking[i]
+
     if (eleConflictBooking === true) {
         const err = new Error('Validation Error')
         err.title = 'Sorry, this spot is already booked for the specified dates'

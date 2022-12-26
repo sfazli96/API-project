@@ -49,7 +49,7 @@ router.get('/current', requireAuth, async(req, res, next) => {
     })
 })
 
-// Edit a Booking (fix 403, Past bookings cant be modified and 404 error when booking already exist)
+// Edit a Booking (fix 403, Past bookings cant be modified and booking conflict)
 router.put('/:bookingId', requireAuth, async(req, res, next) => {
     const id = req.user.id
     const { startDate, endDate } = req.body
@@ -86,7 +86,7 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     // if (eleConflictBooking === true) {
     //     const err = {}
     //     err.message = "Sorry, this spot is already booked for the specified dates"
-    //     err.status = 400
+    //     err.status = 403
     //     err.errors = {
     //         startDate: "Start date conflicts with an existing booking",
     //         endDate: "End date conflicts with an existing booking"
