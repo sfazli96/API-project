@@ -63,6 +63,36 @@ const validateSpotError = [
 //       .exists({ checkFalsy: true })
 //       .isInt({ min: 1})
 //       .withMessage('Size must be greater than or equal to 1'),
+//     check('minLat')
+//       .exists({ checkFalsy: true })
+//       .isDecimal()
+//       .optional()
+//       .withMessage('Minimum latitude is invalid'),
+//     check('maxLat')
+//       .exists({ checkFalsy: true })
+//       .isDecimal()
+//       .optional()
+//       .withMessage('Maximum latitude is invalid'),
+//     check('minLng')
+//       .exists({ checkFalsy: true })
+//       .isDecimal()
+//       .optional()
+//       .withMessage('Minimum longitude is invalid'),
+//     check('maxLng')
+//       .exists({ checkFalsy: true })
+//       .isDecimal()
+//       .optional()
+//       .withMessage('Maximum longitude is invalid'),
+//     check('minPrice')
+//       .exists({ checkFalsy: true })
+//        (add a isFloat maybe)
+//       .optional()
+//       .withMessage('Minimum price must be greater than or equal to 0'),
+//     check('maxPrice')
+//       .exists({ checkFalsy: true })
+//        (add a isFloat maybe)
+//       .optional()
+//       .withMessage('Maximum price must be greater than or equal to 0'),
 //     handleValidationErrors
 //   ]
 
@@ -92,7 +122,7 @@ router.get('/', async (req, res, next) => {
                 model: SpotImage
             }
         ],
-        group: ["Spot.id", "Reviews.id", "SpotImages.id"]
+        group: ["Spot.id", "Reviews.id", "SpotImages.id"],
     })
 
     let ele = []
@@ -460,18 +490,31 @@ router.post('/:spotId/reviews', requireAuth, reviewValidateError, async(req, res
         return next(err)
     }
 
-    const checkRev = await Review.findAll()
-    for (let i = 0; i < checkRev.length; i++) {
-        let rev = checkRev[i]
-        if(rev.dataValues.userId === userId) {
-            const err = {}
-            err.title = 'User already has a review for this spot'
-            err.status = 403;
-            err.errors = ["User already has a review for this spot"]
-            err.statusCode = 403
-            return next(err)
+    const checkRev = await Review.findOne({
+        where: {
+            userId,
+            spotId
         }
+    })
+    if (checkRev) {
+        const err = {}
+        err.title = 'User already has a review for this spot'
+        err.status = 403;
+        err.errors = ["User already has a review for this spot"]
+        err.statusCode = 403
+        return next(err)
     }
+    // for (let i = 0; i < checkRev.length; i++) {
+    //     let rev = checkRev[i]
+    //     if(rev.dataValues.userId === userId) {
+    //         const err = {}
+    //         err.title = 'User already has a review for this spot'
+    //         err.status = 403;
+    //         err.errors = ["User already has a review for this spot"]
+    //         err.statusCode = 403
+    //         return next(err)
+    //     }
+    // }
     const reviewComment = await Review.create({
         userId,
         spotId,
@@ -520,7 +563,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
             //         }
             //     },
             // ],
-            // attributes: ["id"]
+            // attributes: ["id", "spotId", "userId", "startDate", "endDate", "createdAt", "updatedAt"]
         })
         res.json({
             Bookings: bookings
@@ -568,9 +611,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         return next(err)
     }
     const conflictBooking = await Booking.findAll({
-        where: {
-            spotId: spotId,
-        },
+        spotId,
         startDate,
         endDate
     })

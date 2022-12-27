@@ -49,7 +49,7 @@ router.get('/current', requireAuth, async(req, res, next) => {
     })
 })
 
-// Edit a Booking (fix 403, Past bookings cant be modified and booking conflict)
+// Edit a Booking (fix 403, Past bookings cant be modified and booking conflict, I think it works?)
 router.put('/:bookingId', requireAuth, async(req, res, next) => {
     const id = req.user.id
     const { startDate, endDate } = req.body
@@ -70,29 +70,28 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         err.statusCode = 400
         return next(err)
     }
-    // const conflictBooking = await Booking.findAll({
-    //     spotId: req.params.spotId,
-    //     startDate,
-    //     endDate
-    // })
-    // let eleConflictBooking = false
-    // console.log(eleConflictBooking)
-    // for (let i = 0; i < conflictBooking.length; i++) {
-    //     let eleBooking = conflictBooking[i]
-    //     if (eleBooking.dataValues.startDate < eleBooking.dataValues.endDate) {
-    //         eleConflictBooking = true
-    //     }
-    // }
-    // if (eleConflictBooking === true) {
-    //     const err = {}
-    //     err.message = "Sorry, this spot is already booked for the specified dates"
-    //     err.status = 403
-    //     err.errors = {
-    //         startDate: "Start date conflicts with an existing booking",
-    //         endDate: "End date conflicts with an existing booking"
-    //     }
-    //     return next(err)
-    // }
+    const conflictBooking = await Booking.findAll({
+        spotId: id,
+        startDate,
+        endDate
+    })
+    let eleConflictBooking = false
+    for (let i = 0; i < conflictBooking.length; i++) {
+        let eleBooking = conflictBooking[i]
+        if (eleBooking.dataValues.startDate < eleBooking.dataValues.endDate) {
+            eleConflictBooking = true
+        }
+    }
+    if (eleConflictBooking === true) {
+        const err = {}
+        err.message = "Sorry, this spot is already booked for the specified dates"
+        err.status = 403
+        err.errors = {
+            startDate: "Start date conflicts with an existing booking",
+            endDate: "End date conflicts with an existing booking"
+        }
+        return next(err)
+    }
 
     const bookings = await Booking.findOne({
         where: {
