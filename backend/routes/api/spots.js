@@ -541,29 +541,29 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     // If I am the owner of the spot
     if (userId === spot.ownerId) {
         const bookings = await Booking.findAll({
+            // where: {
+            //     id: spotId
+            // },
+            // attributes: ["id", "spotId", "userId", "startDate", "endDate", "createdAt", "updatedAt"],
+            // include: [
+            //     {
+            //         model: User,
+            //         attributes: ["id", "firstName", "lastName"]
+            //     }
+            // ]
             where: {
-                id: userId
+                id: spotId
             },
             attributes: ["id", "spotId", "userId", "startDate", "endDate", "createdAt", "updatedAt"],
             include: [
                 {
                     model: User,
-                    attributes: ["id", "firstName", "lastName"]
-                }
-            ]
-            // where: {
-            //     id: spotId
-            // },
-            // include: [
-            //     {
-            //         model: User,
-            //         // attributes: ["id", "firstName", "lastName"]
-            //         attributes: {
-            //             exclude: ["username", "hashedPassword", "email", "createdAt", "updatedAt"]
-            //         }
-            //     },
-            // ],
-            // attributes: ["id", "spotId", "userId", "startDate", "endDate", "createdAt", "updatedAt"]
+                    // attributes: ["id", "firstName", "lastName"]
+                    attributes: {
+                        exclude: ["username", "hashedPassword", "email", "createdAt", "updatedAt"]
+                    }
+                },
+            ],
         })
         res.json({
             Bookings: bookings
@@ -610,38 +610,46 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         err.statusCode = 400
         return next(err)
     }
-    const conflictBooking = await Booking.findAll({
-        spotId,
-        startDate,
-        endDate
-    })
-    let eleConflictBooking = false
-    // for (let i = 0; i < conflictBooking.length; i++) {
-        for (let conflictBooked of conflictBooking) {
-            if (conflictBooked.dataValues.startDate < conflictBooked.dataValues.endDate) {
-                console.log(conflictBooked.dataValues.startDate)
-                console.log(conflictBooked.dataValues.endDate)
-                eleConflictBooking = true
-            }
-        }
+    // const conflictBooking = await Booking.findAll({
+    //     spotId,
+    //     startDate,
+    //     endDate
+    // })
+    // let eleConflictBooking = false
+    // // for (let i = 0; i < conflictBooking.length; i++) {
+    //     for (let conflictBooked of conflictBooking) {
+    //         if (conflictBooked.dataValues.startDate < conflictBooked.dataValues.endDate) {
+    //             console.log(conflictBooked.dataValues.startDate)
+    //             console.log(conflictBooked.dataValues.endDate)
+    //             eleConflictBooking = true
+    //         }
+    //     }
 
-    if (eleConflictBooking === true) {
-        const err = new Error('Validation Error')
-        err.title = 'Sorry, this spot is already booked for the specified dates'
-        err.status = 403;
-        err.errors = {
-            startDate: "Start date conflicts with an existing booking",
-            endDate: "End date conflicts with an existing booking"
-        }
-        return next(err)
-    }
+    // if (eleConflictBooking === true) {
+    //     const err = new Error('Validation Error')
+    //     err.title = 'Sorry, this spot is already booked for the specified dates'
+    //     err.status = 403;
+    //     err.errors = {
+    //         startDate: "Start date conflicts with an existing booking",
+    //         endDate: "End date conflicts with an existing booking"
+    //     }
+    //     return next(err)
+    // }
     const creatingBookings = await Booking.create({
         userId: userId,
         spotId: parseInt(spotId),
         startDate,
         endDate
     })
-    res.json(creatingBookings)
+    res.json({
+        id: creatingBookings.id,
+        userId: creatingBookings.userId,
+        spotId: creatingBookings.spotId,
+        startDate: creatingBookings.startDate,
+        endDate: creatingBookings.endDate,
+        createdAt: creatingBookings.createdAt,
+        updatedAt: creatingBookings.updatedAt
+    })
 })
 
 
