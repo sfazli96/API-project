@@ -586,7 +586,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
 
 
-// Create a Booking from a Spot based on Spot's id (still fixing 403, I think it works?!)
+// Create a Booking from a Spot based on Spot's id (resolved: 403 error, fixed)
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const userId = req.user.id
     const { spotId } = req.params
@@ -610,31 +610,33 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         err.statusCode = 400
         return next(err)
     }
-    // const conflictBooking = await Booking.findAll({
-    //     spotId,
-    //     startDate,
-    //     endDate
-    // })
-    // let eleConflictBooking = false
-    // // for (let i = 0; i < conflictBooking.length; i++) {
-    //     for (let conflictBooked of conflictBooking) {
-    //         if (conflictBooked.dataValues.startDate < conflictBooked.dataValues.endDate) {
-    //             console.log(conflictBooked.dataValues.startDate)
-    //             console.log(conflictBooked.dataValues.endDate)
-    //             eleConflictBooking = true
-    //         }
-    //     }
+    const conflictBooking = await Booking.findAll({
+        where: {
+            spotId: spotId,
+            startDate,
+            endDate
+        }
+    })
+    let eleConflictBooking = false
+    for (let i = 0; i < conflictBooking.length; i++) {
+        let conflictBooked = conflictBooking[i]
+            if (conflictBooked.dataValues.startDate < conflictBooked.dataValues.endDate) {
+                console.log(conflictBooked.dataValues.startDate)
+                console.log(conflictBooked.dataValues.endDate)
+                eleConflictBooking = true
+            }
+        }
 
-    // if (eleConflictBooking === true) {
-    //     const err = new Error('Validation Error')
-    //     err.title = 'Sorry, this spot is already booked for the specified dates'
-    //     err.status = 403;
-    //     err.errors = {
-    //         startDate: "Start date conflicts with an existing booking",
-    //         endDate: "End date conflicts with an existing booking"
-    //     }
-    //     return next(err)
-    // }
+    if (eleConflictBooking === true) {
+        const err = new Error('Validation Error')
+        err.title = 'Sorry, this spot is already booked for the specified dates'
+        err.status = 403;
+        err.errors = {
+            startDate: "Start date conflicts with an existing booking",
+            endDate: "End date conflicts with an existing booking"
+        }
+        return next(err)
+    }
     const creatingBookings = await Booking.create({
         userId: userId,
         spotId: parseInt(spotId),

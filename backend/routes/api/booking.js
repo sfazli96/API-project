@@ -52,6 +52,7 @@ router.get('/current', requireAuth, async(req, res, next) => {
 // Edit a Booking (fix 403, Past bookings cant be modified and booking conflict, I think it works?)
 router.put('/:bookingId', requireAuth, async(req, res, next) => {
     const id = req.user.id
+    const { spotId } = req.params
     const { startDate, endDate } = req.body
     const checkBooking = await Booking.findByPk(req.params.bookingId)
     if(!checkBooking) {
@@ -70,22 +71,35 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         err.statusCode = 400
         return next(err)
     }
+    // if (endDate <= checkBooking.endDate) {
+    //     const err = {}
+    //     err.title = "Past bookings cannot be modified"
+    //     err.status = 403
+    //     err.errors = ["Past bookings cannot be modified"]
+    //     err.statusCode = 403
+    //     return next(err)
+    // }
+
     const conflictBooking = await Booking.findAll({
-        spotId: id,
-        startDate,
-        endDate
+        where: {
+            startDate,
+            endDate
+        }
     })
     let eleConflictBooking = false
     for (let i = 0; i < conflictBooking.length; i++) {
-        let eleBooking = conflictBooking[i]
-        if (eleBooking.dataValues.startDate < eleBooking.dataValues.endDate) {
-            eleConflictBooking = true
+        let conflictBooked = conflictBooking[i]
+            if (conflictBooked.dataValues.startDate < conflictBooked.dataValues.endDate) {
+                console.log(conflictBooked.dataValues.startDate)
+                console.log(conflictBooked.dataValues.endDate)
+                eleConflictBooking = true
+            }
         }
-    }
+
     if (eleConflictBooking === true) {
-        const err = {}
-        err.message = "Sorry, this spot is already booked for the specified dates"
-        err.status = 403
+        const err = new Error('Validation Error')
+        err.title = 'Sorry, this spot is already booked for the specified dates'
+        err.status = 403;
         err.errors = {
             startDate: "Start date conflicts with an existing booking",
             endDate: "End date conflicts with an existing booking"
