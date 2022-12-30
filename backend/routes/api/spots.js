@@ -221,7 +221,6 @@ router.get('/', validateQueryError, async (req, res, next) => {
 
 // Get all spots owned by current User
 router.get('/current', requireAuth, async(req, res, next) => {
-    // const spots = await Spot.findOne(req.params.id)
     const id = req.user.id
     const spots = await Spot.findAll({
         where: {
