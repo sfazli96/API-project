@@ -99,11 +99,9 @@ const validateSpotError = [
     handleValidationErrors
   ]
 
-  // Working on querying
 // Get all spots
 router.get('/', validateQueryError, async (req, res, next) => {
     let {page, size, maxLat, minLat, maxLng, maxPrice, minPrice} = req.query
-    // const { lat, price, lng } = req.body
     if (!page) page = 1;
     if (!size) size = 20;
 
@@ -124,22 +122,6 @@ router.get('/', validateQueryError, async (req, res, next) => {
     let optionalParameter = {
         where: {}
     }
-
-    // let filter = {}
-
-    // if (maxPrice) {
-    //     filter = {
-    //         [Op.lte]: maxPrice,
-    //         ...filter
-    //     }
-    // }
-
-    // if (minPrice) {
-    //     filter = {
-    //         [Op.gte]: minPrice,
-    //         ...filter
-    //     }
-    // }
 
     if (maxPrice) {
         optionalParameter.where.price = {
@@ -240,7 +222,6 @@ router.get('/', validateQueryError, async (req, res, next) => {
 // Get all spots owned by current User
 router.get('/current', requireAuth, async(req, res, next) => {
     // const spots = await Spot.findOne(req.params.id)
-    // res.json(spots)
     const id = req.user.id
     const spots = await Spot.findAll({
         where: {
@@ -571,17 +552,6 @@ router.post('/:spotId/reviews', requireAuth, reviewValidateError, async(req, res
         err.statusCode = 403
         return next(err)
     }
-    // for (let i = 0; i < checkRev.length; i++) {
-    //     let rev = checkRev[i]
-    //     if(rev.dataValues.userId === userId) {
-    //         const err = {}
-    //         err.title = 'User already has a review for this spot'
-    //         err.status = 403;
-    //         err.errors = ["User already has a review for this spot"]
-    //         err.statusCode = 403
-    //         return next(err)
-    //     }
-    // }
     const reviewComment = await Review.create({
         userId,
         spotId,
@@ -592,7 +562,7 @@ router.post('/:spotId/reviews', requireAuth, reviewValidateError, async(req, res
     res.json(reviewComment)
 })
 
-// Get all Bookings for a Spot based on the Spot's id 
+// Get all Bookings for a Spot based on the Spot's id
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const userId = req.user.id
     const { spotId } = req.params

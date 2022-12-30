@@ -49,10 +49,9 @@ router.get('/current', requireAuth, async(req, res, next) => {
     })
 })
 
-// Edit a Booking (fix 403, Past bookings cant be modified and booking conflict, I think it works?)
+// Edit a Booking
 router.put('/:bookingId', requireAuth, async(req, res, next) => {
     const id = req.user.id
-    // const { spotId } = req.params
     const { startDate, endDate } = req.body
     const newStartDate = new Date(startDate).toISOString().slice(0, 10)
     const newEndDate = new Date(endDate).toISOString().slice(0, 10)
@@ -78,14 +77,6 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         err.statusCode = 400
         return next(err)
     }
-    // if (newEndDate <= checkBooking.endDate) {
-    //     const err = {}
-    //     err.title = "Past bookings cannot be modified"
-    //     err.status = 403
-    //     err.errors = ["Past bookings cannot be modified"]
-    //     err.statusCode = 403
-    //     return next(err)
-    // }
 
     if (bookings.userId !== id) {
         const err = {}
