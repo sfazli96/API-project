@@ -103,7 +103,7 @@ const validateSpotError = [
 // Get all spots
 router.get('/', validateQueryError, async (req, res, next) => {
     let {page, size, maxLat, minLat, maxLng, maxPrice, minPrice} = req.query
-    const { lat, price, lng } = req.body
+    // const { lat, price, lng } = req.body
     if (!page) page = 1;
     if (!size) size = 20;
 
@@ -141,6 +141,31 @@ router.get('/', validateQueryError, async (req, res, next) => {
     //     }
     // }
 
+    if (maxPrice) {
+        optionalParameter.where.price = {
+            [Op.lte]: maxPrice
+        }
+    }
+
+    if (minPrice) {
+        optionalParameter.where.price = {
+            [Op.gte]: minPrice
+        }
+    }
+
+    if (maxLat) {
+        optionalParameter.where.lat = {
+            [Op.lte]: maxLat
+        }
+    }
+
+    if (minLat) {
+        optionalParameter.where.lat = {
+            [Op.gte]: minLat
+        }
+    }
+
+
 
 
 
@@ -154,10 +179,10 @@ router.get('/', validateQueryError, async (req, res, next) => {
             }
         ],
         // group: ["Spot.id", "Reviews.id", "SpotImages.id"],
-        ...pagination,
+        // ...pagination,
         where: optionalParameter.where,
-        // limit: pagination.limit,
-        // offset: pagination.offset
+        limit: pagination.limit,
+        offset: pagination.offset
     })
 
     let ele = []
@@ -567,7 +592,7 @@ router.post('/:spotId/reviews', requireAuth, reviewValidateError, async(req, res
     res.json(reviewComment)
 })
 
-// Get all Bookings for a Spot based on the Spot's id (issue: resolved)
+// Get all Bookings for a Spot based on the Spot's id 
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const userId = req.user.id
     const { spotId } = req.params
@@ -625,14 +650,13 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
 
 
-// Create a Booking from a Spot based on Spot's id (update: 403 error I think it works now!)
+// Create a Booking from a Spot based on Spot's id
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const userId = req.user.id
     const { spotId } = req.params
     const { startDate, endDate } = req.body
     const newStartDate = new Date(startDate).toISOString().slice(0, 10)
     const newEndDate = new Date(endDate).toISOString().slice(0, 10)
-    // const bookings = await Booking.findByPk(spotId)
     const spots = await Spot.findByPk(spotId)
     if(!spots) {
         const err = {}
@@ -683,7 +707,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         }
     })
     let eleConflictBooking = false
-    // still fixing, I think its fixed
     for (let i = 0; i < conflictBooking.length; i++) {
         let conflictBooked = conflictBooking[i]
             if ((newStartDate <= conflictBooked.startDate && newEndDate >= conflictBooked.endDate) ||(newEndDate > conflictBooked.startDate && newEndDate <= conflictBooked.endDate) || (newStartDate >= conflictBooked.startDate && newStartDate < conflictBooked.endDate)) {

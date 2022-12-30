@@ -57,13 +57,18 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     const newStartDate = new Date(startDate).toISOString().slice(0, 10)
     const newEndDate = new Date(endDate).toISOString().slice(0, 10)
     const checkBooking = await Booking.findByPk(req.params.bookingId)
+    const bookings = await Booking.findOne({
+        where: {
+            id: req.params.bookingId
+        }
+    })
     if(!checkBooking) {
         const err = {}
         err.title = 'Booking couldn\'t be found'
         err.status = 404;
         err.errors = ['Booking couldn\'t be found']
         err.statusCode = 404
-        next(err)
+        return next(err)
     }
     if (endDate <= startDate) {
         const err = {}
@@ -81,22 +86,22 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     //     err.statusCode = 403
     //     return next(err)
     // }
-    // const spotId = checkBooking.toJSON().spotId;
-    // console.log(spotId)
 
-    let spotId = null
-    let userId = null
-    for (let i = 0; i < checkBooking.length; i++) {
-        let cbook = checkBooking[i]
-        spotId = cbook.dataValues.spotId
-        userId = cbook.dataValues.userId
+    if (bookings.userId !== id) {
+        const err = {}
+        err.title = "You are not allowed to edit this booking"
+        err.status = 403
+        err.errors = ["You are not allowed to edit this booking"]
+        err.statusCode = 403
+        return next(err)
     }
-    if (userId !== id) {
 
-    }
     const conflictBooking = await Booking.findAll({
         where: {
-            spotId: spotId,
+            spotId: bookings.spotId,
+            userId: {
+                [Op.ne]: id
+            },
             [Op.or]: [
                 {
                   startDate: {
@@ -126,7 +131,6 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         }
     })
     let eleConflictBooking = false
-    // still fixing, I think its fixed
     for (let i = 0; i < conflictBooking.length; i++) {
         let conflictBooked = conflictBooking[i]
             if ((newStartDate <= conflictBooked.startDate && newEndDate >= conflictBooked.endDate) ||(newEndDate > conflictBooked.startDate && newEndDate <= conflictBooked.endDate) || (newStartDate >= conflictBooked.startDate && newStartDate < conflictBooked.endDate)) {
@@ -145,18 +149,22 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         return next(err)
     }
 
-    const bookings = await Booking.findOne({
-        where: {
-            userId: id
-        }
-    })
+    if (bookings.dataValues.endDate <= endDate) {
+        const err = {}
+        err.title = "Past bookings can't be modified"
+        err.status = 403;
+        err.errors = ["Past bookings can't be modified"]
+        err.statusCode = 403
+        return next(err)
+    }
+
     bookings.startDate = startDate
     bookings.endDate = endDate
     await bookings.save()
     res.json(bookings)
 })
 
-// Delete a bookings (resolved: 403 error)
+// Delete a bookings
 router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     const id = req.params.bookingId
     const bookings = await Booking.findByPk(id)
