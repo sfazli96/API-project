@@ -52,8 +52,10 @@ router.get('/current', requireAuth, async(req, res, next) => {
 // Edit a Booking (fix 403, Past bookings cant be modified and booking conflict, I think it works?)
 router.put('/:bookingId', requireAuth, async(req, res, next) => {
     const id = req.user.id
-    const { spotId } = req.params
+    // const { spotId } = req.params
     const { startDate, endDate } = req.body
+    const newStartDate = new Date(startDate).toISOString().slice(0, 10)
+    const newEndDate = new Date(endDate).toISOString().slice(0, 10)
     const checkBooking = await Booking.findByPk(req.params.bookingId)
     if(!checkBooking) {
         const err = {}
@@ -71,7 +73,7 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         err.statusCode = 400
         return next(err)
     }
-    // if (endDate <= checkBooking.endDate) {
+    // if (newEndDate <= checkBooking.endDate) {
     //     const err = {}
     //     err.title = "Past bookings cannot be modified"
     //     err.status = 403
@@ -79,19 +81,55 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     //     err.statusCode = 403
     //     return next(err)
     // }
+    // const spotId = checkBooking.toJSON().spotId;
+    // console.log(spotId)
 
+    let spotId = null
+    let userId = null
+    for (let i = 0; i < checkBooking.length; i++) {
+        let cbook = checkBooking[i]
+        spotId = cbook.dataValues.spotId
+        userId = cbook.dataValues.userId
+    }
+    if (userId !== id) {
+
+    }
     const conflictBooking = await Booking.findAll({
         where: {
-            startDate,
-            endDate
+            spotId: spotId,
+            [Op.or]: [
+                {
+                  startDate: {
+                    [Op.lt]: newEndDate,
+                  },
+                  endDate: {
+                    [Op.gt]: newStartDate,
+                  },
+                },
+                {
+                  startDate: {
+                    [Op.gt]: newStartDate,
+                  },
+                  endDate: {
+                    [Op.lt]: newEndDate,
+                  },
+                },
+                {
+                  startDate: {
+                    [Op.lt]: newStartDate,
+                  },
+                  endDate: {
+                    [Op.gt]: newEndDate,
+                  },
+              },
+              ],
         }
     })
     let eleConflictBooking = false
+    // still fixing, I think its fixed
     for (let i = 0; i < conflictBooking.length; i++) {
         let conflictBooked = conflictBooking[i]
-            if (conflictBooked.dataValues.startDate < conflictBooked.dataValues.endDate) {
-                console.log(conflictBooked.dataValues.startDate)
-                console.log(conflictBooked.dataValues.endDate)
+            if ((newStartDate <= conflictBooked.startDate && newEndDate >= conflictBooked.endDate) ||(newEndDate > conflictBooked.startDate && newEndDate <= conflictBooked.endDate) || (newStartDate >= conflictBooked.startDate && newStartDate < conflictBooked.endDate)) {
                 eleConflictBooking = true
             }
         }
@@ -118,27 +156,32 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     res.json(bookings)
 })
 
-// Delete a bookings (fixing 403 error)
+// Delete a bookings (resolved: 403 error)
 router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     const id = req.params.bookingId
     const bookings = await Booking.findByPk(id)
-
-    const today = new Date(new Date().toDateString()).getTime();
-    console.log(today)
+    const startDate = new Date().toISOString().slice(0, 10)
     if(!bookings) {
         const err = {}
         err.title = 'Booking couldn\'t be found'
         err.status = 404;
         err.errors = ['Booking couldn\'t be found']
         err.statusCode = 404
-        next(err)
-    } else {
-        await bookings.destroy()
-        res.json({
-            statusCode: 200,
-            message: "successfully deleted"
-        })
+        return next(err)
     }
+    if (bookings.dataValues.startDate <= startDate) {
+        const err = {}
+        err.title = "Bookings that have been started can't be deleted"
+        err.status = 403;
+        err.errors = ["Bookings that have been started can't be deleted"]
+        err.statusCode = 403
+        return next(err)
+    }
+    await bookings.destroy()
+    res.json({
+        statusCode: 200,
+        message: "successfully deleted"
+    })
 })
 
 
