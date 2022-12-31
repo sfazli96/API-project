@@ -52,13 +52,14 @@ router.get('/current', requireAuth, async(req, res, next) => {
 // Edit a Booking
 router.put('/:bookingId', requireAuth, async(req, res, next) => {
     const id = req.user.id
+    const { bookingId } = req.params
     const { startDate, endDate } = req.body
     const newStartDate = new Date(startDate).toISOString().slice(0, 10)
     const newEndDate = new Date(endDate).toISOString().slice(0, 10)
     const checkBooking = await Booking.findByPk(req.params.bookingId)
     const bookings = await Booking.findOne({
         where: {
-            id: req.params.bookingId
+            id: bookingId
         }
     })
     if(!checkBooking) {
@@ -86,6 +87,7 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         err.statusCode = 403
         return next(err)
     }
+
 
     const conflictBooking = await Booking.findAll({
         where: {
@@ -140,7 +142,16 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         return next(err)
     }
 
-    if (bookings.dataValues.endDate <= endDate) {
+    // if (bookings.dataValues.endDate <= endDate) {
+    //     const err = {}
+    //     err.title = "Past bookings can't be modified"
+    //     err.status = 403;
+    //     err.errors = ["Past bookings can't be modified"]
+    //     err.statusCode = 403
+    //     return next(err)
+    // }
+
+    if (Date.parse(startDate) <= Date.now()) {
         const err = {}
         err.title = "Past bookings can't be modified"
         err.status = 403;
