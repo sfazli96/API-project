@@ -176,6 +176,14 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
         err.statusCode = 403
         return next(err)
     }
+    if (req.user.id !== bookings.userId) {
+        const err = {}
+        err.title = "Authorization Error"
+        err.status = 403;
+        err.errors = ["Authorization Error"]
+        err.statusCode = 403
+        return next(err)
+    }
     await bookings.destroy()
     res.json({
         statusCode: 200,

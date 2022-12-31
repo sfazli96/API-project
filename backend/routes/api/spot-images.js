@@ -12,14 +12,27 @@ router.delete('/:imageId', requireAuth, async(req, res, next) => {
     const images = await SpotImage.findByPk(imageId)
     if(!images) {
         const err = new Error('Image does not exist')
-        err.title = 'Image couldn\'t be found'
+        err.title = 'Spot Image couldn\'t be found'
         err.status = 404
         err.error = [{
-            message: "Image couldn't be found",
+            message: "Spot Image couldn't be found",
             statusCode: 404
         }]
         return next(err)
-       }
+    }
+    const spot = await Spot.findAll()
+    let ownerId;
+    spot.forEach(element => {
+        ownerId = element.ownerId
+    });
+    if (req.user.id !== ownerId) {
+        const err = {}
+        err.title = "Authorization Error"
+        err.status = 403;
+        err.errors = ["Authorization Error"]
+        err.statusCode = 403
+        return next(err)
+    }
    await images.destroy()
    res.json(({
         message: "Successfully deleted",

@@ -95,6 +95,15 @@ router.post('/:reviewId/images', requireAuth, async(req, res, next) => {
         err.statusCode = 403
         return next(err)
     }
+
+    if (req.user.id !== reviews.userId) {
+        const err = {}
+        err.title = 'Authorization required'
+        err.status = 403
+        err.errors = ["Authorization required"]
+        err.statusCode = 403
+        return next(err)
+    }
     res.json({
         id: revImage.id,
         url: revImage.url
@@ -123,6 +132,14 @@ router.put('/:reviewId', requireAuth, reviewValidateError, async(req, res, next)
             }]
         return next(err)
     }
+    if (req.user.id !== reviews.userId) {
+        const err = {}
+        err.title = 'Authorization required'
+        err.status = 403
+        err.errors = ["Authorization required"]
+        err.statusCode = 403
+        return next(err)
+    }
     reviews.review = review
     reviews.stars = stars
     await reviews.save()
@@ -139,7 +156,15 @@ router.delete('/:reviewId', requireAuth, async(req, res, next) => {
         err.status = 404;
         err.errors = ["Review couldn't be found"]
         err.statusCode = 404
-        next(err)
+        return next(err)
+    }
+    if (req.user.id !== reviews.userId) {
+        const err = {}
+        err.title = 'Authorization required'
+        err.status = 403
+        err.errors = ["Authorization required"]
+        err.statusCode = 403
+        return next(err)
     }
     await reviews.destroy()
     res.json({

@@ -387,16 +387,16 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         err.statusCode = 404
         return next(err)
     }
-    // if (req.user.id !== spots.ownerId) {
-    //     const err = {}
-    //     err.title = 'Require proper authorization'
-    //     err.status = 403;
-    //     err.errors = {
-    //         message: "Forbidden"
-    //     }
-    //     err.statusCode = 403
-    //     return next(err)
-    // }
+    if (req.user.id !== spots.ownerId) {
+        const err = {}
+        err.title = 'Require proper authorization'
+        err.status = 403;
+        err.errors = {
+            message: "Forbidden"
+        }
+        err.statusCode = 403
+        return next(err)
+    }
     const img = await SpotImage.create({
         spotId: spotId,
         url,
@@ -644,6 +644,14 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         err.status = 400
         err.errors = ["endDate can't be on or before startDate"]
         err.statusCode = 400
+        return next(err)
+    }
+    if (req.user.id !== spots.ownerId) {
+        const err = {}
+        err.title = "Spot must NOT belong to the current user"
+        err.status = 403
+        err.errors = ["Authorization required"]
+        err.statusCode = 403
         return next(err)
     }
 
