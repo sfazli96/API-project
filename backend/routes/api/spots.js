@@ -646,7 +646,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         err.statusCode = 400
         return next(err)
     }
-    if (req.user.id !== spots.ownerId) {
+    if (req.user.id === spots.ownerId) {
         const err = {}
         err.title = "Spot must NOT belong to the current user"
         err.status = 403
