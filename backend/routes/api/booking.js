@@ -56,13 +56,13 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     const { startDate, endDate } = req.body
     const newStartDate = new Date(startDate).toISOString().slice(0, 10)
     const newEndDate = new Date(endDate).toISOString().slice(0, 10)
-    const checkBooking = await Booking.findByPk(req.params.bookingId)
+    // const checkBooking = await Booking.findByPk(req.params.bookingId)
     const bookings = await Booking.findOne({
         where: {
             id: bookingId
         }
     })
-    if(!checkBooking) {
+    if(!bookings) {
         const err = {}
         err.title = 'Booking couldn\'t be found'
         err.status = 404;
@@ -126,7 +126,7 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     let eleConflictBooking = false
     for (let i = 0; i < conflictBooking.length; i++) {
         let conflictBooked = conflictBooking[i]
-            if ((newStartDate <= conflictBooked.startDate && newEndDate >= conflictBooked.endDate) ||(newEndDate > conflictBooked.startDate && newEndDate <= conflictBooked.endDate) || (newStartDate >= conflictBooked.startDate && newStartDate < conflictBooked.endDate)) {
+            if ((newStartDate >= conflictBooked.startDate && newStartDate < conflictBooked.endDate) || (newEndDate > conflictBooked.startDate && newEndDate <= conflictBooked.endDate) || (newStartDate <= conflictBooked.startDate && newEndDate >= conflictBooked.endDate))  {
                 eleConflictBooking = true
             }
         }
@@ -141,16 +141,6 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         }
         return next(err)
     }
-
-    // if (bookings.dataValues.endDate <= endDate) {
-    //     const err = {}
-    //     err.title = "Past bookings can't be modified"
-    //     err.status = 403;
-    //     err.errors = ["Past bookings can't be modified"]
-    //     err.statusCode = 403
-    //     return next(err)
-    // }
-
     if (Date.parse(startDate) <= Date.now()) {
         const err = {}
         err.title = "Past bookings can't be modified"

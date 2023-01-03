@@ -465,11 +465,9 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     if (req.user.id !== spots.ownerId) {
         const err = {}
         err.title = 'Require proper authorization'
-        err.status = 403;
-        err.errors = {
-            message: "Forbidden"
-        }
-        err.statusCode = 403
+        err.status = 404;
+        err.errors = ['Require proper authorization']
+        err.statusCode = 404
         return next(err)
     }
     await spots.destroy()
