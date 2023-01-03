@@ -500,7 +500,8 @@ router.get('/:spotId/reviews', async (req,res, next)=> {
         ]
     })
     // reviews.forEach(element => {
-
+    //     console.log(element)
+    //     console.log(element.spotId)
     // });
     const spot = await Spot.findByPk(spotId)
     if(!spot) {

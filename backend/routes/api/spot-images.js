@@ -20,12 +20,12 @@ router.delete('/:imageId', requireAuth, async(req, res, next) => {
         }]
         return next(err)
     }
-    const spot = await Spot.findAll()
-    let ownerId;
+    const spot = await Spot.findOne(req.params.id)
+    let userId;
     spot.forEach(element => {
-        ownerId = element.ownerId
+        userId = element.userId
     });
-    if (req.user.id !== ownerId) {
+    if (req.user.id !== spot.userId) {
         const err = {}
         err.title = "Authorization Error"
         err.status = 403;

@@ -10,7 +10,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 router.delete('/:imageId', requireAuth, async(req, res, next) => {
     const reviewImageId = req.params.imageId
     const reviewImages = await ReviewImage.findByPk(reviewImageId)
-    const spot = await Spot.findAll()
+    const reviews = await Review.findAll()
     if(!reviewImages) {
         const err = new Error('Review Image does not exist')
         err.title = 'Review Image couldn\'t be found'
@@ -21,11 +21,11 @@ router.delete('/:imageId', requireAuth, async(req, res, next) => {
         }]
         return next(err)
     }
-    let ownerId;
-    spot.forEach(element => {
-        ownerId = element.ownerId
+    let userId;
+    reviews.forEach(element => {
+        userId = element.userId
     });
-    if (req.user.id !== ownerId) {
+    if (req.user.id !== userId) {
         const err = {}
         err.title = "Authorization Error"
         err.status = 403;
