@@ -499,6 +499,9 @@ router.get('/:spotId/reviews', async (req,res, next)=> {
                 }
         ]
     })
+    // reviews.forEach(element => {
+
+    // });
     const spot = await Spot.findByPk(spotId)
     if(!spot) {
         const err = {}
@@ -508,6 +511,7 @@ router.get('/:spotId/reviews', async (req,res, next)=> {
         err.statusCode = 404
         return next(err)
     }
+
     res.json({
         Review: reviews
     })
@@ -601,18 +605,15 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
                 },
             ],
         })
-        // return res.json({
-        //     Bookings: bookings
-        // })
     }
     // If i am NOT the owner of the spot
     if (userId !== spot.ownerId) {
         bookings = await Booking.findAll({
+            where: {
+                spotId: spotId
+            },
             attributes: ["spotId", "startDate", "endDate"]
         })
-        // res.json({
-        //     Bookings: bookings2
-        // })
     }
     return res.json({
         Booking: bookings
