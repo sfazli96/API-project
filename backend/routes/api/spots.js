@@ -454,6 +454,7 @@ router.put('/:spotId', requireAuth, validateSpotError, async (req, res, next) =>
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
     const id = req.params.spotId
     const spots = await Spot.findByPk(id)
+    console.log(spots)
     if(!spots) {
         const err = {}
         err.title = 'Spot couldn\'t be found'
