@@ -8,38 +8,32 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 // Delete a Spot Image
 router.delete('/:imageId', requireAuth, async(req, res, next) => {
-    // const userId = req.user.id
-    const imageId = req.params.imageId
-    const image = await SpotImage.findByPk(imageId)
-    if(!image) {
-        const err = new Error('Image does not exist')
-        err.title = 'Spot Image couldn\'t be found'
-        err.status = 404
-        err.error = [{
-            message: "Spot Image couldn't be found",
-            statusCode: 404
-        }]
-        return next(err)
+    const imageId = req.params.imageId;
+    const image = await SpotImage.findByPk(imageId);
+
+    // Couldn't find a Spot Image with the specified id
+    if (!image) {
+      res.status(404);
+      return res.json({
+        "message": "Spot Image couldn't be found",
+        "statusCode": 404
+      })
     }
-    const spot = await Spot.findAll()
-    let userId;
-    spot.forEach(element => {
-        userId = element.userId
-    });
-    // const spot = await Spot.findByPk(image.spotId)
-    if (req.user.id !== userId) {
-        const err = {}
-        err.title = "Authorization Error"
-        err.status = 403;
-        err.errors = ["Authorization Error"]
-        err.statusCode = 403
-        return next(err)
+    const spot = await Spot.findByPk(image.spotId);
+    if (req.user.id !== spot.ownerId) {
+      res.status(403)
+      return res.json({
+        "message": "Forbidden",
+        "statusCode": 403
+      })
     }
-   await image.destroy()
-   res.json(({
-        message: "Successfully deleted",
-        statusCode: 200
-   }))
-})
+
+    // delete spot image
+    await image.destroy();
+    return res.json({
+      "message": "Successfully deleted",
+      "statusCode": 200
+    })
+  })
 
 module.exports = router;
