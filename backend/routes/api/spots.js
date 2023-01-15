@@ -454,7 +454,6 @@ router.put('/:spotId', requireAuth, validateSpotError, async (req, res, next) =>
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
     const id = req.params.spotId
     const spots = await Spot.findByPk(id)
-    console.log(spots)
     if(!spots) {
         const err = {}
         err.title = 'Spot couldn\'t be found'
@@ -498,10 +497,7 @@ router.get('/:spotId/reviews', async (req,res, next)=> {
                 }
         ]
     })
-    // reviews.forEach(element => {
-    //     console.log(element)
-    //     console.log(element.spotId)
-    // });
+
     const spot = await Spot.findByPk(spotId)
     if(!spot) {
         const err = {}
