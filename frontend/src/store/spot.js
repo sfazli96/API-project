@@ -46,7 +46,6 @@ export const getSpots = () => async (dispatch) => {
 export const getOneSpot = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`)
     const spotData = await response.json()
-    console.log(spotData, 'data')
     dispatch(loadOneSpots(spotData))
     return response
 }
@@ -70,18 +69,27 @@ export const addSpot = (spots) => async (dispatch) => {
     dispatch(createSpots(data.spots)) // dispatches the 'createSpots' action with returned data
     return response;
 }
+export const editSpots = (spotId, spots) => async (dispatch) => {
+    const {address, city, state, country, name, description, price} = spots
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: "PUT",
+        body: JSON.stringify({
+            address,
+            city,
+            state,
+            country,
+            name,
+            description,
+            price
+        })
+    })
+    const data = await response.json()
+    dispatch(updateSpots(data.spots))
+    return response
+}
 
 // initial state for reducer with empty 'entries' array
-const initialState = { spots: []}
-
-// normalization
-// function defaultState(arr){
-//     const s = {};
-//     arr.forEach(element => {
-//       s[element.id] = element
-//     });
-//     return s
-// }
+const initialState = { spots: {}}
 
 // This handles the actions and updates the state
 export const spotsReducer = (state = initialState, action) => {
@@ -89,24 +97,17 @@ export const spotsReducer = (state = initialState, action) => {
     switch(action.type) {
         case LOAD_SPOTS:
             newState = {...state}
-            console.log(action.payload, 'action')
-            // action.payload.Spots.forEach(spot => {
-            //     newState[spot.id] = spot
-            // });
-            const getAllSpot = {...state.spots}
-            getAllSpot[action.payload.id] = action.payload
-            newState.spots = getAllSpot
+            action.payload.Spots.forEach(spot => {
+                newState[spot.id] = spot
+            });
             return newState
         case LOAD_ONE_SPOT:
-            newState = {...state}
-            const getOneSpot = {...state.spots}
-            getOneSpot[action.payload.id] = action.payload
-            newState.spots = getOneSpot
+            newState = {...state, [action.payload.id]: action.payload }
             return newState
         case ADD_SPOTS:
             newState = {...state} // copy of state
             const newEntries = {...state.spots} // copy the state with the entries
-            newEntries[action.payload.id] = action.payload
+            newEntries[action.payload.spots.id] = action.payload.spots
             newState.spots = newEntries
             return newState
         case EDIT_SPOTS:

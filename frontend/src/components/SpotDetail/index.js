@@ -11,7 +11,7 @@ const SpotDetail = () => {
     const spotDetail = useSelector(state => state.spot[id])
     useEffect(() => {
         dispatch(getOneSpot(id))
-    }, [dispatch, id, spotDetail])
+    }, [dispatch, id])
     if (!spotDetail) {
         return <p>Loading...</p>
     }
@@ -28,10 +28,3 @@ const SpotDetail = () => {
 }
 
 export default SpotDetail
-
-
-// const spots = useSelector(state => state.spot.spots[id])
-// const spotDetail = spots.find(spot => spot.id === id)
-// if (!spotDetail) {
-//     return <p> Spot Not Found </p>
-// }
