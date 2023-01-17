@@ -20,10 +20,15 @@ const SpotList = () => {
         <div>
             <h1>Spot List</h1>
             <ol>
-                {spots.map(({ id, name }) => {
+                {spots.map(({ id, name, previewImage, city, state, price, avgRating }) => {
                     return (
                     <li key={id}>
-                        <NavLink to={`/spots/${id}`}>{name}</NavLink>
+                        <NavLink to={`/spots/${id}`}>
+                            <img src={previewImage} alt={name} />
+                        </NavLink>
+                            <p>{city}, {state}</p>
+                            <p>${price}</p>
+                            <p>{avgRating}</p>
                     </li>
                     )
                 })}
