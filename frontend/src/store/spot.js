@@ -9,27 +9,27 @@ const DELETE_SPOTS = 'spots/deleteSpots' // deleting a spot
 // create POJO action creator to get all spots
 export const loadSpots = (spots) => ({
     type: LOAD_SPOTS,
-    spots
+    payload: spots
 })
 
 // create POJO action creator to create the spots
 export const createSpots = (spots) => ({
     type: ADD_SPOTS,
-    spots
+    payload: spots
 })
 
 // create POJO action creator to edit a spot
-// export const modifySpots = (spots) => ({
-//     type: EDIT_SPOTS,
-//     spots
-// })
+export const updateSpots = (spots) => ({
+    type: EDIT_SPOTS,
+    spots
+})
 
 // create POJO action creator to delete a spot
-// export const removeSpots = () => ({
-//     type: DELETE_SPOTS
-// })
+export const removeSpots = () => ({
+    type: DELETE_SPOTS
+})
 
-// thunk action creator (to get all spots), getting an infinite loop here
+// thunk action creator (to get all spots, spot details), was getting an infinite loop here
 export const getSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots')
     const data = await response.json()
@@ -37,9 +37,17 @@ export const getSpots = () => async (dispatch) => {
     return response
 }
 
+// thunk action creator (to get spot by id with the details)
+export const getOneSpot = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`)
+    const spotData = await response.json()
+    dispatch(loadSpots(spotData))
+    return response
+}
+
 // thunk action creator (to create the spot)
 export const addSpot = (spots) => async (dispatch) => {
-    const {address, city, state, country, lat, lng, name, description, price} = spots
+    const {address, city, state, country, name, description, price} = spots
     const response = await csrfFetch('/api/spots', {
         method: 'POST',
         body: JSON.stringify({
@@ -47,8 +55,6 @@ export const addSpot = (spots) => async (dispatch) => {
             city,
             state,
             country,
-            lat,
-            lng,
             name,
             description,
             price
@@ -64,31 +70,40 @@ export const addSpot = (spots) => async (dispatch) => {
 // exports a normalize function
 // takes in an array of spots
 // returns an object with spot id as key and spot obj as value, to access data
-const normalize = (spots) => {
-    const normalizeObj = {}
-    spots.forEach(spot => {
-        normalizeObj[spot.id] = spot;
-    });
-    return normalizeObj
-}
+// const normalize = (spots) => {
+//     const normalizeObj = {}
+//     for (let i = 0; i < spots.length; i++) {
+//         let spot = spots[i]
+//         normalizeObj[spot.id] = spots
+//     }
+//     return normalizeObj
+// }
 
 // initial state for reducer with empty 'entries' array
-const initialState = { entries: []}
+const initialState = { spots: []}
 
 // This handles the actions and updates the state
 export const spotsReducer = (state = initialState, action) => {
     let newState;
     switch(action.type) {
         case LOAD_SPOTS:
-            const allSpots = {}
-            action.spots.forEach(spot => {
-                allSpots[spot.id] = spot
+            newState = {...state}
+            action.payload.Spots.forEach(spot => {
+                newState[spot.id] = spot
             });
-            return {...allSpots, ...state, entries: normalize(action.spots)}
+            return newState
         case ADD_SPOTS:
-            const addState = {...state}
-            addState[action.spots.id] = action.spots
-            return addState
+            newState = {...state} // copy of state
+            const newEntries = {...state.spots} // copy the state with the entries
+            newEntries[action.spots.id] = action.spots
+            newState.spots = newEntries
+            return newState
+        case DELETE_SPOTS:
+            newState = {...state} // copy of state
+            const newDeleteEntries = {...state.spots} // copy the state with the entries
+            delete newDeleteEntries[action.spots.id] // delete state.entries of the spot.id
+            newState.spots = newEntries
+            return newState
         default:
             return state
     }
