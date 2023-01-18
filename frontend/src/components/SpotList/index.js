@@ -19,7 +19,6 @@ const SpotList = () => {
     }, [dispatch]) // this makes sure the effect runs only on 1st render
     return (
         <div>
-            <h1>Spot List</h1>
             <ol>
                 {spots.map(({ id, name, previewImage, city, state, price, avgRating }) => {
                     return (

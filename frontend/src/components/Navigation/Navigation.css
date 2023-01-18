@@ -1,3 +1,10 @@
 .hidden {
     display: none;
 }
+
+.NavBar {
+    display: flex;
+    /* list-style: none; */
+    justify-content: flex-end;
+    /* border: 4px solid red; */
+}

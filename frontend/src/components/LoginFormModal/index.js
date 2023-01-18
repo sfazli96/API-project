@@ -27,6 +27,8 @@ function LoginFormModal() {
   return (
     <>
       <h1 className="login">Log In</h1>
+      <button className="DemoUserButton"
+        onClick={() => dispatch(sessionActions.login({credential: "Demo-lition", password: "password"})).then(closeModal) }>Demo User</button>
       <form className="form" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (

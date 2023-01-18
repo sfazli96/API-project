@@ -5,7 +5,7 @@ import { useState } from "react";
 import * as spotActions from "../../store/spot"
 
 
-export const CreateSpotModal = () => {
+export const EditSpotModal = () => {
     const dispatch = useDispatch()
     const [address, setAddress ] = useState('')
     const [city, setCity ] = useState('')
@@ -23,7 +23,7 @@ export const CreateSpotModal = () => {
         setErrors([])
         const data = new FormData()
         data.append('previewImage', previewImage)
-        return dispatch(spotActions.addSpot({address, city, state, country, name, description, price, previewImage, lat:10, lng:10}))
+        return dispatch(spotActions.editSpots({address, city, state, country, name, description, price, lat:10, lng:10}))
         .then(closeModal)
         .catch(async (res) => {
             const data = await res.json()
@@ -32,7 +32,7 @@ export const CreateSpotModal = () => {
     }
     return (
         <form className="createSpotForm" onSubmit={handleSubmit}>
-            <h1 className="h1">Add a Spot</h1>
+            <h1 className="h1">Edit a Spot</h1>
             <ul className="ul">
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
@@ -99,17 +99,9 @@ export const CreateSpotModal = () => {
           required
         />
       </label>
-      <label className="form-label3">
-        Add an Image
-        <input className="file"
-          type="text"
-          onChange={(e) => setImage(e.target.value)}
-          required
-        />
-      </label>
-      <button className="Button" type="Create">Create</button>
+      <button className="Button" type="Create">Edit</button>
     </form>
     )
 }
 
-export default CreateSpotModal
+export default EditSpotModal

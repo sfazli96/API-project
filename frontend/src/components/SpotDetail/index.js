@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getOneSpot } from "../../store/spot";
+import { EditSpotModal } from "../EditSpotModal";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 
 // the json information for the get all spots
 const SpotDetail = () => {
@@ -23,6 +25,8 @@ const SpotDetail = () => {
             <p>Price: ${spotDetail.price}</p>
             <img src={spotDetail.previewImage} alt={spotDetail.name} />
             <p>Average Rating: {spotDetail.avgRating}</p>
+            <OpenModalMenuItem buttonText ="Edit a spot" modalComponent={<EditSpotModal />}
+            />
         </div>
     )
 }

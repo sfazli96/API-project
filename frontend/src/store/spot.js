@@ -6,9 +6,15 @@ const ADD_SPOTS = 'spots/addSpots' // create spots
 const EDIT_SPOTS = 'spots/editSpots' // editing/update a spot
 const DELETE_SPOTS = 'spots/deleteSpots' // deleting a spot
 const LOAD_ONE_SPOT = 'spots/oneSpot' // load one spot
+const ADD_PREVIEW_IMAGE = 'spots/loadImage'
 // create POJO action creator to get all spots
 export const loadSpots = (spots) => ({
     type: LOAD_SPOTS,
+    payload: spots
+})
+
+export const addPreviewImage = (spots) => ({
+    type: ADD_PREVIEW_IMAGE,
     payload: spots
 })
 
@@ -30,11 +36,12 @@ export const updateSpots = (spots) => ({
 })
 
 // create POJO action creator to delete a spot
-export const removeSpots = () => ({
-    type: DELETE_SPOTS
+export const removeSpots = (spots) => ({
+    type: DELETE_SPOTS,
+    payload: spots
 })
 
-// thunk action creator (to get all spots, spot details), was getting an infinite loop here
+// thunk action creator (to get all spots, spot details)
 export const getSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots')
     if (response.ok) {
@@ -55,35 +62,52 @@ export const getOneSpot = (spotId) => async (dispatch) => {
 }
 
 // thunk action creator (to create the spot)
-export const addSpot = (spots) => async (dispatch) => {
+export const addSpot = (spots, spotImages) => async (dispatch) => {
     // const {address, city, state, country, name, description, price} = spots
-    const response = await csrfFetch('/api/spots', {
-        method: 'POST',
+        const response = await csrfFetch('/api/spots', {
+            method: 'POST',
+            body: JSON.stringify(spots)
+        })
+        if (response.ok) {
+            const response = await csrfFetch(`/api/spots/${spots.id}/images`, {
+                method: 'POST',
+                body: JSON.stringify({url: spotImages.url, preview: true})
+            })
+            const data = await response.json();
+            dispatch(createSpots(data)) // dispatches the 'createSpots' action with returned data
+            return data;
+    }
+    if (response.ok) {
+        const data = await response.json()
+        dispatch(addPreviewImage(data))
+        return data
+    }
+}
+
+
+export const editSpots = (spotId, spots) => async (dispatch) => {
+    // const {address, city, state, country, name, description, price} = spots
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: "PUT",
         body: JSON.stringify(spots)
     })
     if (response.ok) {
-        const data = await response.json();
-        dispatch(createSpots(data)) // dispatches the 'createSpots' action with returned data
-        return data;
+        const data = await response.json()
+        dispatch(updateSpots(data.spots))
+        return data
     }
 }
-export const editSpots = (spotId, spots) => async (dispatch) => {
-    const {address, city, state, country, name, description, price} = spots
-    const response = await csrfFetch(`/api/spots/${spotId}`, {
-        method: "PUT",
-        body: JSON.stringify({
-            address,
-            city,
-            state,
-            country,
-            name,
-            description,
-            price
-        })
+
+// Thunk action creator (to delete the spot)
+export const deleteSpots = (spot) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spot.id}`, {
+        method: "DELETE"
     })
-    const data = await response.json()
-    dispatch(updateSpots(data.spots))
-    return response
+    if (response.ok) {
+        const data = await response.json()
+        dispatch(removeSpots(data))
+        return data
+    }
 }
 
 // initial state for reducer with empty 'entries' array
@@ -100,7 +124,7 @@ export const spotsReducer = (state = initialState, action) => {
             });
             return newState
         case LOAD_ONE_SPOT:
-            newState = {...state, [action.payload.id]: action.payload }
+            newState = {...state, [action.payload.id]: action.payload}
             return newState
         case ADD_SPOTS:
             newState = {...state} // copy of state
@@ -125,6 +149,10 @@ export const spotsReducer = (state = initialState, action) => {
             delete newDeleteEntries[action.payload.id] // delete state.entries of the spot.id
             newState.spots = newEntries
             return newState
+        case ADD_PREVIEW_IMAGE:
+            return {
+                ...state, singleSpot: {...state.singleSpot, ...action.payload}
+            }
         default:
             return state
     }
