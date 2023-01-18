@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+const SET_DEMO_USER = 'session/demoUser'
 
 // create POJO action creator to get user
 export const setUser = (user) => ({
@@ -9,9 +10,14 @@ export const setUser = (user) => ({
     payload: user,
 })
 
-// create POJO action creator to delete user
+// create POJO action creator to logout user
 export const removeUser = () => ({
     type: REMOVE_USER,
+})
+
+export const setDemoUser = (isDemoUser) => ({
+    type: SET_DEMO_USER,
+    payload: isDemoUser
 })
 
 // thunk action creator (for restore the session user)
@@ -66,7 +72,7 @@ export const logout = () => async (dispatch) => {
 }
 
 
-const initialState = { user: null}
+const initialState = { user: null, demoUser: false}
 
 const sessionReducer = (state = initialState, action) => {
     let newState;
@@ -79,6 +85,8 @@ const sessionReducer = (state = initialState, action) => {
             newState = Object.assign({}, state)
             newState.user = null;
             return newState
+        case SET_DEMO_USER:
+            return {...state, demoUser: action.payload}
         default:
             return state;
         }

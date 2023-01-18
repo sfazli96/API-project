@@ -37,38 +37,38 @@ export const removeSpots = () => ({
 // thunk action creator (to get all spots, spot details), was getting an infinite loop here
 export const getSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots')
-    const data = await response.json()
-    dispatch(loadSpots(data))
-    return response
+    if (response.ok) {
+        const data = await response.json()
+        dispatch(loadSpots(data))
+        return data
+    }
 }
 
 // thunk action creator (to get spot by id with the details)
 export const getOneSpot = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`)
-    const spotData = await response.json()
-    dispatch(loadOneSpots(spotData))
-    return response
+    if (response.ok) {
+        const spotData = await response.json()
+        dispatch(loadOneSpots(spotData))
+        return spotData
+    }
 }
 
 // thunk action creator (to create the spot)
 export const addSpot = (spots) => async (dispatch) => {
-    const {address, city, state, country, name, description, price} = spots
+    // const {address, city, state, country, name, description, price} = spots
     const response = await csrfFetch('/api/spots', {
         method: 'POST',
-        body: JSON.stringify({
-            address,
-            city,
-            state,
-            country,
-            name,
-            description,
-            price
-        })
+        body: JSON.stringify(spots)
     })
-    const data = await response.json();
-    dispatch(createSpots(data.spots)) // dispatches the 'createSpots' action with returned data
-    return response;
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(createSpots(data)) // dispatches the 'createSpots' action with returned data
+        return data;
+    }
 }
+
+// Thnunk action creator (to edit the spot)
 export const editSpots = (spotId, spots) => async (dispatch) => {
     const {address, city, state, country, name, description, price} = spots
     const response = await csrfFetch(`/api/spots/${spotId}`, {
@@ -89,7 +89,7 @@ export const editSpots = (spotId, spots) => async (dispatch) => {
 }
 
 // initial state for reducer with empty 'entries' array
-const initialState = { spots: {}}
+const initialState = { spots: {}, singleSpot: {}}
 
 // This handles the actions and updates the state
 export const spotsReducer = (state = initialState, action) => {
@@ -106,8 +106,8 @@ export const spotsReducer = (state = initialState, action) => {
             return newState
         case ADD_SPOTS:
             newState = {...state} // copy of state
-            const newEntries = {...state.spots} // copy the state with the entries
-            newEntries[action.payload.spots.id] = action.payload.spots
+            const newEntries = {...state.singleSpot} // copy the state with the entries
+            newEntries[action.payload.singleSpot] = action.payload.singleSpot
             newState.spots = newEntries
             return newState
         case EDIT_SPOTS:

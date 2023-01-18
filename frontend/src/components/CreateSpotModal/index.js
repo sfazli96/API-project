@@ -1,14 +1,12 @@
 import React from "react";
 import { useModal } from "../../context/Modal";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import * as spotActions from "../../store/spot"
-import { Redirect } from "react-router-dom";
 
 
 export const CreateSpotModal = () => {
     const dispatch = useDispatch()
-    const spotUser = useSelector(state => state.spot.user)
     const [address, setAddress ] = useState('')
     const [city, setCity ] = useState('')
     const [state, setState ] = useState('')
@@ -16,24 +14,20 @@ export const CreateSpotModal = () => {
     const [name, setName ] = useState('')
     const [description, setDescription ] = useState('')
     const [price, setPrice ] = useState('')
+    const [image, setImage] = useState(null)
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal()
 
     const handleSubmit = (e) => {
         e.preventDefault()
         setErrors([])
-        return dispatch(spotActions.addSpot({address, city, state, country, name, description, price}))
+        return dispatch(spotActions.addSpot({address, city, state, country, name, description, price, lat:10, lng:10, image}))
         .then(closeModal)
         .catch(async (res) => {
             const data = await res.json()
             if(data && data.errors) setErrors(data.errors)
         })
     }
-
-    if (spotUser) return (
-        <Redirect to="/" />
-    )
-
     return (
         <form className="createSpotForm" onSubmit={handleSubmit}>
             <h1 className="h1">Add a Spot</h1>
@@ -103,8 +97,17 @@ export const CreateSpotModal = () => {
           required
         />
       </label>
+      <label className="label">
+        Add an Image
+        <input className="file"
+          type="file"
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
+          required
+        />
+      </label>
       <button className="Button" type="Create">Create</button>
-        </form>
+    </form>
     )
 }
 
