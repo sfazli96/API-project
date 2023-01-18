@@ -14,14 +14,16 @@ export const CreateSpotModal = () => {
     const [name, setName ] = useState('')
     const [description, setDescription ] = useState('')
     const [price, setPrice ] = useState('')
-    const [image, setImage] = useState(null)
+    const [previewImage, setImage] = useState(null)
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal()
 
     const handleSubmit = (e) => {
         e.preventDefault()
         setErrors([])
-        return dispatch(spotActions.addSpot({address, city, state, country, name, description, price, lat:10, lng:10, image}))
+        const data = new FormData()
+        data.append('previewImage', previewImage)
+        return dispatch(spotActions.addSpot({address, city, state, country, name, description, price, lat:10, lng:10}))
         .then(closeModal)
         .catch(async (res) => {
             const data = await res.json()
@@ -101,8 +103,7 @@ export const CreateSpotModal = () => {
         Add an Image
         <input className="file"
           type="file"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
+          onChange={(e) => setImage(e.target.files[0])}
           required
         />
       </label>

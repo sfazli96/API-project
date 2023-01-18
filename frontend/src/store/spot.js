@@ -67,8 +67,6 @@ export const addSpot = (spots) => async (dispatch) => {
         return data;
     }
 }
-
-// Thnunk action creator (to edit the spot)
 export const editSpots = (spotId, spots) => async (dispatch) => {
     const {address, city, state, country, name, description, price} = spots
     const response = await csrfFetch(`/api/spots/${spotId}`, {

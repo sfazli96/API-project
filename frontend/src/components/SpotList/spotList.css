@@ -1,0 +1,25 @@
+.spot-container {
+    width: 25%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-end;
+    /* position: relative; */
+    flex-direction: column;
+}
+
+.city-state, .price {
+    width: 25%;
+    display: block;
+    text-align: center;
+}
+
+.price {
+    margin-top: 10px;
+}
+
+.avgRating {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}

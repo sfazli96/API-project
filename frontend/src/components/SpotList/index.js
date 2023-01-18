@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { NavLink, Route, Switch } from "react-router-dom"
 import { getSpots } from "../../store/spot"
 import SpotDetail from "../SpotDetail"
+import "./spotList.css"
 
 const SpotList = () => {
     // gain access to dispatch function, used to dispatch the "getSpots" action to store
@@ -22,14 +23,16 @@ const SpotList = () => {
             <ol>
                 {spots.map(({ id, name, previewImage, city, state, price, avgRating }) => {
                     return (
-                    <li key={id}>
-                        <NavLink to={`/spots/${id}`}>
-                            <img src={previewImage} alt={name} />
-                        </NavLink>
-                            <p>{city}, {state}</p>
-                            <p>${price}</p>
-                            <p>{avgRating}</p>
-                    </li>
+                    <ol key={id} className="li2">
+                        <div className="spot-container">
+                            <NavLink to= {`/spots/${id}`}>
+                                <img src={previewImage} alt={name} className="img"/>
+                            </NavLink>
+                                <p>{city}, {state}</p>
+                                <p>${price}</p>
+                                <p>{avgRating}</p>
+                        </div>
+                    </ol>
                     )
                 })}
             </ol>

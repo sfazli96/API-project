@@ -15,9 +15,9 @@ export const removeUser = () => ({
     type: REMOVE_USER,
 })
 
-export const setDemoUser = (isDemoUser) => ({
+export const setDemoUser = (user) => ({
     type: SET_DEMO_USER,
-    payload: isDemoUser
+    payload: user
 })
 
 // thunk action creator (for restore the session user)
@@ -80,13 +80,15 @@ const sessionReducer = (state = initialState, action) => {
         case SET_USER:
             newState = Object.assign({}, state)
             newState.user = action.payload
+            newState.demoUser = false
             return newState;
         case REMOVE_USER:
             newState = Object.assign({}, state)
             newState.user = null;
+            newState.demoUser = false
             return newState
         case SET_DEMO_USER:
-            return {...state, demoUser: action.payload}
+            return { ...state, user: action.payload, demoUser: true }
         default:
             return state;
         }
