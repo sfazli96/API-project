@@ -6,17 +6,17 @@ const ADD_SPOTS = 'spots/addSpots' // create spots
 const EDIT_SPOTS = 'spots/editSpots' // editing/update a spot
 const DELETE_SPOTS = 'spots/deleteSpots' // deleting a spot
 const LOAD_ONE_SPOT = 'spots/oneSpot' // load one spot
-const ADD_PREVIEW_IMAGE = 'spots/loadImage'
+// const ADD_PREVIEW_IMAGE = 'spots/loadImage'
 // create POJO action creator to get all spots
 export const loadSpots = (spots) => ({
     type: LOAD_SPOTS,
     payload: spots
 })
 
-export const addPreviewImage = (spots) => ({
-    type: ADD_PREVIEW_IMAGE,
-    payload: spots
-})
+// export const addPreviewImage = (spots) => ({
+//     type: ADD_PREVIEW_IMAGE,
+//     payload: spots
+// })
 
 export const loadOneSpots = (spots) => ({
     type: LOAD_ONE_SPOT,
@@ -121,18 +121,21 @@ export const spotsReducer = (state = initialState, action) => {
     let newState;
     switch(action.type) {
         case LOAD_SPOTS:
-            newState = {...state}
+            // newState = {...state}
+            newState = { spots: {}, singleSpot: {}}
             action.payload.Spots.forEach(spot => {
                 newState[spot.id] = spot
             });
             return newState
-            // newState = {...state, spots: {...state.spots}}
-            // action.payload.Spots.forEach(spot => {
+            // newState = {...state}
+            // action.payload.Spot.forEach(spot => {
             //     newState.spots[spot.id] = spot
             // });
-            // return state
+            // return newState
+            // return { ...state, spots: action.payload.spots}
         case LOAD_ONE_SPOT:
             newState = {...state, singleSpot: {...state.singleSpot}}
+            // console.log('spot here', action.payload)
             newState.singleSpot = action.payload;
             return newState
         case ADD_SPOTS:
@@ -167,10 +170,6 @@ export const spotsReducer = (state = initialState, action) => {
             delete newDeleteEntries[action.payload.id] // delete state.entries of the spot.id
             newState.spots = newDeleteEntries
             return newState
-        case ADD_PREVIEW_IMAGE:
-            return {
-                ...state, singleSpot: {...state.singleSpot, ...action.payload}
-            }
         default:
             return state
     }

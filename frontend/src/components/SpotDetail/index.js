@@ -11,6 +11,7 @@ const SpotDetail = () => {
     const dispatch = useDispatch()
     // select the spot from the entries based on the id
     const spotDetail = useSelector(state => state.spot[id])
+    // const spotDetail = useSelector(state => state.singleSpot || {})
     useEffect(() => {
         dispatch(getOneSpot(id))
     }, [dispatch, id])
