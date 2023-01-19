@@ -54,11 +54,9 @@ export const getSpots = () => async (dispatch) => {
 // thunk action creator (to get spot by id with the details)
 export const getOneSpot = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`)
-    if (response.ok) {
-        const spotData = await response.json()
-        dispatch(loadOneSpots(spotData))
-        return spotData
-    }
+    const spotData = await response.json()
+    dispatch(loadOneSpots(spotData))
+    return spotData
 }
 
 export const addSpot = (spots, spotImages) => async (dispatch) => {
@@ -96,7 +94,7 @@ export const editSpots = (spotId, spots) => async (dispatch) => {
     })
     if (response.ok) {
         const data = await response.json()
-        dispatch(updateSpots(data.spots))
+        dispatch(updateSpots(data))
         return data
     }
 }
@@ -114,17 +112,17 @@ export const deleteSpots = (spot) => async (dispatch) => {
 }
 
 // initial state for reducer with empty 'entries' array
-const initialState = { spots: {}, singleSpot: {}}
+const initialState = { allSpots: {}, singleSpot: {}}
 
 // This handles the actions and updates the state
 export const spotsReducer = (state = initialState, action) => {
     let newState;
     switch(action.type) {
         case LOAD_SPOTS:
-            // newState = {...state}
-            newState = { spots: {}, singleSpot: {}} // I believe make a copy of the initial state
+            newState = {...state}
+            newState = { allSpots: {}, singleSpot: {}} // I believe make a copy of the initial state
             action.payload.Spots.forEach(spot => {
-                newState[spot.id] = spot
+                newState.allSpots[spot.id] = spot
             });
             return newState
             // newState = {...state}
@@ -133,14 +131,23 @@ export const spotsReducer = (state = initialState, action) => {
             // });
             // return newState
             // return { ...state, spots: action.payload.spots}
+            // newState = {...state}
+            // let spotsCopy = {}
+            // action.payload.Spots.forEach(spot => {
+            //     spotsCopy[spot.id] = spot
+            // });
+            // return spotsCopy
         case LOAD_ONE_SPOT:
-            newState = {...state, singleSpot: {...state.singleSpot}}
-            // console.log('spot here', action.payload)
-            newState.singleSpot = action.payload;
+            newState = {...state}
+            newState.singleSpot = action.payload
             return newState
+
         case ADD_SPOTS:
-            newState = {...state, spots: {...state.spots, [action.payload.id]: action.payload}};
-            return newState;
+            newState = {...state}
+            const newSpotImage = {...state.singleSpot}
+            newSpotImage[action.payload.singleSpot] = action.payload.singleSpot
+            newState.spots = newSpotImage
+            return newState
         case EDIT_SPOTS:
             newState = {...state}
             newState.spots = {...state.spots}
@@ -165,10 +172,8 @@ export const spotsReducer = (state = initialState, action) => {
             // }
             return newState
         case DELETE_SPOTS:
-            newState = {...state} // copy of state
-            const newDeleteEntries = {...state.spots} // copy the state with the entries
-            delete newDeleteEntries[action.payload.id] // delete state.entries of the spot.id
-            newState.spots = newDeleteEntries
+            newState = {...state, spots: {...state.spots}} // copy of state
+            delete newState.spots[action.payload.id] // delete state.entries of the spot.id
             return newState
         default:
             return state

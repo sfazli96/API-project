@@ -10,14 +10,10 @@ const SpotDetail = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     // select the spot from the entries based on the id
-    const spotDetail = useSelector(state => state.spot[id])
-    // const spotDetail = useSelector(state => state.singleSpot || {})
+    const spotDetail = useSelector(state => state.spot.singleSpot)
     useEffect(() => {
         dispatch(getOneSpot(id))
     }, [dispatch, id])
-    if (!spotDetail) {
-        return <p>Loading...</p>
-    }
     return (
         <div>
             <h1>{spotDetail.name}</h1>
@@ -28,8 +24,9 @@ const SpotDetail = () => {
             <p>Average Rating: {spotDetail.avgRating}</p>
             <button>
             <OpenModalMenuItem buttonText ="Edit a spot" modalComponent={<EditSpotModal />}
-            /> Edit 
+            /> Edit
             </button>
+            <button className="Button">Delete a Spot</button>
         </div>
     )
 }

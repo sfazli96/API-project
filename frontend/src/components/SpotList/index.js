@@ -11,7 +11,8 @@ const SpotList = () => {
     const dispatch = useDispatch()
     // useSelector is used to access the entries property of the spot of the redux store
     // Object.values converts the object to an array
-    const spots = Object.values(useSelector(state => state.spot))
+    const spotObj = useSelector(state => state.spot.allSpots)
+    const spots = Object.values(spotObj)
 
     // this useEffect gets called the "getSpots"  action when the component is 1st rendered.
     useEffect(() => {
@@ -20,7 +21,6 @@ const SpotList = () => {
 
     return (
         <div>
-            <button className="Button"></button>
             <ol>
                 {spots.map(({ id, name, previewImage, city, state, price, avgRating }) => {
                     return (

@@ -21,8 +21,6 @@ export const CreateSpotModal = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         setErrors([])
-        const data = new FormData()
-        data.append('previewImage', previewImage)
         return dispatch(spotActions.addSpot({address, city, state, country, name, description, price, previewImage, lat:10, lng:10}, previewImage))
         .then(closeModal)
         .catch(async (res) => {
