@@ -26,8 +26,10 @@ const SpotDetail = () => {
             <p>Price: ${spotDetail.price}</p>
             <img src={spotDetail.previewImage} alt={spotDetail.name} />
             <p>Average Rating: {spotDetail.avgRating}</p>
+            <button>
             <OpenModalMenuItem buttonText ="Edit a spot" modalComponent={<EditSpotModal />}
-            />
+            /> Edit 
+            </button>
         </div>
     )
 }

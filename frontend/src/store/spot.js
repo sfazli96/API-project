@@ -122,7 +122,7 @@ export const spotsReducer = (state = initialState, action) => {
     switch(action.type) {
         case LOAD_SPOTS:
             // newState = {...state}
-            newState = { spots: {}, singleSpot: {}}
+            newState = { spots: {}, singleSpot: {}} // I believe make a copy of the initial state
             action.payload.Spots.forEach(spot => {
                 newState[spot.id] = spot
             });

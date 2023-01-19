@@ -20,6 +20,7 @@ const SpotList = () => {
 
     return (
         <div>
+            <button className="Button"></button>
             <ol>
                 {spots.map(({ id, name, previewImage, city, state, price, avgRating }) => {
                     return (
