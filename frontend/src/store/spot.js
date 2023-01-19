@@ -126,15 +126,23 @@ export const spotsReducer = (state = initialState, action) => {
                 newState[spot.id] = spot
             });
             return newState
+            // newState = {...state, spots: {...state.spots}}
+            // action.payload.Spots.forEach(spot => {
+            //     newState.spots[spot.id] = spot
+            // });
+            // return state
         case LOAD_ONE_SPOT:
-            newState = {...state, [action.payload.id]: action.payload}
+            newState = {...state, singleSpot: {...state.singleSpot}}
+            newState.singleSpot = action.payload;
             return newState
         case ADD_SPOTS:
             newState = {...state, spots: {...state.spots, [action.payload.id]: action.payload}};
             return newState;
-
         case EDIT_SPOTS:
-            newState[action.payload.id] = {...state[action.payload.id],
+            newState = {...state}
+            newState.spots = {...state.spots}
+            newState.spots[action.payload.id] = {
+                ...state.spots[action.payload.id],
                 address: action.payload.address,
                 city: action.payload.city,
                 state: action.payload.state,
@@ -143,6 +151,15 @@ export const spotsReducer = (state = initialState, action) => {
                 description: action.payload.description,
                 price: action.payload.price
             }
+            // newState[action.payload.id] = {...state[action.payload.id],
+            //     address: action.payload.address,
+            //     city: action.payload.city,
+            //     state: action.payload.state,
+            //     country: action.payload.country,
+            //     name: action.payload.name,
+            //     description: action.payload.description,
+            //     price: action.payload.price
+            // }
             return newState
         case DELETE_SPOTS:
             newState = {...state} // copy of state

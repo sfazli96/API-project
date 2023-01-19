@@ -17,6 +17,7 @@ const SpotList = () => {
     useEffect(() => {
         dispatch(getSpots())
     }, [dispatch]) // this makes sure the effect runs only on 1st render
+
     return (
         <div>
             <ol>

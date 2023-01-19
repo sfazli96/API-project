@@ -14,15 +14,13 @@ export const EditSpotModal = () => {
     const [name, setName ] = useState('')
     const [description, setDescription ] = useState('')
     const [price, setPrice ] = useState('')
-    const [previewImage, setImage] = useState(null)
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal()
 
     const handleSubmit = (e) => {
         e.preventDefault()
         setErrors([])
-        const data = new FormData()
-        data.append('previewImage', previewImage)
+
         return dispatch(spotActions.editSpots({address, city, state, country, name, description, price, lat:10, lng:10}))
         .then(closeModal)
         .catch(async (res) => {
