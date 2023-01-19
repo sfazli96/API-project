@@ -61,28 +61,31 @@ export const getOneSpot = (spotId) => async (dispatch) => {
     }
 }
 
-// thunk action creator (to create the spot)
 export const addSpot = (spots, spotImages) => async (dispatch) => {
-    // const {address, city, state, country, name, description, price} = spots
-        const response = await csrfFetch('/api/spots', {
-            method: 'POST',
-            body: JSON.stringify(spots)
-        })
-        if (response.ok) {
-            const response = await csrfFetch(`/api/spots/${spots.id}/images`, {
-                method: 'POST',
-                body: JSON.stringify({url: spotImages.url, preview: true})
-            })
-            const data = await response.json();
-            dispatch(createSpots(data)) // dispatches the 'createSpots' action with returned data
-            return data;
-    }
+    const response = await csrfFetch('/api/spots', {
+        method: 'POST',
+        body: JSON.stringify(spots)
+    })
     if (response.ok) {
         const data = await response.json()
-        dispatch(addPreviewImage(data))
-        return data
+        console.log('new spot', data)
+        const spotId = data.id
+        const imageResponse = await csrfFetch(`/api/spots/${spotId}/images`, {
+            method: 'POST',
+            body: JSON.stringify({url: spotImages, preview: true})
+        })
+        if (imageResponse.ok) {
+            const imageData = await imageResponse.json();
+            console.log('new spot image', imageData)
+            const combined = {...data, ...imageData}
+            dispatch(createSpots(combined))
+            // dispatch(createSpots(data)) // dispatches the 'createSpots' action with returned data
+            // dispatch(addPreviewImage(imageData))
+            return combined;
+        }
     }
 }
+
 
 
 export const editSpots = (spotId, spots) => async (dispatch) => {
@@ -127,11 +130,9 @@ export const spotsReducer = (state = initialState, action) => {
             newState = {...state, [action.payload.id]: action.payload}
             return newState
         case ADD_SPOTS:
-            newState = {...state} // copy of state
-            const newEntries = {...state.singleSpot} // copy the state with the entries
-            newEntries[action.payload.singleSpot] = action.payload.singleSpot
-            newState.spots = newEntries
-            return newState
+            newState = {...state, spots: {...state.spots, [action.payload.id]: action.payload}};
+            return newState;
+
         case EDIT_SPOTS:
             newState[action.payload.id] = {...state[action.payload.id],
                 address: action.payload.address,
@@ -147,7 +148,7 @@ export const spotsReducer = (state = initialState, action) => {
             newState = {...state} // copy of state
             const newDeleteEntries = {...state.spots} // copy the state with the entries
             delete newDeleteEntries[action.payload.id] // delete state.entries of the spot.id
-            newState.spots = newEntries
+            newState.spots = newDeleteEntries
             return newState
         case ADD_PREVIEW_IMAGE:
             return {
