@@ -53,8 +53,8 @@ function Navigation({ isLoaded }){
       modalComponent={<CreateSpotModal />}
       />
 
-      <h2>airSfRentals</h2>
-
+      <h2>airSamRentals</h2>
+      {/* <i class="fa-thin fa-apartment"></i> */}
     </ol>
       </div>
   );

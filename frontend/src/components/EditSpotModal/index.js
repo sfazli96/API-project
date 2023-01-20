@@ -6,7 +6,7 @@ import { useState } from "react";
 import * as spotActions from "../../store/spot"
 
 
-export const EditSpotModal = (props) => {
+export const EditSpotModal = () => {
     const dispatch = useDispatch()
     const spotsObj = useSelector(state => state.spot.singleSpot)
     // console.log('spotsObj', spotsObj)

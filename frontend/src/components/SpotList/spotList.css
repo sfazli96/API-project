@@ -1,6 +1,7 @@
 .spot-container {
     width: 100%;
     text-align: center;
+    position: relative;
 }
 
 .li2 {
@@ -9,13 +10,14 @@
     list-style: none;
     text-align: center;
     margin: 10px;
+    position: relative;
 }
 
 .img {
     width: 400px;
     height: 350px;
     margin-right: 1%;
-    border-radius: 10%;
+    border-radius: 3%;
     float: left;
 }
 
@@ -25,4 +27,10 @@
     position: relative;
 }
 
+/* .spot-nav-link:hover {
+    background-color: blue;
+} */
 
+.spot-nav-link {
+    text-decoration: none;
+}

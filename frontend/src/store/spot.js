@@ -70,7 +70,8 @@ export const addSpot = (spots, spotImages) => async (dispatch) => {
         if (imageResponse.ok) {
             const imageData = await imageResponse.json();
             console.log('new spot image', imageData)
-            const combined = {...data, ...imageData}
+            const combined = {...data, previewImage: imageData.url}
+            combined.avgRating = 'no reviews are found'
             dispatch(createSpots(combined))
             return combined;
         }
@@ -124,11 +125,14 @@ export const spotsReducer = (state = initialState, action) => {
             newState = {...state}
             newState.singleSpot = action.payload
             return newState
-
         case ADD_SPOTS:
-            newState = {...state};
-            newState.allSpots[action.payload.id] = action.payload;
-            return newState;
+            newState = {...state}
+            let copy = {...newState.allSpots}
+            copy[action.payload.id] = action.payload
+            newState.allSpots = copy
+            return newState
+            // newState.allSpots = {...newState.allSpots, [action.payload.id]: action.payload};
+            // return newState;
         case EDIT_SPOTS:
             let updateSingleSpot = {...state.singleSpot, ...action.payload}
             return {...state,singleSpot: updateSingleSpot}

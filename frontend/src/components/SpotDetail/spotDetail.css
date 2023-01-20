@@ -1,4 +1,4 @@
-/* .spot-detail-container {
+.spot-detail-container {
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -21,86 +21,4 @@
 
 .spot-detail-container img {
     border-radius: 5%;
-} */
-
-.spot-description {
-    display: flex;
-    width: 85vw;
-    padding-bottom: 2px;
-    margin-left: 7vw;
-}
-
-.spot-details-main {
-    display: flex;
-    /* flex-direction: row; */
-    width: 85vw;
-    padding-bottom: 15px;
-    margin-left: 7vw;
-    /* justify-content: space-between; */
-
-}
-.spot-details-top-left {
-    display: inline;
-    width: 100%;
-
-
-}
-.spot-details-star-ratings {
-    display: inline;
-}
-.spot-details-num-reviews {
-    display: inline;
-    text-decoration: underline;
-    font-size: 14.5px;
-    width: auto;
-
-}
-
-.spot-details-location{
-    margin-left: 1.2vw;
-    text-decoration: underline;
-    font-size: 14.5px;
-    width: auto;
-    display: inline;
-
-
-}
-
-.spot-details-edit {
-    margin-left: 36vw;
-    padding-right: 2vw;
-    width: 350px;
-}
-
-
-.spot-details-delete {
-    border-radius: 50px;
-    color: black;
-    background-color: white;
-}
-
-.spot-details-delete:hover {
-
-    background-color: red;
-}
-
-
-.singlespotpage-images-container {
-    display: flex;
-    flex-direction: row;
-    width: 85vw;
-    margin-left: 3.5vw;
-
-}
-.spotpage-image-container {
-    width: 100%;
-
-}
-
-.actual-spotImage {
-   width: 100%;
-}
-
-.singlespot-errors {
-    margin-left: 5vw;
 }

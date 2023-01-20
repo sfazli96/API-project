@@ -26,12 +26,14 @@ const SpotList = () => {
                     return (
                     <ol key={id} className="li2">
                         <div className="spot-container">
-                            <NavLink to= {`/spots/${id}`}>
-                                <img src={previewImage} alt={name} className="img"/>
+                            <NavLink to= {`/spots/${id}`} className="spot-nav-link">
+                                <div className="image-text-container">
+                                    <img src={previewImage} alt={name} className="img"/>
+                                    <p className="text">{city}, {state}</p>
+                                    <p className="price">${price}</p>
+                                    <p className="reviews">{avgRating}</p>
+                                </div>
                             </NavLink>
-                                <p>{city}, {state}</p>
-                                <p>${price}</p>
-                                <p>{avgRating}</p>
                         </div>
                     </ol>
                     )
