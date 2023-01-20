@@ -12,7 +12,17 @@
 }
 
 .img {
-    width: 100%;
+    width: 400px;
+    height: 350px;
     margin-right: 1%;
     border-radius: 10%;
+    float: left;
 }
+
+.spot-container {
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+

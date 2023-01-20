@@ -12,14 +12,15 @@
 
 ol {
     list-style-type: none;
+    justify-content: flex-start;
 }
 
 
-/* h1 {
+h2 {
     position: absolute;
     top: 0;
     left: 0;
     text-align: left;
     font-weight: bold;
     color: rgb(235, 91, 8);
-} */
+}

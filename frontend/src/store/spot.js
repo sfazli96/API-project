@@ -6,17 +6,12 @@ const ADD_SPOTS = 'spots/addSpots' // create spots
 const EDIT_SPOTS = 'spots/editSpots' // editing/update a spot
 const DELETE_SPOTS = 'spots/deleteSpots' // deleting a spot
 const LOAD_ONE_SPOT = 'spots/oneSpot' // load one spot
-// const ADD_PREVIEW_IMAGE = 'spots/loadImage'
+
 // create POJO action creator to get all spots
 export const loadSpots = (spots) => ({
     type: LOAD_SPOTS,
     payload: spots
 })
-
-// export const addPreviewImage = (spots) => ({
-//     type: ADD_PREVIEW_IMAGE,
-//     payload: spots
-// })
 
 export const loadOneSpots = (spots) => ({
     type: LOAD_ONE_SPOT,
@@ -36,9 +31,9 @@ export const updateSpots = (spots) => ({
 })
 
 // create POJO action creator to delete a spot
-export const removeSpots = (spots) => ({
+export const removeSpots = (id) => ({
     type: DELETE_SPOTS,
-    payload: spots
+    payload: id
 })
 
 // thunk action creator (to get all spots, spot details)
@@ -77,8 +72,6 @@ export const addSpot = (spots, spotImages) => async (dispatch) => {
             console.log('new spot image', imageData)
             const combined = {...data, ...imageData}
             dispatch(createSpots(combined))
-            // dispatch(createSpots(data)) // dispatches the 'createSpots' action with returned data
-            // dispatch(addPreviewImage(imageData))
             return combined;
         }
     }
@@ -86,15 +79,17 @@ export const addSpot = (spots, spotImages) => async (dispatch) => {
 
 
 
-export const editSpots = (spotId, spots) => async (dispatch) => {
-    // const {address, city, state, country, name, description, price} = spots
-    const response = await csrfFetch(`/api/spots/${spotId}`, {
-        method: "PUT",
+export const editSpots = (spots) => async (dispatch) => {
+    console.log('spots', spots)
+    const response = await csrfFetch(`/api/spots/${spots.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(spots)
     })
     if (response.ok) {
         const data = await response.json()
         dispatch(updateSpots(data))
+        console.log('after dispatch', data)
         return data
     }
 }
@@ -102,7 +97,7 @@ export const editSpots = (spotId, spots) => async (dispatch) => {
 // Thunk action creator (to delete the spot)
 export const deleteSpots = (spot) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spot.id}`, {
-        method: "DELETE"
+        method: 'DELETE'
     })
     if (response.ok) {
         const data = await response.json()
@@ -120,60 +115,26 @@ export const spotsReducer = (state = initialState, action) => {
     switch(action.type) {
         case LOAD_SPOTS:
             newState = {...state}
-            newState = { allSpots: {}, singleSpot: {}} // I believe make a copy of the initial state
+            newState = { allSpots: {}, singleSpot: {}}
             action.payload.Spots.forEach(spot => {
                 newState.allSpots[spot.id] = spot
             });
             return newState
-            // newState = {...state}
-            // action.payload.Spot.forEach(spot => {
-            //     newState.spots[spot.id] = spot
-            // });
-            // return newState
-            // return { ...state, spots: action.payload.spots}
-            // newState = {...state}
-            // let spotsCopy = {}
-            // action.payload.Spots.forEach(spot => {
-            //     spotsCopy[spot.id] = spot
-            // });
-            // return spotsCopy
         case LOAD_ONE_SPOT:
             newState = {...state}
             newState.singleSpot = action.payload
             return newState
 
         case ADD_SPOTS:
-            newState = {...state}
-            const newSpotImage = {...state.singleSpot}
-            newSpotImage[action.payload.singleSpot] = action.payload.singleSpot
-            newState.spots = newSpotImage
-            return newState
+            newState = {...state};
+            newState.allSpots[action.payload.id] = action.payload;
+            return newState;
         case EDIT_SPOTS:
-            newState = {...state}
-            newState.spots = {...state.spots}
-            newState.spots[action.payload.id] = {
-                ...state.spots[action.payload.id],
-                address: action.payload.address,
-                city: action.payload.city,
-                state: action.payload.state,
-                country: action.payload.country,
-                name: action.payload.name,
-                description: action.payload.description,
-                price: action.payload.price
-            }
-            // newState[action.payload.id] = {...state[action.payload.id],
-            //     address: action.payload.address,
-            //     city: action.payload.city,
-            //     state: action.payload.state,
-            //     country: action.payload.country,
-            //     name: action.payload.name,
-            //     description: action.payload.description,
-            //     price: action.payload.price
-            // }
-            return newState
+            let updateSingleSpot = {...state.singleSpot, ...action.payload}
+            return {...state,singleSpot: updateSingleSpot}
         case DELETE_SPOTS:
-            newState = {...state, spots: {...state.spots}} // copy of state
-            delete newState.spots[action.payload.id] // delete state.entries of the spot.id
+            newState = {...state, singleSpot: {...state.singleSpot}} // copy of state
+            delete newState.singleSpot[action.payload.id] // delete state.entries of the spot.id
             return newState
         default:
             return state

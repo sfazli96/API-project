@@ -1,37 +1,45 @@
 import React, { useState } from "react";
 import { useModal } from "../../context/Modal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as spotActions from "../../store/spot";
+import { useHistory } from "react-router-dom";
 
-export const DeleteSpotModal = ({ spot }) => {
+export const DeleteSpotModal = () => {
   const dispatch = useDispatch();
+  const spots = useSelector(state => state.spot.singleSpot)
+  const id = spots.id
   const { closeModal } = useModal();
   const [errors, setErrors] = useState([]);
+  const history = useHistory()
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     setErrors([]);
-    return dispatch(spotActions.deleteSpots(spot))
-      .then(() => {
-        closeModal();
+    return dispatch(spotActions.deleteSpots({id}))
+      .then((res) => {
+        if(res.status === 200){
+          closeModal();
+        }
       })
       .catch(async (res) => {
         if (!res.ok) {
           setErrors(["An error occurred while deleting the spot. Please try again later."]);
         }
+      })
+      .then(()=>{
+        history.push('/');
       });
   };
 
+
   return (
     <form className="deleteSpotForm" onSubmit={handleSubmit}>
-      <h1 className="h1">Delete a Spot</h1>
       <ul className="ul">
         {errors.map((error, idx) => (
           <li key={idx}>{error}</li>
         ))}
       </ul>
-      <p>Are you sure you want to delete this spot?</p>
-      <button className="Button" type="Delete">
+      <button className="Button" onClick={() => handleSubmit()}>
         Delete
       </button>
     </form>

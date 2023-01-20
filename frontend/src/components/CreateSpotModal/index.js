@@ -3,6 +3,7 @@ import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import * as spotActions from "../../store/spot"
+import './createSpotModal.css'
 
 
 export const CreateSpotModal = () => {
@@ -27,6 +28,7 @@ export const CreateSpotModal = () => {
             const data = await res.json()
             if(data && data.errors) setErrors(data.errors)
         })
+
     }
     return (
         <form className="createSpotForm" onSubmit={handleSubmit}>

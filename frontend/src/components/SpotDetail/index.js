@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getOneSpot } from "../../store/spot";
+import DeleteSpotModal from "../DeleteSpotModal";
 import { EditSpotModal } from "../EditSpotModal";
-import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import OpenModalButton from '../OpenModalButton'
+import './spotDetail.css'
 
 // the json information for the get all spots
 const SpotDetail = () => {
@@ -14,19 +16,24 @@ const SpotDetail = () => {
     useEffect(() => {
         dispatch(getOneSpot(id))
     }, [dispatch, id])
+
+    if (!spotDetail || !spotDetail.name) {
+        return <h1>Spot doesn't exist</h1>
+    }
     return (
-        <div>
+        <div className="spot-detail-container">
             <h1>{spotDetail.name}</h1>
             <p>{spotDetail.address}, {spotDetail.city}, {spotDetail.state}, {spotDetail.country}</p>
             <p>{spotDetail.description}</p>
             <p>Price: ${spotDetail.price}</p>
-            <img src={spotDetail.previewImage} alt={spotDetail.name} />
+            {spotDetail.SpotImages.map(image => {
+                return <img src={image.url} alt={spotDetail.name} />
+
+            })}
             <p>Average Rating: {spotDetail.avgRating}</p>
-            <button>
-            <OpenModalMenuItem buttonText ="Edit a spot" modalComponent={<EditSpotModal />}
-            /> Edit
-            </button>
-            <button className="Button">Delete a Spot</button>
+            <OpenModalButton buttonText ="Edit a spot" modalComponent={<EditSpotModal/>}
+            />
+            <DeleteSpotModal />
         </div>
     )
 }

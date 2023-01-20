@@ -1,19 +1,23 @@
 import React from "react";
 import { useModal } from "../../context/Modal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+
 import * as spotActions from "../../store/spot"
 
 
-export const EditSpotModal = () => {
+export const EditSpotModal = (props) => {
     const dispatch = useDispatch()
-    const [address, setAddress ] = useState('')
-    const [city, setCity ] = useState('')
-    const [state, setState ] = useState('')
-    const [country, setCountry ] = useState('')
-    const [name, setName ] = useState('')
-    const [description, setDescription ] = useState('')
-    const [price, setPrice ] = useState('')
+    const spotsObj = useSelector(state => state.spot.singleSpot)
+    // console.log('spotsObj', spotsObj)
+    const id = spotsObj.id
+    const [address, setAddress ] = useState(spotsObj.address)
+    const [city, setCity ] = useState(spotsObj.city)
+    const [state, setState ] = useState(spotsObj.state)
+    const [country, setCountry ] = useState(spotsObj.country)
+    const [name, setName ] = useState(spotsObj.name)
+    const [description, setDescription ] = useState(spotsObj.description)
+    const [price, setPrice ] = useState(spotsObj.price)
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal()
 
@@ -21,7 +25,7 @@ export const EditSpotModal = () => {
         e.preventDefault()
         setErrors([])
 
-        return dispatch(spotActions.editSpots({address, city, state, country, name, description, price, lat:10, lng:10}))
+        return dispatch(spotActions.editSpots({id, address, city, state, country, name, description, price, lat:10, lng:10}))
         .then(closeModal)
         .catch(async (res) => {
             const data = await res.json()

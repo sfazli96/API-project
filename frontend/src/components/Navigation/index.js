@@ -53,7 +53,7 @@ function Navigation({ isLoaded }){
       modalComponent={<CreateSpotModal />}
       />
 
-      <h1>airSf</h1>
+      <h2>airSfRentals</h2>
 
     </ol>
       </div>
