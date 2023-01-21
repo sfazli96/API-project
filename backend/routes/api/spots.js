@@ -103,7 +103,7 @@ const validateSpotError = [
 router.get('/', validateQueryError, async (req, res, next) => {
     let {page, size, maxLat, minLat, maxLng, maxPrice, minPrice} = req.query
     if (!page) page = 1;
-    if (!size) size = 20;
+    if (!size) size = 200;
 
     size = parseInt(size)
     page = parseInt(page)
@@ -432,22 +432,17 @@ router.put('/:spotId', requireAuth, validateSpotError, async (req, res, next) =>
         err.statusCode = 403
         return next(err)
     }
-    const spots = await Spot.findOne({
-        where: {
-            ownerId: id
-        }
-    })
-    spots.address = address
-    spots.city = city
-    spots.state = state
-    spots.country = country
-    spots.lat = lat
-    spots.lng = lng
-    spots.name = name
-    spots.description = description
-    spots.price = price
-    await spots.save()
-    res.json(spots)
+    spot.address = address
+    spot.city = city
+    spot.state = state
+    spot.country = country
+    spot.lat = lat
+    spot.lng = lng
+    spot.name = name
+    spot.description = description
+    spot.price = price
+    await spot.save()
+    res.json(spot)
 })
 
 // Delete a spot
