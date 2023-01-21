@@ -49,7 +49,7 @@ const SpotDetail = () => {
             })}
             <p className="spotDetail-rating">Average Rating: {spotDetail.avgStarRating}</p>
             <p className="num-reviews">numReviews: {spotDetail.numReviews}</p>
-            <CreateReviewForm id={spotDetail.id}/>
+            <CreateReviewForm />
             <h3 className="text-overlay">Reviews:</h3>
             <div className="reviews-container">
                 {reviews.map((review, index) => {

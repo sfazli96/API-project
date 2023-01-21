@@ -20,7 +20,7 @@ export const DeleteSpotModal = () => {
         if(res.status === 200){
           closeModal();
         }
-        history.push('/');
+        // history.push('/');
       })
       .catch(async (res) => {
         if (!res.ok) {
