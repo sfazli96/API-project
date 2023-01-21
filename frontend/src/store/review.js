@@ -34,16 +34,16 @@ export const getAllReviews = (spot) => async (dispatch) => {
 }
 
 // thunk action creator (to create a review)
-export const addOneReview = (review, id) => async (dispatch) => {
+export const addOneReview = (review) => async (dispatch) => {
     console.log('review', review)
 
-    const response = await csrfFetch(`/api/spots/${id}/reviews`, {
+    const response = await csrfFetch(`/api/spots/${review.id}/reviews`, {
         method: 'POST',
         body: JSON.stringify(review)
     })
     if (response.ok) {
         const data = await response.json()
-        dispatch(createReview(review))
+        dispatch(createReview(data))
         return data
     }
 }
@@ -68,17 +68,15 @@ export const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_REVIEWS:
             newState = {...state}
-            let copy = {}
+            let copyState = {}
             action.payload.Review.forEach(review => {
-                copy[review.id] = review
+                copyState[review.id] = review
             });
-            newState.allReviews = copy
+            newState.allReviews = copyState
             return newState
         case ADD_REVIEWS:
             newState = {...state}
-            let copy2 = {...newState.allReviews}
-            copy2[action.payload.id] = action.payload
-            newState.allReviews = copy2
+            newState.allReviews[action.payload.id] = action.payload
             return newState
         case DELETE_REVIEWS:
             newState = {...state, allReviews: {...state.allReviews}}

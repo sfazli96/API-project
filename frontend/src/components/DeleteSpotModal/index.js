@@ -19,8 +19,8 @@ export const DeleteSpotModal = () => {
       .then((res) => {
         if(res.status === 200){
           closeModal();
-          // history.push('/');
         }
+        history.push('/');
       })
       .catch(async (res) => {
         if (!res.ok) {
@@ -31,7 +31,7 @@ export const DeleteSpotModal = () => {
       //   history.push('/');
       // });
   };
-
+  if (!spotActions.deleteSpots) return null
 
   return (
     <form className="deleteSpotForm" onSubmit={handleSubmit}>

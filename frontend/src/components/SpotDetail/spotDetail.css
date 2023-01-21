@@ -1,24 +1,39 @@
 .spot-detail-container {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-wrap: wrap;
 }
+
+@media (max-width: 1120px) {
+    .spot-detail-container img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+
 
 .text-overlay {
     text-align: center;
 }
 
-.price {
-    align-self: flex-end;
+.spotDetail-rating {
+    align-self: flex-start;
+    font-weight: bold;
 }
 
-.rating {
-    align-self: flex-start;
-    display: flex;
-    align-items: center;
+.spotDetail-price {
+    align-self: flex-end;
+    font-weight: bold;
 }
 
 .spot-detail-container img {
+    width: 1120px;
+    height: 100vh;
     border-radius: 5%;
+    padding: 10px;
+    margin: auto;
 }

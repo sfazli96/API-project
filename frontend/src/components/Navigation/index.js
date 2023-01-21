@@ -40,20 +40,23 @@ function Navigation({ isLoaded }){
     <div className="NavBar">
 
     <ol>
-      <li>
+      {/* <li>
         <NavLink exact to="/">Home</NavLink>
-      </li>
+      </li> */}
       {isLoaded && (
         <li>
           <ProfileButton user={sessionUser} />
         </li>
       )}
+      <li>
       <OpenModalButton
       buttonText="Add a Spot"
       modalComponent={<CreateSpotModal />}
       />
-
-      <h2>airSamRentals</h2>
+      </li>
+      <NavLink to="/">
+        <h2>airSFRents</h2>
+      </NavLink>
       {/* <i class="fa-thin fa-apartment"></i> */}
     </ol>
       </div>

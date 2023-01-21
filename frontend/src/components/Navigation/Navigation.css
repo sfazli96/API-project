@@ -6,8 +6,10 @@
     display: flex;
     /* list-style: none; */
     justify-content: flex-end;
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,0.5);
     border: 4px solid red;
     position: relative;
+    align-items: center;
 }
 
 ol {
@@ -18,9 +20,16 @@ ol {
 
 h2 {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 20px;
+    left: 55px;
     text-align: left;
     font-weight: bold;
     color: rgb(235, 91, 8);
+    margin: 0 auto;
+}
+
+h2::before {
+    content: '\f015';
+    font-family: 'Font Awesome 5 Free';
+    padding-right: 5px;
 }
