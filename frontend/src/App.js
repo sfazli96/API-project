@@ -22,7 +22,7 @@ function App() {
           exact >
             <SpotList />
           </Route>
-          <Route path={["/spots/:id"]}
+          <Route path={["/spots/:spotId"]}
           exact >
             <SpotDetail />
           </Route>

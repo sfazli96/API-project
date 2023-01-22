@@ -24,10 +24,12 @@ const removeReview = (reviews) => ({
 })
 
 // thunk action creator (to get all reviews for a spot)
-export const getAllReviews = (spot) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spot}/reviews`)
+export const getAllReviews = (spotId) => async (dispatch) => {
+    console.log('spotId to get all', spotId)
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
     if (response.ok) {
         const reviewData = await response.json()
+        console.log({reviewData})
         dispatch(loadReviews(reviewData))
         return reviewData
     }
