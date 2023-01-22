@@ -2,7 +2,7 @@ import React from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-
+import "./editSpotModal.css"
 import * as spotActions from "../../store/spot"
 
 
@@ -33,7 +33,7 @@ export const EditSpotModal = () => {
         })
     }
     return (
-        <form className="createSpotForm" onSubmit={handleSubmit}>
+        <form className="edit-modal" onSubmit={handleSubmit}>
             <h1 className="h1">Edit a Spot</h1>
             <ul className="ul">
               {errors.map((error, idx) => <li key={idx}>{error}</li>)}

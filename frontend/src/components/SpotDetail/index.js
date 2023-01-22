@@ -77,12 +77,13 @@ const SpotDetail = () => {
             <div className="reviews-container">
                 <h3 className="text-overlay-reviews">Reviews:</h3>
                 {reviews.map((review, index) => {
-                    return <div className="review" key={index}>
-                        <p className="text-overlay"> User: {review?.User?.firstName} {review?.User?.lastName}</p>
-                        <p className="text-overlay">{review.review}</p>
-                        <p className="text-overlay">Rating: {review.stars}</p>
-                        <button className="Button" onClick={() => handleDelete(review.id)}>
-                            Delete Review
+                    return <div className="review-card" key={index}>
+                        <p className="review-user"> User: {review?.User?.firstName} {review?.User?.lastName}</p>
+                        <p className="review-text">{review.review}</p>
+                        <p className="review-rating">Rating: {review.stars}</p>
+                        <button className="delete-review-button" onClick={() => handleDelete(review.id)}>
+                            {/* Delete Review */}
+                            <i className="fas fa-trash-alt"></i>
                         </button>
                     </div>
                 })}

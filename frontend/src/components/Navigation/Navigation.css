@@ -30,8 +30,8 @@ ol {
 h2 {
     position: absolute;
     top: 20px;
-    left: 35px;
-    text-align: left;
+    left: 15px;
+    /* text-align: left; */
     font-weight: bold;
     color: rgb(235, 91, 8);
     margin: 0 auto;
@@ -48,8 +48,6 @@ h2::before {
     left: 1758px;
     top: 20px;
 }
-
-
 
 body {
     padding: 80px;

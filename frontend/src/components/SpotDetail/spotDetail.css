@@ -19,7 +19,7 @@
 
 .text-overlay-reviews {
     text-align: center;
-    left: -420px;
+    left: -140px;
     bottom: -40px;
     position: relative;
 }
@@ -71,6 +71,37 @@
     /* text-decoration: underline; */
 }
 
+.delete-review-button {
+    background-color: transparent;
+    border: none;
+}
+
+/* .delete-review-button:hover {
+    background-color: #f44336;
+    color: white;
+    text-decoration: underline;
+} */
+
+.fa-trash-alt {
+    background-color: transparent;
+    border: none;
+}
+.fa-trash-alt:hover {
+    color: #f44336;
+}
+
+.review-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #f9f9f9;
+    box-shadow: 2px 2px 2px #ccc;
+}
+
+
 .spotDetail-price {
     align-self: flex-start;
     font-weight: bold;
@@ -93,6 +124,13 @@
 .spot-image {
     position: relative;
     width: 800px;
+}
+
+.Button2::before {
+    content: "+";
+    /* font-size: 24px; */
+    margin-right: 10px;
+    color: rgb(4, 206, 4);
 }
 
 

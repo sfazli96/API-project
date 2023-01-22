@@ -31,7 +31,7 @@ export const CreateSpotModal = () => {
 
     }
     return (
-        <form className="createSpotForm" onSubmit={handleSubmit}>
+        <form className="add-spot-modal" onSubmit={handleSubmit}>
             <h1 className="h1">Add a Spot</h1>
             <ul className="ul">
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}

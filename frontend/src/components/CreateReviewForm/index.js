@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllReviews } from "../../store/review";
 import * as reviewActions from "../../store/review"
 import { useParams, useHistory } from "react-router-dom";
+import "./createReviewForm.css"
 
 const CreateReviewForm = () => {
     const dispatch = useDispatch()
@@ -35,16 +36,16 @@ const CreateReviewForm = () => {
             <ul className="ul">
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
-            <label className="form-label3">
+            <label className="form-label4">
                 Review
-                <input className="input"
-                type="textarea"
+                <textarea className="input" rows='4' cols='50'
+                // type="textarea"
                 value={review}
                 onChange={(e) => setReview(e.target.value)}
                 required
             />
             </label>
-            <label className="form-label3">
+            <label className="form-label4">
                 Stars
                 <input
                 type="number"
@@ -56,7 +57,7 @@ const CreateReviewForm = () => {
                 required
             />
         </label>
-        <button className="Button" type="Create">Add a Review</button>
+        <button className="add-review-button" type="Create">Add a Review</button>
         </form>
     )
 }
