@@ -23,6 +23,10 @@ const SpotList = () => {
         <div>
             <ol>
                 {spots.map(({ id, name, previewImage, city, state, price, avgRating }) => {
+                    let rating = parseFloat(avgRating)
+                    if (isNaN(rating)) {
+                        rating = 0
+                    }
                     return (
                     <ol key={id} className="li2">
                         <div className="spot-container">
@@ -30,8 +34,8 @@ const SpotList = () => {
                                 <div className="image-text-container">
                                     <img src={previewImage} alt={name} className="img"/>
                                     <p className="text">{city}, {state}</p>
-                                    <p className="price">${price}</p>
-                                    <p className="reviews">{avgRating}</p>
+                                    <p className="price">${price} night</p>
+                                    <p className="reviews">{rating.toFixed(2)}</p>
                                 </div>
                             </NavLink>
                         </div>

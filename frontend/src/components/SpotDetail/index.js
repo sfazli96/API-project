@@ -64,21 +64,23 @@ const SpotDetail = () => {
             <h1 className="text-overlay">{spotDetail.name}</h1>
             <p className="text-overlay">{spotDetail.address}, {spotDetail.city}, {spotDetail.state}, {spotDetail.country}</p>
             <p className="text-overlay">{spotDetail.description}</p>
-            <p className="spotDetail-price">Price: ${spotDetail.price}</p>
+            <p className="spotDetail-price">${spotDetail.price} night</p>
             {spotDetail.SpotImages.map((image, index) => {
                 return <img src={image.url} alt={spotDetail.name} className="spot-image" key={index}/>
 
             })}
-            <p className="spotDetail-rating">Average Rating: {reviews.length < 2 ? totalRating : totalRating/2}</p>
-            <p className="num-reviews">numReviews: {reviews.length}</p>
+            <p className="spotDetail-rating">{reviews.length < 2 ? totalRating : totalRating/2}</p>
+            <div className="num-review-container">
+                <p className="num-reviews">{reviews.length} reviews</p>
+            </div>
             <CreateReviewForm />
-            <h3 className="text-overlay">Reviews:</h3>
             <div className="reviews-container">
+                <h3 className="text-overlay-reviews">Reviews:</h3>
                 {reviews.map((review, index) => {
                     return <div className="review" key={index}>
+                        <p className="text-overlay"> User: {review?.User?.firstName} {review?.User?.lastName}</p>
                         <p className="text-overlay">{review.review}</p>
-                        <p className="text-overlay">{review.stars}</p>
-                        <p className="text-overlay">{review?.User?.firstName} {review?.User?.lastName}</p>
+                        <p className="text-overlay">Rating: {review.stars}</p>
                         <button className="Button" onClick={() => handleDelete(review.id)}>
                             Delete Review
                         </button>
@@ -87,8 +89,12 @@ const SpotDetail = () => {
             </div>
             <OpenModalButton buttonText ="Edit a spot" modalComponent={<EditSpotModal/>}
             />
-
             <DeleteSpotModal />
+            {/* <div className="spot-image">
+                <OpenModalButton className="edit-spot-button" buttonText={"Edit"} modalComponent={<EditSpotModal/>} />
+                <DeleteSpotModal className="delete-spot-button" buttonText={"Delete"} modalComponent={<DeleteSpotModal/>} />
+            </div> */}
+
 
 
         </div>

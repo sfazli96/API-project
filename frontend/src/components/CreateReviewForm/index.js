@@ -21,7 +21,8 @@ const CreateReviewForm = () => {
         return dispatch(reviewActions.addOneReview({review, stars, id}, id))
         .then(() => {
             dispatch(getAllReviews(id))
-
+            setReview("")
+            setStars("")
         })
         .catch(async (res) => {
             const data = await res.json()
@@ -47,6 +48,9 @@ const CreateReviewForm = () => {
                 Stars
                 <input
                 type="number"
+                min="1"
+                max="10"
+                step="1"
                 value={stars}
                 onChange={(e) => setStars(e.target.value)}
                 required

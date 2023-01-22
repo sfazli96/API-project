@@ -48,7 +48,7 @@ function Navigation({ isLoaded }){
           <ProfileButton user={sessionUser} />
         </li>
       )}
-      <li>
+      <li className='add-spot-button'>
       <OpenModalButton
       buttonText="Add a Spot"
       modalComponent={<CreateSpotModal />}
