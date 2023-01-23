@@ -22,7 +22,7 @@ ul {
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .Button {
@@ -30,7 +30,7 @@ ul {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #4CAF50; /* replaced with same background color as submit button */
+    background-color: #4CAF50;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -40,6 +40,11 @@ ul {
     width: 100%;
     text-align: center;
 }
+
+.delete-btn{
+    background-color: #e80101;
+}
+
 .add-spot-modal {
     background-color: white;
     /* color: white; */
@@ -50,7 +55,7 @@ ul {
     font-size: 1rem;
     margin-top: 20px;
     width: 100%;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .add-modal button:hover {
@@ -78,8 +83,8 @@ ul {
 }
 input {
     padding: 5px;
-    border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 1rem;
     margin-bottom: 20px;
+    flex: 1;
 }

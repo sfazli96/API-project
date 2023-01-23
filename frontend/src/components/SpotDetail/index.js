@@ -64,15 +64,26 @@ const SpotDetail = () => {
             <h1 className="text-overlay">{spotDetail.name}</h1>
             <p className="text-overlay">{spotDetail.address}, {spotDetail.city}, {spotDetail.state}, {spotDetail.country}</p>
             <p className="text-overlay-description">{spotDetail.description}</p>
-            <p className="spotDetail-price">${spotDetail.price} night</p>
+            <div className="rating-model-div">
+                <div className="rating-div">
+                <p className="spotDetail-rating">{reviews.length < 2 ? totalRating : totalRating/2}</p>
+                <div className="num-review-container">
+                    <p className="num-reviews">{reviews.length} reviews</p>
+                </div>
+                </div>
+                <div className="delete-model-div">
+                <OpenModalButton buttonText ={<div id="edit-spot-modal-detail">Edit a spot</div>} modalComponent={<EditSpotModal/>}
+            />
+            <DeleteSpotModal />
+                </div>
+            </div>
+
             {spotDetail.SpotImages.map((image, index) => {
                 return <img src={image.url} alt={spotDetail.name} className="spot-image" key={index}/>
 
             })}
-            <p className="spotDetail-rating">{reviews.length < 2 ? totalRating : totalRating/2}</p>
-            <div className="num-review-container">
-                <p className="num-reviews">{reviews.length} reviews</p>
-            </div>
+            <p className="spotDetail-price">${spotDetail.price} night</p>
+
             <CreateReviewForm />
             <div className="reviews-container">
                 <h3 className="text-overlay-reviews">Reviews:</h3>
@@ -88,16 +99,6 @@ const SpotDetail = () => {
                     </div>
                 })}
             </div>
-            <OpenModalButton buttonText ={<div id="edit-spot-modal-detail">Edit a spot</div>} modalComponent={<EditSpotModal/>}
-            />
-            <DeleteSpotModal />
-            {/* <div className="spot-image">
-                <OpenModalButton className="edit-spot-button" buttonText={"Edit"} modalComponent={<EditSpotModal/>} />
-                <DeleteSpotModal className="delete-spot-button" buttonText={"Delete"} modalComponent={<DeleteSpotModal/>} />
-            </div> */}
-
-
-
         </div>
     )
 

@@ -1,18 +1,18 @@
 .edit-modal {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    font-family: 'Open Sans', sans-serif;
-    font-size: 18px;
-  }
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+}
 
-  input {
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    margin-bottom: 0.1px;
+input {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 0.1px;
 
 }
 
@@ -25,7 +25,7 @@ input:focus {
   font-size: 1rem;
   color: #333;
   margin-bottom: 10px;
-  display: block;
+  /* display: block; */
   padding:10px;
   font-family: 'Sofia Sans', sans-serif;
   font-weight: bolder;
@@ -50,7 +50,7 @@ input:focus {
 
 .edit-modal label {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .edit-modal input {

@@ -28,7 +28,7 @@ export const DeleteSpotModal = (props) => {
   if (!spotActions.deleteSpots) return null
 
   return (
-      <button className="Button" onClick={handleSubmit}>
+      <button className="Button delete-btn" onClick={handleSubmit}>
         Delete
       </button>
   );

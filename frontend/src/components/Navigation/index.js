@@ -41,6 +41,7 @@ function Navigation({ isLoaded }){
       <NavLink to="/">
         <h2>airSFRents</h2>
       </NavLink>
+    <div className='add-spot-div'>
       <li className='add-spot-button'>
       <OpenModalButton
       buttonText={<div id='spot-button'>Add a Spot</div>}
@@ -52,6 +53,7 @@ function Navigation({ isLoaded }){
           <ProfileButton user={sessionUser} />
         </li>
       )}
+      </div>
       </div>
   );
 }

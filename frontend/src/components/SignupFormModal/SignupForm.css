@@ -22,7 +22,6 @@ ul {
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .submit-label {
@@ -32,8 +31,8 @@ ul {
     align-items: center;
 }
 
-/* input {
-    width: 100%;
-    padding: 10px;
-    align-items: center;
-} */
+input{
+    margin-top: 0.5em;
+}
+
+

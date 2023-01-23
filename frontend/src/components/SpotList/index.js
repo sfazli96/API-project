@@ -20,29 +20,29 @@ const SpotList = () => {
     }, [dispatch]) // this makes sure the effect runs only on 1st render
 
     return (
-        <div>
-            <ol>
+        <div className="cards-div">
                 {spots.map(({ id, name, previewImage, city, state, price, avgRating }) => {
                     let rating = parseFloat(avgRating)
                     if (isNaN(rating)) {
                         rating = 0
                     }
                     return (
-                    <ol key={id} className="li2">
+                    <div key={id} className="li2">
                         <div className="spot-container">
                             <NavLink to= {`/spots/${id}`} className="spot-nav-link">
                                 <div className="image-text-container">
                                     <img src={previewImage} alt={name} className="img"/>
-                                    <p className="text">{city}, {state}</p>
+                                    <div className="city-rating-div">
+                                        <p className="text">{city}, {state}</p>
+                                        <p className="reviews">{rating.toFixed(2)}</p>
+                                    </div>
                                     <p className="price">${price} night</p>
-                                    <p className="reviews">{rating.toFixed(2)}</p>
                                 </div>
                             </NavLink>
                         </div>
-                    </ol>
+                    </div>
                     )
                 })}
-            </ol>
 
             <Switch>
                 <Route path='/spots/:id'>
