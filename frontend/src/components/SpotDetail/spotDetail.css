@@ -15,6 +15,17 @@
     left: -420px;
     bottom: -40px;
     position: relative;
+    font-family: 'Sofia Sans', sans-serif;
+}
+
+.text-overlay-description {
+    text-align: center;
+    position: relative;
+    left: -520px;
+    /* bottom: -10px; */
+    top: 895px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .text-overlay-reviews {
@@ -22,6 +33,7 @@
     left: -140px;
     bottom: -40px;
     position: relative;
+    font-family: 'Sofia Sans', sans-serif;
 }
 
 .spotDetail-rating {
@@ -49,6 +61,8 @@
     position: relative;
     right: 85px;
     top: -40px;
+    font-family: 'Sofia Sans', sans-serif;
+    font-weight: bold;
 }
 
 .num-review-container {
@@ -74,6 +88,7 @@
 .delete-review-button {
     background-color: transparent;
     border: none;
+
 }
 
 /* .delete-review-button:hover {
@@ -104,13 +119,14 @@
 
 .spotDetail-price {
     align-self: flex-start;
-    font-weight: bold;
+    font-weight: bolder;
     position: relative;
     top: 845px;
     /* bottom: 20px; */
     left: 515px;
     margin: auto;
     font-size: 24px;
+    font-family: 'Sofia Sans', sans-serif;
 }
 
 .spot-detail-container img {
@@ -126,13 +142,17 @@
     width: 800px;
 }
 
-.Button2::before {
+/* .Button2::before {
     content: "+";
-    /* font-size: 24px; */
+    font-size: 24px;
     margin-right: 10px;
     color: rgb(4, 206, 4);
-}
+} */
 
+
+.Button2 > #edit-spot-modal-detail {
+    border-radius: 2px solid red;
+}
 
 @media (max-width: 1120px) {
     .spot-detail-container img {

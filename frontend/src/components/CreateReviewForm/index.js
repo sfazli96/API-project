@@ -37,7 +37,6 @@ const CreateReviewForm = () => {
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
             <label className="form-label4">
-                Review
                 <textarea className="input" rows='4' cols='50'
                 // type="textarea"
                 value={review}

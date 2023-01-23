@@ -42,9 +42,12 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={() => setShowMenu(!showMenu)}>
+    <div className="Navbar">
+
+      <button className= "button-dropdown" onClick={() => setShowMenu(!showMenu)}>
         <i className="fas fa-user-circle" />
       </button>
+    </div>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>

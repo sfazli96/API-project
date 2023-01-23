@@ -63,7 +63,7 @@ const SpotDetail = () => {
         <div className="spot-detail-container">
             <h1 className="text-overlay">{spotDetail.name}</h1>
             <p className="text-overlay">{spotDetail.address}, {spotDetail.city}, {spotDetail.state}, {spotDetail.country}</p>
-            <p className="text-overlay">{spotDetail.description}</p>
+            <p className="text-overlay-description">{spotDetail.description}</p>
             <p className="spotDetail-price">${spotDetail.price} night</p>
             {spotDetail.SpotImages.map((image, index) => {
                 return <img src={image.url} alt={spotDetail.name} className="spot-image" key={index}/>
@@ -88,7 +88,7 @@ const SpotDetail = () => {
                     </div>
                 })}
             </div>
-            <OpenModalButton buttonText ="Edit a spot" modalComponent={<EditSpotModal/>}
+            <OpenModalButton buttonText ={<div id="edit-spot-modal-detail">Edit a spot</div>} modalComponent={<EditSpotModal/>}
             />
             <DeleteSpotModal />
             {/* <div className="spot-image">

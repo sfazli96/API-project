@@ -38,27 +38,20 @@ function Navigation({ isLoaded }){
 
   return (
     <div className="NavBar">
-
-    <ol>
-      {/* <li>
-        <NavLink exact to="/">Home</NavLink>
-      </li> */}
+      <NavLink to="/">
+        <h2>airSFRents</h2>
+      </NavLink>
+      <li className='add-spot-button'>
+      <OpenModalButton
+      buttonText={<div id='spot-button'>Add a Spot</div>}
+      modalComponent={<CreateSpotModal />}
+      />
+      </li>
       {isLoaded && (
         <li>
           <ProfileButton user={sessionUser} />
         </li>
       )}
-      <li className='add-spot-button'>
-      <OpenModalButton
-      buttonText="Add a Spot"
-      modalComponent={<CreateSpotModal />}
-      />
-      </li>
-      <NavLink to="/">
-        <h2>airSFRents</h2>
-      </NavLink>
-      {/* <i class="fa-thin fa-apartment"></i> */}
-    </ol>
       </div>
   );
 }

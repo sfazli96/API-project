@@ -48,6 +48,7 @@
     position: relative;
     left: -122px;
     bottom: 40px;
+    /* display: flex; */
     /* right: 10px; */
     font-weight: bold;
     font-family: 'Sofia Sans', sans-serif;
@@ -77,7 +78,6 @@
 
 @media only screen and (max-width: 1025px) {
     .li2 {
-      display: block;
       width: 100%;
       margin: 10px 0;
       display: flex;
@@ -95,5 +95,9 @@
         position: relative;
         bottom: 10px;
         left: 0px;
+    }
+    .spot-list-container {
+        display: flex;
+        flex-wrap: wrap;
     }
   }

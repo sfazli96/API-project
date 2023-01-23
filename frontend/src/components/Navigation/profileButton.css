@@ -7,9 +7,17 @@
     box-shadow: 0px 0px 10px #ccc;
     position: absolute;
     top: 100%;
-    right: 0;
+    /* right: 0; */
     z-index: 1;
-    width: 200px;
+    margin-top: -20px;
+    /* position: absolute; */
+    /* top: 100%; */
+    right: 10px;
+    z-index: 1;
+    width: 150px;
+    height: auto;
+    font-family: 'Sofia Sans', sans-serif;
+    font-weight: bold;
   }
 
   .profile-dropdown li {
@@ -17,7 +25,7 @@
   }
 
   .profile-dropdown button {
-    padding: 10px;
+    padding: 5px;
     background-color: #ccc;
     color: #fff;
     border: none;
@@ -27,3 +35,27 @@
   .fa-user-circle {
     font-size: 1.5em;
   }
+
+  /* .button-dropdown {
+    position: relative;
+    right: 10px;
+    left: 40px;
+  } */
+/*
+  .button-dropdown {
+    position: relative;
+    right: 200px;
+  } */
+  .button-dropdown {
+    background-color: #4CAF50;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-family: 'Sofia Sans', sans-serif;
+    font-weight: bold;
+}
+.button-dropdown:hover {
+  background-color: #3e8e41;
+}
