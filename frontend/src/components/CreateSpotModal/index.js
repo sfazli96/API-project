@@ -40,16 +40,16 @@ export const CreateSpotModal = () => {
           setErrors(errors => [...errors, 'Please enter a valid state name (less than 20 characters)'])
           return
         }
-        if (country.length === 0 || country.length > 20) {
-          setErrors(errors => [...errors, 'Please enter a valid country name (less than 20 characters)'])
+        if (country.length === 0 || country.length > 25) {
+          setErrors(errors => [...errors, 'Please enter a valid country name (less than 25 characters)'])
           return
         }
         if (name.length === 0 || name.length > 20) {
           setErrors(errors => [...errors, 'Please enter a valid name (less than 20 characters)'])
           return
         }
-        if (description.length === 0 || description.length > 100) {
-          setErrors(errors => [...errors, 'Please enter a valid description (less than 100 characters)'])
+        if (description.length === 0 || description.length > 50) {
+          setErrors(errors => [...errors, 'Please enter a valid description (less than 50 characters)'])
           return
         }
         if (price <= 0 || !price) {

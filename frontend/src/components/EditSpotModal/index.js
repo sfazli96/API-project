@@ -27,7 +27,7 @@ export const EditSpotModal = () => {
         e.preventDefault()
         setErrors([])
         if (!sessionUser) {
-          setErrors(errors => [...errors, 'User must be signed in to create a spot'])
+          setErrors(errors => [...errors, 'User must be signed in to edit a spot'])
           return
         }
         if (address.length === 0 || address.length > 20) {
@@ -43,7 +43,7 @@ export const EditSpotModal = () => {
           return
         }
         if (country.length === 0 || country.length > 25) {
-          setErrors(errors => [...errors, 'Please enter a valid country name (less than 20 characters)'])
+          setErrors(errors => [...errors, 'Please enter a valid country name (less than 25 characters)'])
           return
         }
         if (name.length === 0 || name.length > 20) {
@@ -51,7 +51,7 @@ export const EditSpotModal = () => {
           return
         }
         if (description.length === 0 || description.length > 50) {
-          setErrors(errors => [...errors, 'Please enter a valid description (less than 100 characters)'])
+          setErrors(errors => [...errors, 'Please enter a valid description (less than 50 characters)'])
           return
         }
         if (price <= 0 || !price) {

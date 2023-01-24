@@ -12,8 +12,8 @@ export const DeleteSpotModal = (props) => {
   const [errors, setErrors] = useState([]);
   const history = useHistory()
 
-  const handleSubmit = () => {
 
+  const handleSubmit = () => {
     setErrors([]);
     return dispatch(spotActions.deleteSpots({id}))
       .then((res) => {
@@ -21,7 +21,10 @@ export const DeleteSpotModal = (props) => {
       })
       .catch(async (res) => {
         if (!res.ok) {
-          setErrors(["An error occurred while deleting the spot. Please try again later."]);
+        console.log("ERROR")
+
+          // setErrors(["An error occurred while deleting the spot. Please try again later."]);
+          alert("YOU CAN'T DELETE IT")
         }
       })
   };
