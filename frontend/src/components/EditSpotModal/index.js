@@ -30,8 +30,8 @@ export const EditSpotModal = () => {
           setErrors(errors => [...errors, 'User must be signed in to edit a spot'])
           return
         }
-        if (address.length === 0 || address.length > 20) {
-          setErrors(errors => [...errors, 'Please enter a valid street address (less than 20 characters)'])
+        if (address.length === 0 || address.length > 25) {
+          setErrors(errors => [...errors, 'Please enter a valid street address (less than 25 characters)'])
           return
         }
         if (city.length === 0 || city.length > 20) {

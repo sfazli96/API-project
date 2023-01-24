@@ -6,13 +6,16 @@
 
 * This project is built with the following technologies that I used:
     - Sequelize
-    - PostgreSQL
     - Javascript
     - React
     - Redux
     - Express
+    - NodeJS
+    - HTML5 / CSS
 
-    
+* Database: PostgreSQL
+* Hosting:
+    - Render
 
 ## Demo user:
 - here is a demo user in the login dropdown menu without sign by, all you have to do is to click on "Demo user" button and it will login as a Demo.
@@ -25,6 +28,11 @@
     - Step 3: Then on local machine, after cloning cd into the project, run npm install in backend directory first then in another terminal run npm install in frontend directories. Using Visual Studio Code helps as well.
     - Step 4: After the packages finished installing, then run npm start in both directories frontend and backend.
     - Step 5: Go to the browser and type in localhost:3000/ and you should see the website or it will pop up after the npm start which starts the server.
+
+## Home Page
+- You can access to login, sign up in the modal on top right. There is demo button included in the login modal to test out the website.
+![HTML5](assets/html5.svg)
+
 
 ## User Authentication
 - As you sign up with a new user, the user can create an account with the following: username, email address, and password.
