@@ -49,7 +49,7 @@ const CreateReviewForm = () => {
                 <input
                 type="number"
                 min="1"
-                max="10"
+                max="5"
                 step="1"
                 value={stars}
                 onChange={(e) => setStars(e.target.value)}

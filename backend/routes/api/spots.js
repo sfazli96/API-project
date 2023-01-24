@@ -292,7 +292,7 @@ router.get('/current', requireAuth, async(req, res, next) => {
 // Get details of a Spot from an id
 router.get('/:spotId', async(req, res, next) => {
     const id = req.params.spotId;
-    const ownerId = req.user.id
+    const ownerId = req.user
     const spots = await Spot.findByPk(id, {
         raw: true
     })
@@ -306,14 +306,14 @@ router.get('/:spotId', async(req, res, next) => {
         return next(err)
     }
 
-    const userOwner = await User.findOne({
-        where: {
-            id: ownerId
-        },
-        model: User,
-        attributes: ["id", "firstName", "lastName"],
-    })
-    spots.Owner = userOwner
+    // const userOwner = await User.findOne({
+    //     where: {
+    //         id: ownerId
+    //     },
+    //     model: User,
+    //     attributes: ["id", "firstName", "lastName"],
+    // })
+    // spots.Owner = userOwner
 
     const reviews = await Review.findAll({
         where: {
