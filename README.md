@@ -31,7 +31,7 @@
 
 ## Home Page
 - You can access to login, sign up in the modal on top right. There is demo button included in the login modal to test out the website.
-![HTML5](assets/html5.svg)
+
 
 
 ## User Authentication
