@@ -34,6 +34,10 @@
 
 
 
+## Sign up Modal Page
+- 
+
+
 ## User Authentication
 - As you sign up with a new user, the user can create an account with the following: username, email address, and password.
 - New users can also use the demo user to login and try out the website.
