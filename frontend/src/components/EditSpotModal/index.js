@@ -50,7 +50,7 @@ export const EditSpotModal = () => {
           setErrors(errors => [...errors, 'Please enter a valid name (less than 20 characters)'])
           return
         }
-        if (description.length === 0 || description.length > 50) {
+        if (description.length === 0 || description.length > 400) {
           setErrors(errors => [...errors, 'Please enter a valid description (less than 50 characters)'])
           return
         }

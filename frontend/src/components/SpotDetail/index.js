@@ -18,6 +18,7 @@ const SpotDetail = () => {
 
     const spotDetail = useSelector(state => state.spot.singleSpot)
     console.log('spotDetail', spotDetail)
+    const user = useSelector(state => state.session.user)
     // select the review from the entries based on the id
     const reviewDetail = useSelector(state => state.review.allReviews)
     const reviews = Object.values(reviewDetail)
@@ -72,9 +73,11 @@ const SpotDetail = () => {
                 </div>
                 </div>
                 <div className="delete-model-div">
-                <OpenModalButton buttonText ={<div id="edit-spot-modal-detail">Edit a spot</div>} modalComponent={<EditSpotModal/>}
+                    {user?.id === spotDetail?.ownerId &&<OpenModalButton buttonText ={<div id="edit-spot-modal-detail">Edit a spot</div>} modalComponent={<EditSpotModal/>}/>}
+                    {user?.id === spotDetail?.ownerId &&<DeleteSpotModal />}
+                {/* <OpenModalButton buttonText ={<div id="edit-spot-modal-detail">Edit a spot</div>} modalComponent={<EditSpotModal/>}
             />
-            <DeleteSpotModal />
+            <DeleteSpotModal /> */}
                 </div>
             </div>
 
