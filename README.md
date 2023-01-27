@@ -1,8 +1,8 @@
-## About AirSfRentals:
+# About AirSfRentals:
+- This is my AirSfRentals is a website clone that is inspired from AirBnB. SfRentals can be used for online vacation rentals, online marketplace for lodging and other activities as well. In the website you can do the following: sign up, login, login as a demo user, create, edit and delete spots as well as create and delete reviews.
 
-- This is my AirSfRentals is a website clone that is inspired from AirBnB. SfRentals can be used for online vacation rentals, online marketplace for lodging and other activities as well. In the website you can do the following: sign up, login, login as demouser, create, edit and delete spots as well as create and delete reviews.
-
-- Live Link: https://sam-airsf.onrender.com
+## Live Link:
+https://sam-airsf.onrender.com
 
 * This project is built with the following technologies that I used:
     - Sequelize
@@ -12,13 +12,13 @@
     - Express
     - NodeJS
     - HTML5 / CSS
+    - Database: PostgreSQL
 
-* Database: PostgreSQL
 * Hosting:
     - Render
 
 ## Demo user:
-- here is a demo user in the login dropdown menu without sign by, all you have to do is to click on "Demo user" button and it will login as a Demo.
+- Here on this website is a demo user in the login dropdown menu without sign by, all you have to do is to click on "Demo user" button and it will login as a Demo.
 
 - My Logo is an apartment house since I was inspired from airBnB logo was for rental places, I decided to choose like an small rental house. Currently, in the website I added some special features such as when a user adds a review it will show as a review card box and if the user wants to delete a review they can just press the trash can to delete it. In the future I plan to add in the CRUD for bookings as well.
 
@@ -32,10 +32,29 @@
 ## Home Page
 - You can access to login, sign up in the modal on top right. There is demo button included in the login modal to test out the website.
 
+![Home page](assets/homepage.PNG)
+
+## Sign up Modal
+-
 
 
-## Sign up Modal Page
-- 
+## Login Modal
+- Here you can see the Login modal where you can sign in as your existing user or as demo user:
+
+![sign-up](assets/login.PNG)
+
+## Create Spot listing Modal
+- This is where the user can create a spot listing that has the correct credentials to fill in. Also the user must include a valid image link as well.
+![Alt text](assets/add-spot.PNG)
+![Alt text](assets/add-spot-2.PNG)
+
+## Listing Page
+- Here you can see the listing that the user created with the address, price, city, state, country, etc including the image link as well.
+
+
+## Review Comments and Card
+- Here the user can create a review and see what they rated the specific place from 1-5 star. They can also delete their review from their own choice.
+
 
 
 ## User Authentication

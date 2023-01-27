@@ -31,7 +31,6 @@ function Navigation({ isLoaded }){
           buttonText="Sign Up"
           modalComponent={<SignupFormModal />}
         />
-
       </li>
     );
   }

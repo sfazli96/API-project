@@ -67,7 +67,7 @@ const SpotDetail = () => {
             <p className="text-overlay-description">{spotDetail.description}</p>
             <div className="rating-model-div">
                 <div className="rating-div">
-                <p className="spotDetail-rating">{reviews.length < 2 ? totalRating : totalRating/2}</p>
+                <p className="spotDetail-rating">{reviews.length < 2 ? totalRating : totalRating/reviews.length}</p>
                 <div className="num-review-container">
                     <p className="num-reviews">{reviews.length} reviews</p>
                 </div>
@@ -95,10 +95,12 @@ const SpotDetail = () => {
                         <p className="review-user"> User: {review?.User?.firstName} {review?.User?.lastName}</p>
                         <p className="review-text">{review.review}</p>
                         <p className="review-rating">Rating: {review.stars}</p>
-                        <button className="delete-review-button" onClick={() => handleDelete(review.id)}>
+                        {/* <button className="delete-review-button" onClick={() => handleDelete(review.id)}> */}
                             {/* Delete Review */}
-                            <i className="fas fa-trash-alt"></i>
-                        </button>
+                            {/* {user?.id === review.userId && <button className ="delete-review-button" onClick={() => handleDelete(review.id)}>Delete Review</button>}
+                            <i className="fas fa-trash-alt"></i> */}
+                        {/* </button> */}
+                        {user?.id === review.userId ? <div className="trashcan" onClick={() => handleDelete(review.id)}><i className="fas fa-trash-alt"></i></div> : null}
                     </div>
                 })}
             </div>
