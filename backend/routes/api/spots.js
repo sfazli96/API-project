@@ -292,9 +292,20 @@ router.get('/current', requireAuth, async(req, res, next) => {
 // Get details of a Spot from an id
 router.get('/:spotId', async(req, res, next) => {
     const id = req.params.spotId;
-    const ownerId = req.user
+    // const ownerId = req.user
     const spots = await Spot.findByPk(id, {
-        raw: true
+        include: [
+            {
+                model: User,
+                as: "Owner",
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: SpotImage,
+                attributes: ['id', 'url', 'preview']
+            }
+        ],
+        // raw: true
     })
 
     if(!spots) {
