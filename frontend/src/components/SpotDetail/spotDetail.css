@@ -24,11 +24,11 @@
 }
 
 .text-overlay-description {
-    text-align: center;
-    position: relative;
+    /* text-align: center; */
+    /* position: relative; */
     left: -520px;
     top: 910px;
-    font-family: Arial, Helvetica, sans-serif;
+    /* font-family: Arial, Helvetica, sans-serif; */
 }
 
 .text-overlay-reviews {
@@ -124,7 +124,8 @@
 
 .spot-detail-container img {
     width: 1200px;
-    height: auto;
+    height: 600px;
+    object-fit: cover;
     border-radius: 5%;
     padding: 10px;
     margin: auto;

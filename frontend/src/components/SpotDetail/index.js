@@ -64,7 +64,6 @@ const SpotDetail = () => {
         <div className="spot-detail-container">
             <h1 className="text-overlay">{spotDetail.name}</h1>
             <p className="text-overlay">{spotDetail.address}, {spotDetail.city}, {spotDetail.state}, {spotDetail.country}</p>
-            <p className="text-overlay-description">{spotDetail.description}</p>
             <div className="rating-model-div">
                 <div className="rating-div">
                 <p className="spotDetail-rating">{reviews.length < 2 ? totalRating : totalRating/reviews.length}</p>
@@ -85,9 +84,13 @@ const SpotDetail = () => {
                 return <img src={image.url} alt={spotDetail.name} className="spot-image" key={index}/>
 
             })}
+            <p className="text-overlay-description">{spotDetail.description}</p>
             <p className="spotDetail-price">${spotDetail.price} night</p>
 
-            <CreateReviewForm />
+            {/* <CreateReviewForm /> */}
+            {/* User can make a review ONLY on other spots they didn't create but should not leave a review on there spot */}
+            {/* Also when user NOT logged in only show all reviews */}
+            {user && user.id !== spotDetail?.ownerId && <CreateReviewForm />}
             <div className="reviews-container">
                 <h3 className="text-overlay-reviews">Reviews:</h3>
                 {reviews.map((review, index) => {

@@ -7,13 +7,14 @@ import "./createReviewForm.css"
 
 const CreateReviewForm = () => {
     const dispatch = useDispatch()
-     const {spotId} = useParams()
+    const {spotId} = useParams()
     const spotsObj = useSelector(state => state.spot.singleSpot)
     const id = spotsObj.id
     const [review, setReview] = useState(spotsObj.review)
     const [stars, setStars] = useState(spotsObj.stars)
     const [errors, setErrors] = useState([])
-     const history = useHistory()
+    const [showForm, setShowForm] = useState(false)
+    const history = useHistory()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -24,40 +25,47 @@ const CreateReviewForm = () => {
             dispatch(getAllReviews(id))
             setReview("")
             setStars("")
+            setShowForm(false)
         })
         .catch(async (res) => {
             const data = await res.json()
             if (data && data.errors) setErrors(data.errors)
         })
     }
+
     return (
-        <form className="createReviewForm" onSubmit={handleSubmit}>
-            <h1 className="h1">Add a Review</h1>
-            <ul className="ul">
-                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-            </ul>
-            <label className="form-label4">
-                <textarea className="input" rows='4' cols='50'
-                // type="textarea"
-                value={review}
-                onChange={(e) => setReview(e.target.value)}
-                required
-            />
-            </label>
-            <label className="form-label4">
-                Stars
-                <input
-                type="number"
-                min="1"
-                max="5"
-                step="1"
-                value={stars}
-                onChange={(e) => setStars(e.target.value)}
-                required
-            />
-        </label>
-        <button className="add-review-button" type="Create">Add a Review</button>
-        </form>
+        <>
+            <button className="add-review-button" onClick={() => setShowForm(true)}>Create a Review</button>
+            {showForm && (
+                <form className="createReviewForm" onSubmit={handleSubmit}>
+                    <h1 className="h1">Add a Review</h1>
+                    <ul className="ul">
+                        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                    </ul>
+                    <label className="form-label4">
+                        <textarea className="input" rows='4' cols='50'
+                        // type="textarea"
+                        value={review}
+                        onChange={(e) => setReview(e.target.value)}
+                        required
+                    />
+                    </label>
+                    <label className="form-label4">
+                        Stars
+                        <input
+                        type="number"
+                        min="1"
+                        max="5"
+                        step="1"
+                        value={stars}
+                        onChange={(e) => setStars(e.target.value)}
+                        required
+                    />
+                </label>
+                <button className="add-review-button" type="Create">Add a Review</button>
+                </form>
+            )}
+        </>
     )
 }
 
