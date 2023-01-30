@@ -91,8 +91,15 @@ export const CreateSpotModal = () => {
     return (
         <form className="add-spot-modal" onSubmit={handleSubmit}>
             <h1 className="h1">Add a Spot</h1>
-            <ul className="ul">
+            {/* <ul className="ul">
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+      </ul> */}
+       <ul className="error-message">
+        {errors.map((error, idx) => (
+          <li key={idx} className="error-text">
+            {error}
+          </li>
+        ))}
       </ul>
       <label className="form-label3">
         Address
@@ -150,12 +157,22 @@ export const CreateSpotModal = () => {
       </label>
       <label className="form-label3">
         Price
-        <input className="input"
+        {/* <input className="input"
           type="text"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           required
+        /> */}
+        <input
+          type="number"
+          name="price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          required
+          min="0"
+          max="9999"
         />
+
       </label>
       <label className="form-label3">
         Add an Image

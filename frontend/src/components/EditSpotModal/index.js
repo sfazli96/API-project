@@ -131,11 +131,20 @@ export const EditSpotModal = () => {
       </label>
       <label className="form-label3">
         Price
-        <input className="input"
+        {/* <input className="input"
           type="text"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           required
+        /> */}
+          <input
+          type="number"
+          name="price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          required
+          min="0"
+          max="9999"
         />
       </label>
       <button className="Button" type="Create">Edit</button>
