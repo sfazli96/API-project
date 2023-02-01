@@ -28,7 +28,7 @@
     /* position: relative; */
     left: -520px;
     top: 910px;
-    /* font-family: Arial, Helvetica, sans-serif; */
+    font-size: 18px;
 }
 
 .text-overlay-reviews {
@@ -97,6 +97,7 @@
 }
 .fa-trash-alt:hover {
     color: #f44336;
+    cursor: pointer;
 }
 
 .review-card {

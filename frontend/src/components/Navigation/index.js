@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
@@ -7,10 +7,15 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import CreateSpotModal from '../CreateSpotModal'
 import './Navigation.css';
+// import UserReviewsPage from '../UserReviewsPage';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
+  const history = useHistory()
 
+  const handleClick = () => {
+    history.push("/reviews/current");
+  };
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
@@ -47,6 +52,7 @@ function Navigation({ isLoaded }){
       modalComponent={<CreateSpotModal />}
       />
       </li>
+        <button onClick={handleClick}>My Reviews</button>
       {isLoaded && (
         <li>
           <ProfileButton user={sessionUser} />

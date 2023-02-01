@@ -5,7 +5,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotList from "./components/SpotList";
 import SpotDetail from "./components/SpotDetail";
-
+import UserReviewsPage from "./components/UserReviewsPage";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,6 +26,7 @@ function App() {
           exact >
             <SpotDetail />
           </Route>
+          <Route path="/reviews/current" component={UserReviewsPage} />
         </Switch>
       )}
     </>

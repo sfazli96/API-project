@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 const LOAD_REVIEWS = 'reviews/loadReviews' // get/read all reviews from a spot
 const ADD_REVIEWS = 'reviews/addReviews' // create reviews
 const DELETE_REVIEWS = 'reviews/deleteReviews' // delete a review
+const LOAD_USER_REVIEWS = 'reviews/loadUserReviews' // only get reviews of current user
 
 // create POJO action creator to get all reviews
 export const loadReviews = (reviews) => ({
@@ -23,9 +24,14 @@ const removeReview = (reviews) => ({
     payload: reviews
 })
 
+const loadAllReviewsForUser = (reviews) => ({
+    type: LOAD_USER_REVIEWS,
+    payload: reviews
+})
+
 // thunk action creator (to get all reviews for a spot)
 export const getAllReviews = (spotId) => async (dispatch) => {
-    console.log('spotId to get all', spotId)
+    // console.log('spotId to get all', spotId)
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
     if (response.ok) {
         const reviewData = await response.json()
@@ -37,7 +43,7 @@ export const getAllReviews = (spotId) => async (dispatch) => {
 
 // thunk action creator (to create a review)
 export const addOneReview = (review, spotId) => async (dispatch) => {
-    console.log('review', review)
+    // console.log('review', review)
 
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',
@@ -63,6 +69,18 @@ export const deleteReview = (reviewId) => async(dispatch) => {
     }
 }
 
+// thunk action creator (to get all reviews of CURRENT user)
+export const getAllReviewsUser = () => async (dispatch) => {
+    const response = await csrfFetch(`/api/reviews/current`)
+    // console.log(response, 'response')
+    if (response.ok) {
+        const reviews = await response.json()
+        console.log({reviews}, 'before dispatch')
+        dispatch(loadAllReviewsForUser(reviews))
+        return reviews
+    }
+}
+
 // initialState
 const initialState = { allReviews: {}, reviews: {} }
 
@@ -77,6 +95,14 @@ export const reviewsReducer = (state = initialState, action) => {
             });
             newState.allReviews = copyState
             return newState
+        case LOAD_USER_REVIEWS:
+            if (!action.payload.Reviews) return state;
+            const allReviews = {};
+            action.payload.Reviews.forEach(review => {
+                allReviews[review.id] = review;
+            });
+            return { ...state, allReviews };
+
         case ADD_REVIEWS:
             // newState = {...state}
             // newState.allReviews[action.payload.id] = action.payload

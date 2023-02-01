@@ -4,6 +4,7 @@ import { getAllReviews } from "../../store/review";
 import * as reviewActions from "../../store/review"
 import { useParams, useHistory } from "react-router-dom";
 import "./createReviewForm.css"
+import { useEffect } from "react";
 
 const CreateReviewForm = () => {
     const dispatch = useDispatch()
@@ -15,6 +16,7 @@ const CreateReviewForm = () => {
     const [errors, setErrors] = useState([])
     const [showForm, setShowForm] = useState(false)
     const history = useHistory()
+    const [showErrors, setShowErrors] = useState(true);
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -29,7 +31,12 @@ const CreateReviewForm = () => {
         })
         .catch(async (res) => {
             const data = await res.json()
-            if (data && data.errors) setErrors(data.errors)
+            if (data && data.errors) {
+                setErrors(data.errors)
+                setTimeout(() => {
+                    setErrors([])
+                }, 6000);
+            }
         })
     }
 
@@ -44,7 +51,6 @@ const CreateReviewForm = () => {
                     </ul>
                     <label className="form-label4">
                         <textarea className="input" rows='4' cols='50'
-                        // type="textarea"
                         value={review}
                         onChange={(e) => setReview(e.target.value)}
                         required

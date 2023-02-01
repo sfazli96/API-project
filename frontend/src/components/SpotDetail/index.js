@@ -17,7 +17,6 @@ const SpotDetail = () => {
     // select the spot from the entries based on the id
 
     const spotDetail = useSelector(state => state.spot.singleSpot)
-    console.log('spotDetail', spotDetail)
     const user = useSelector(state => state.session.user)
     // select the review from the entries based on the id
     const reviewDetail = useSelector(state => state.review.allReviews)
@@ -46,9 +45,6 @@ const SpotDetail = () => {
     })
 
     const handleDelete = (reviewId) => {
-        // e.preventDefault();
-        // setErrors([]);
-        // const reviewId = review.id
         return dispatch(reviewActions.deleteReview(reviewId))
           .then((res) => {
             dispatch(getAllReviews(spotDetail.id))
@@ -74,9 +70,6 @@ const SpotDetail = () => {
                 <div className="delete-model-div">
                     {user?.id === spotDetail?.ownerId &&<OpenModalButton buttonText ={<div id="edit-spot-modal-detail">Edit a spot</div>} modalComponent={<EditSpotModal/>}/>}
                     {user?.id === spotDetail?.ownerId &&<DeleteSpotModal />}
-                {/* <OpenModalButton buttonText ={<div id="edit-spot-modal-detail">Edit a spot</div>} modalComponent={<EditSpotModal/>}
-            />
-            <DeleteSpotModal /> */}
                 </div>
             </div>
 
@@ -92,6 +85,7 @@ const SpotDetail = () => {
             {/* Also when user NOT logged in only show all reviews */}
             {user && user.id !== spotDetail?.ownerId && <CreateReviewForm />}
             <div className="reviews-container">
+
                 <h3 className="text-overlay-reviews">Reviews:</h3>
                 {reviews.map((review, index) => {
                     return <div className="review-card" key={index}>
@@ -103,6 +97,8 @@ const SpotDetail = () => {
                             {/* {user?.id === review.userId && <button className ="delete-review-button" onClick={() => handleDelete(review.id)}>Delete Review</button>}
                             <i className="fas fa-trash-alt"></i> */}
                         {/* </button> */}
+                        <p className="rating-createdAt">CreatedAt: {new Date(review.createdAt).toLocaleDateString()}</p>
+                        <p className="rating-updatedAt">UpdatedAt: {new Date(review.updatedAt).toLocaleDateString()}</p>
                         {user?.id === review.userId ? <div className="trashcan" onClick={() => handleDelete(review.id)}><i className="fas fa-trash-alt"></i></div> : null}
                     </div>
                 })}
