@@ -23,11 +23,11 @@ https://sam-airsf.onrender.com
 - My Logo is an apartment house since I was inspired from airBnB logo was for rental places, I decided to choose like an small rental house. Currently, in the website I added some special features such as when a user adds a review it will show as a review card box and if the user wants to delete a review they can just press the trash can to delete it. In the future I plan to add in the CRUD for bookings as well.
 
 * Setup locally on machine
-    - Step 1: First download, Ubuntu 20.04 terminal to setup: (include link here), also in microsoft store as well.
-    - Step 2: After Ubuntu terminal is finished downloading, Open it, copy and run this command: git clone git@github.com:sfazli96/API-project.git
-    - Step 3: Then on local machine, after cloning cd into the project, run npm install in backend directory first then in another terminal run npm install in frontend directories. Using Visual Studio Code helps as well.
-    - Step 4: After the packages finished installing, then run npm start in both directories frontend and backend.
-    - Step 5: Go to the browser and type in localhost:3000/ and you should see the website or it will pop up after the npm start which starts the server.
+    - Step 1: First download, Ubuntu 20.04 terminal to setup: https://www.microsoft.com/store/productId/9MTTCL66CPXJ
+    - Step 2: After Ubuntu terminal is finished downloading, Open it, copy and run this command: ```git clone git@github.com:sfazli96/API-project.git```
+    - Step 3: Then on your local machine, after cloning copy and paste command in Ubuntu: ```cd API-project``` after that then run: ```run npm install``` in backend directory first. Then in another terminal ```run npm install``` in frontend directory. Use Visual Studio Code as it helps a lot of this setup, other editors are fine as well.
+    - Step 4: After the packages finished installing, then run ```npm start``` in both directories frontend and backend.
+    - Step 5: Go to the browser and type in ```https:localhost:3000/``` and you should see the website or it will pop up after the npm start which starts the server.
 
 ## Home Page
 - You can access to login, sign up in the modal on top right. There is demo button included in the login modal to test out the website.
