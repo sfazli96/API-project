@@ -35,7 +35,7 @@ const CreateReviewForm = () => {
                 setErrors(data.errors)
                 setTimeout(() => {
                     setErrors([])
-                }, 5000);
+                }, 2000);
             }
         })
     }
@@ -53,6 +53,7 @@ const CreateReviewForm = () => {
                         <textarea className="input" rows='4' cols='50'
                         value={review}
                         onChange={(e) => setReview(e.target.value)}
+                        maxLength="350"
                         required
                     />
                     </label>
