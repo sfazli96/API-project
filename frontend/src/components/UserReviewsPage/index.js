@@ -7,10 +7,10 @@ function UserReviewsPage() {
   const dispatch = useDispatch();
   const reviewsObj = useSelector(state => state.review.allReviews)
   // const reviewsObj = useSelector(state => state.review.reviews)
-  const reviews = reviewsObj && reviewsObj.reviews && Object.values(reviewsObj.reviews) || [];
+  // const reviews = reviewsObj && reviewsObj.reviews && Object.values(reviewsObj.reviews) || [];
+  const reviews = Object.values(reviewsObj) || []
   console.log({reviews}, 'reviews')
   const [validationErrors, setValidationErrors] = useState([]);
-
   useEffect(() => {
     dispatch(getAllReviewsUser());
   }, [dispatch]);

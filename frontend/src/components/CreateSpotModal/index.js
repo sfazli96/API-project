@@ -5,6 +5,7 @@ import { useState } from "react";
 import * as spotActions from "../../store/spot"
 import './createSpotModal.css'
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 
 export const CreateSpotModal = () => {
@@ -19,6 +20,7 @@ export const CreateSpotModal = () => {
     const [previewImage, setImage] = useState('')
     const [errors, setErrors] = useState([]);
     const sessionUser = useSelector(state => state.session.user);
+    const history = useHistory()
     const { closeModal } = useModal()
 
     const handleSubmit = async (e) => {
@@ -81,7 +83,11 @@ export const CreateSpotModal = () => {
           return;
       }
         return dispatch(spotActions.addSpot({address, city, state, country, name, description, price, previewImage, lat:10, lng:10}, previewImage))
-        .then(closeModal)
+        // .then(closeModal)
+        .then(() => {
+          closeModal()
+          history.push('/')
+        })
         .catch(async (res) => {
             const data = await res.json()
             if(data && data.errors) setErrors(data.errors)

@@ -72,7 +72,6 @@ export const deleteReview = (reviewId) => async(dispatch) => {
 // thunk action creator (to get all reviews of CURRENT user)
 export const getAllReviewsUser = () => async (dispatch) => {
     const response = await csrfFetch(`/api/reviews/current`)
-    // console.log(response, 'response')
     if (response.ok) {
         const reviews = await response.json()
         console.log({reviews}, 'before dispatch')
@@ -96,10 +95,10 @@ export const reviewsReducer = (state = initialState, action) => {
             newState.allReviews = copyState
             return newState
         case LOAD_USER_REVIEWS:
-            if (!action.payload.Reviews) return state;
+            if (!action.payload) return state
             const allReviews = {};
-            action.payload.Reviews.forEach(review => {
-                allReviews[review.id] = review;
+            action.payload.forEach(review => {
+            allReviews[review.id] = review;
             });
             return { ...state, allReviews };
 

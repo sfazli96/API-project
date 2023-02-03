@@ -43,6 +43,7 @@ const SpotDetail = () => {
     reviews?.forEach(review=> {
         totalRating += parseInt(review.stars);
     })
+    const avgRating = reviews.length < 2 ? totalRating : (totalRating/reviews.length).toFixed(1);
 
     const handleDelete = (reviewId) => {
         return dispatch(reviewActions.deleteReview(reviewId))
@@ -62,7 +63,7 @@ const SpotDetail = () => {
             <p className="text-overlay">{spotDetail.address}, {spotDetail.city}, {spotDetail.state}, {spotDetail.country}</p>
             <div className="rating-model-div">
                 <div className="rating-div">
-                <p className="spotDetail-rating">{reviews.length < 2 ? totalRating : totalRating/reviews.length}</p>
+                <p className="spotDetail-rating">{avgRating}</p>
                 <div className="num-review-container">
                     <p className="num-reviews">{reviews.length} reviews</p>
                 </div>
@@ -87,18 +88,19 @@ const SpotDetail = () => {
             <div className="reviews-container">
 
                 <h3 className="text-overlay-reviews">Reviews:</h3>
-                {reviews.map((review, index) => {
+                {reviews.reverse()
+                .map((review, index) => {
                     return <div className="review-card" key={index}>
-                        <p className="review-user"> User: {review?.User?.firstName} {review?.User?.lastName}</p>
+                        <p className="review-user"> User: {review?.User?.firstName}</p>
                         <p className="review-text">{review.review}</p>
-                        <p className="review-rating">Rating: {review.stars}</p>
+                        <p className="review-rating">{review.stars}</p>
                         {/* <button className="delete-review-button" onClick={() => handleDelete(review.id)}> */}
                             {/* Delete Review */}
                             {/* {user?.id === review.userId && <button className ="delete-review-button" onClick={() => handleDelete(review.id)}>Delete Review</button>}
                             <i className="fas fa-trash-alt"></i> */}
                         {/* </button> */}
-                        <p className="rating-createdAt">CreatedAt: {new Date(review.createdAt).toLocaleDateString()}</p>
-                        <p className="rating-updatedAt">UpdatedAt: {new Date(review.updatedAt).toLocaleDateString()}</p>
+                        {/* <p className="rating-createdAt">CreatedAt: {new Date(review.createdAt).toLocaleDateString()}</p>
+                        <p className="rating-updatedAt">UpdatedAt: {new Date(review.updatedAt).toLocaleDateString()}</p> */}
                         {user?.id === review.userId ? <div className="trashcan" onClick={() => handleDelete(review.id)}><i className="fas fa-trash-alt"></i></div> : null}
                     </div>
                 })}

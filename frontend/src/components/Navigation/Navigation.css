@@ -83,3 +83,15 @@ Button {
 .add-spot-button {
     margin-right: 1em;
 }
+
+.ModalButton {
+    cursor:pointer
+}
+
+.text-login {
+    cursor: pointer;
+}
+
+.text-signup {
+    cursor: pointer;
+}

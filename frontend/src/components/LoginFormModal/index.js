@@ -29,8 +29,6 @@ function LoginFormModal() {
       <h1 className="login">Log In</h1>
       <div className="login-modal">
 
-      <button className="DemoUserButton"
-        onClick={() => dispatch(sessionActions.login({credential: "Demo-lition", password: "password"})).then(closeModal) }>Demo User</button>
       <form className="form" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
@@ -57,6 +55,8 @@ function LoginFormModal() {
         </label>
         <button type="submit" className="submit-button">Log In</button>
       </form>
+            <button className="DemoUserButton"
+              onClick={() => dispatch(sessionActions.login({credential: "Demo-lition", password: "password"})).then(closeModal) }>Demo User</button>
             </div>
     </>
   );

@@ -50,6 +50,13 @@
     position: relative;
 }
 
+.review-rating::before {
+    content:"★";
+    font-size: 20px;
+    color: #F5A623;
+    margin-right:5px;
+}
+
 .reviews-container {
     right: 85px;
     top: -40px;
@@ -109,6 +116,9 @@
     align-items: flex-start;
     background-color: #f9f9f9;
     box-shadow: 2px 2px 2px #ccc;
+    max-width: 400px;
+    height: 140px;
+    max-height: fit-content;
 }
 
 
@@ -167,6 +177,14 @@
     white-space: nowrap;
 } */
 
+.review-text {
+    word-wrap: break-word;
+    /* overflow-y: scroll; */
+    overflow: auto;
+    max-width: -webkit-fill-available;
+    height: 200px;
+    padding: 10px;
+}
 
 @media (max-width: 1120px) {
     .spot-detail-container img {

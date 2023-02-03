@@ -35,7 +35,7 @@ const CreateReviewForm = () => {
                 setErrors(data.errors)
                 setTimeout(() => {
                     setErrors([])
-                }, 6000);
+                }, 5000);
             }
         })
     }
@@ -68,7 +68,7 @@ const CreateReviewForm = () => {
                         required
                     />
                 </label>
-                <button className="add-review-button" type="Create">Add a Review</button>
+                <button className="add-review-button" type="Create">Submit</button>
                 </form>
             )}
         </>
