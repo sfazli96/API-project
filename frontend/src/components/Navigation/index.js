@@ -55,6 +55,7 @@ function Navigation({ isLoaded }){
         <button onClick={handleClick}>My Reviews</button>
       {isLoaded && (
         <li>
+
           <ProfileButton user={sessionUser} />
         </li>
       )}

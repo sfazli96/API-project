@@ -87,18 +87,14 @@ const SpotDetail = () => {
             {user && user.id !== spotDetail?.ownerId && <CreateReviewForm />}
             <div className="reviews-container">
 
-                <h3 className="text-overlay-reviews">Reviews:</h3>
+                {/* <h3 className="text-overlay-reviews">Reviews:</h3> */}
+                {/* <p className="num-reviews">{reviews.length} reviews</p> */}
                 {reviews.reverse()
                 .map((review, index) => {
                     return <div className="review-card" key={index}>
-                        <p className="review-user"> User: {review?.User?.firstName}</p>
+                        <p className="review-user">{review?.User?.firstName}</p>
                         <p className="review-text">{review.review}</p>
                         <p className="review-rating">{review.stars}</p>
-                        {/* <button className="delete-review-button" onClick={() => handleDelete(review.id)}> */}
-                            {/* Delete Review */}
-                            {/* {user?.id === review.userId && <button className ="delete-review-button" onClick={() => handleDelete(review.id)}>Delete Review</button>}
-                            <i className="fas fa-trash-alt"></i> */}
-                        {/* </button> */}
                         {/* <p className="rating-createdAt">CreatedAt: {new Date(review.createdAt).toLocaleDateString()}</p>
                         <p className="rating-updatedAt">UpdatedAt: {new Date(review.updatedAt).toLocaleDateString()}</p> */}
                         {user?.id === review.userId ? <div className="trashcan" onClick={() => handleDelete(review.id)}><i className="fas fa-trash-alt"></i></div> : null}

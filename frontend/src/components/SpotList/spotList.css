@@ -60,8 +60,10 @@
     /* bottom: 40px; */
     /* display: flex; */
     /* right: 10px; */
-    font-weight: bold;
+    font-weight: bolder;
     font-family: 'Sofia Sans', sans-serif;
+    font-size: 20px;
+    color: black;
 }
 
 .price {
@@ -70,6 +72,9 @@
     /* left: -160px; */
     font-weight: bold;
     font-size: 18px;
+    color: black;
+    float: left;
+    margin: revert;
 }
 
 .reviews {
@@ -85,6 +90,7 @@
     color: #F5A623;
     margin-right:5px;
 }
+
 
 /* @media only screen and (max-width: 1025px) {
     .li2 {

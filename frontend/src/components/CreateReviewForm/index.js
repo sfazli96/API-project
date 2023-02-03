@@ -39,7 +39,11 @@ const CreateReviewForm = () => {
             }
         })
     }
-
+    const handleChange = (e) => {
+        if (e.target.value.length <= 150) {
+            setReview(e.target.value);
+        }
+    };
     return (
         <>
             <button className="add-review-button" onClick={() => setShowForm(true)}>Create a Review</button>
@@ -52,8 +56,7 @@ const CreateReviewForm = () => {
                     <label className="form-label4">
                         <textarea className="input" rows='4' cols='50'
                         value={review}
-                        onChange={(e) => setReview(e.target.value)}
-                        maxLength="350"
+                        onChange={handleChange}
                         required
                     />
                     </label>

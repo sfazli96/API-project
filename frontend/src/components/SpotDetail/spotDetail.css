@@ -14,8 +14,10 @@
     left: -420px;
     bottom: -40px;
     font-family: 'Sofia Sans', sans-serif;
-    margin-top: 2em;
+    /* margin-top: 2em; */
+    margin: 0.5em;
     font-weight: bolder;
+    text-decoration: underline;
 }
 
 .rating-div{
@@ -35,11 +37,13 @@
     left: -140px;
     bottom: -40px;
     font-family: 'Sofia Sans', sans-serif;
+    text-decoration: underline;
 }
 
 .spotDetail-rating {
     align-self: center;
     font-weight: bold;
+    font-size: 20px;
 }
 
 .spotDetail-rating::before {
@@ -66,7 +70,8 @@
 
 .num-review-container {
     margin-left: 0.7em;
-    margin-top: 0.4em;
+    margin-top: 0.15em;
+    font-size: 20px;
 }
 
 .delete-model-div{
@@ -98,6 +103,7 @@
     text-decoration: underline;
 } */
 
+
 .fa-trash-alt {
     background-color: transparent;
     border: none;
@@ -107,7 +113,14 @@
     cursor: pointer;
 }
 
-.review-card {
+.trashcan {
+    justify-content: flex-end;
+    /* border: 1px red solid; */
+    display: flex;
+    width: 100%;
+}
+
+/* .review-card {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
@@ -119,6 +132,40 @@
     max-width: 400px;
     height: 140px;
     max-height: fit-content;
+} */
+
+.review-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #f9f9f9;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    height: 140px;
+    max-height: fit-content;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #ccc;
+}
+
+@media only screen and (min-width: 769px) {
+    .review-card {
+        height: 200px;
+        border-radius: 10px;
+    }
 }
 
 
