@@ -27,6 +27,7 @@ https://sam-airsf.onrender.com
     - Step 2: After Ubuntu terminal is finished downloading, Open it, copy and run this command: ```git clone git@github.com:sfazli96/API-project.git```
     - Step 3: Then on your local machine, after cloning copy and paste command in Ubuntu: ```cd API-project``` after that then run: ```run npm install``` in backend directory first. Then in another terminal ```run npm install``` in frontend directory. Use Visual Studio Code as it helps a lot of this setup, other editors are fine as well.
     - Step 4: After the packages finished installing, then run ```npm start``` in both directories frontend and backend.
+    Note: If ```npm start``` does not work in backend folder, try to run the command ```npm run start:development``` and in frontend folder as well if the problem persists of ```npm start``` not working.
     - Step 5: Go to the browser and type in ```https:localhost:3000/``` and you should see the website or it will pop up after the npm start which starts the server.
 
 ## Home Page

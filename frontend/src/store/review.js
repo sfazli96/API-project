@@ -5,6 +5,7 @@ const LOAD_REVIEWS = 'reviews/loadReviews' // get/read all reviews from a spot
 const ADD_REVIEWS = 'reviews/addReviews' // create reviews
 const DELETE_REVIEWS = 'reviews/deleteReviews' // delete a review
 const LOAD_USER_REVIEWS = 'reviews/loadUserReviews' // only get reviews of current user
+const USER_SPECIFIC_REVIEWS = 'reviews/userSpecificReviews' // get reviews of a specific user
 
 // create POJO action creator to get all reviews
 export const loadReviews = (reviews) => ({
@@ -28,6 +29,12 @@ const loadAllReviewsForUser = (reviews) => ({
     type: LOAD_USER_REVIEWS,
     payload: reviews
 })
+
+const loadUserSpecificReviews = (reviews) => ({
+    type: USER_SPECIFIC_REVIEWS,
+    payload: reviews
+})
+
 
 // thunk action creator (to get all reviews for a spot)
 export const getAllReviews = (spotId) => async (dispatch) => {
@@ -75,13 +82,14 @@ export const getAllReviewsUser = () => async (dispatch) => {
     if (response.ok) {
         const reviews = await response.json()
         console.log({reviews}, 'before dispatch')
-        dispatch(loadAllReviewsForUser(reviews))
+        // dispatch(loadAllReviewsForUser(reviews))
+        dispatch(loadUserSpecificReviews(reviews.Review))
         return reviews
     }
 }
 
 // initialState
-const initialState = { allReviews: {}, reviews: {} }
+const initialState = { allReviews: {}, reviews: {}, userSpecificReviews: {} }
 
 export const reviewsReducer = (state = initialState, action) => {
     let newState;
@@ -101,7 +109,13 @@ export const reviewsReducer = (state = initialState, action) => {
             allReviews[review.id] = review;
             });
             return { ...state, allReviews };
-
+        case USER_SPECIFIC_REVIEWS:
+            if (!action.payload) return state
+                const userSpecificReviews = {};
+                action.payload.forEach(review => {
+                userSpecificReviews[review.id] = review;
+            });
+            return { ...state, userSpecificReviews };
         case ADD_REVIEWS:
             // newState = {...state}
             // newState.allReviews[action.payload.id] = action.payload
