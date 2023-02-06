@@ -95,3 +95,20 @@ Button {
 .text-signup {
     cursor: pointer;
 }
+
+.user-review-button:hover {
+    border: 1px;
+    border-radius: 5px;
+    background-color: rgb(187, 186, 186);
+    cursor: pointer;
+}
+
+.user-review-button {
+    cursor: pointer;
+    background-color: white;
+    border-radius: 10px;
+    font-family: 'Sofia Sans', sans-serif;
+    font-weight: bolder;
+    font-size: 18px;
+    margin: 20px;
+}

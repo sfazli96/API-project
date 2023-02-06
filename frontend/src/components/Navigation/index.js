@@ -47,12 +47,12 @@ function Navigation({ isLoaded }){
       </NavLink>
     <div className='add-spot-div'>
       <li className='add-spot-button'>
+        <button onClick={handleClick} className='user-review-button'>My Reviews</button>
       <OpenModalButton
       buttonText={<div id='spot-button'>Add a Spot</div>}
       modalComponent={<CreateSpotModal />}
       />
       </li>
-        <button onClick={handleClick}>My Reviews</button>
       {isLoaded && (
         <li>
 
