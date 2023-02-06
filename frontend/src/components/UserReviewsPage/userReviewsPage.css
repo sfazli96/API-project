@@ -31,5 +31,5 @@
     margin-right:5px;
   }
   .user-review {
-
+    overflow-y: scroll;
   }
