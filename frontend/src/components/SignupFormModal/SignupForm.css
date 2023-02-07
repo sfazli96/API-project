@@ -54,3 +54,14 @@ ul {
 input{
     margin-top: 0.5em;
 }
+.error-message {
+    text-align: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .error-text {
+    color: red;
+    font-weight: bold;
+  }

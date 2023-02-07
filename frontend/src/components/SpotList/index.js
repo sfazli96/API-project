@@ -23,8 +23,10 @@ const SpotList = () => {
         <div className="cards-div">
                 {spots.map(({ id, name, previewImage, city, state, price, avgRating }) => {
                     let rating = parseFloat(avgRating)
+                    // console.log(rating, 'before if statement')
                     if (isNaN(rating)) {
                         rating = 0
+                        // console.log('rating is NaN')
                     }
                     return (
                     <div key={id} className="li2">

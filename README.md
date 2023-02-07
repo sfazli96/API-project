@@ -36,18 +36,19 @@ https://sam-airsf.onrender.com
 ![Home page](assets/homepage.PNG)
 
 ## Sign up Modal
--
+- Here you can see that you can sign up with the required information email, username, first and last name then password.
+![sign-up](assets/sign-up.PNG)
 
 
 ## Login Modal
 - Here you can see the Login modal where you can sign in as your existing user or as demo user:
 
-![sign-up](assets/login.PNG)
+![login-up](assets/login.PNG)
 
 ## Create Spot listing Modal
 - This is where the user can create a spot listing that has the correct credentials to fill in. Also the user must include a valid image link as well.
-![Alt text](assets/add-spot.PNG)
-![Alt text](assets/add-spot-2.PNG)
+![create-spot](assets/add-spot.PNG)
+![create-spot](assets/add-spot-2.PNG)
 
 ## Listing Page
 - Here you can see the listing that the user created with the address, price, city, state, country, etc including the image link as well.
@@ -55,6 +56,10 @@ https://sam-airsf.onrender.com
 
 ## Review Comments and Card
 - Here the user can create a review and see what they rated the specific place from 1-5 star. They can also delete their review from their own choice.
+
+
+## My Reviews Page
+- Here the user can see all the reviews that they created. They can remove there reviews or go to the spot where they made the review.
 
 
 

@@ -1,8 +1,10 @@
 .user-review-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     margin-top: 70px;
+    justify-content: space-around;
+    flex-wrap: wrap;
   }
 
   .single-review {
@@ -14,6 +16,7 @@
     border-radius: 10px;
     text-align: center;
     overflow-y: scroll;
+    font-family: Helvetica Neue,sans-serif;
   }
 
   .user-review-error {
@@ -32,4 +35,9 @@
   }
   .user-review {
     overflow-y: scroll;
+  }
+
+  .star-in-date {
+    justify-content: center;
+    align-items: baseline
   }

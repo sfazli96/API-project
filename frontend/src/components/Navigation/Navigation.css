@@ -71,7 +71,8 @@ h2::before {
 #spot-button:hover {
     border: 1px;
     border-radius: 5px;
-    background-color: rgb(187, 186, 186);
+    /* background-color: rgba(76, 175, 79, 0.568); */
+    background-color: rgba(235, 91, 8, 0.644);
     cursor: pointer;
 }
 
@@ -92,16 +93,26 @@ Button {
     cursor: pointer;
 }
 
+.text-login:hover {
+    background-color: rgba(255, 166, 0, 0.13);
+}
+
 .text-signup {
     cursor: pointer;
+}
+
+.text-signup:hover {
+    background-color: rgba(255, 166, 0, 0.13);
 }
 
 .user-review-button:hover {
     border: 1px;
     border-radius: 5px;
-    background-color: rgb(187, 186, 186);
+    /* background-color: rgba(76, 175, 79, 0.568); */
+    background-color: rgba(235, 91, 8, 0.644);
     cursor: pointer;
 }
+
 
 .user-review-button {
     cursor: pointer;

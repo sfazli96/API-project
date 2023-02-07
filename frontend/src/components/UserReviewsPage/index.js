@@ -19,7 +19,7 @@ function UserReviewsPage() {
 
   useEffect(() => {
     if (!user) {
-      setValidationErrors(["You must be logged in to see your reviews"]);
+      setValidationErrors(["You must be logged in to see your reviews!"]);
     } else if (reviews.length === 0) {
       setValidationErrors(["No reviews are here, make a review on a spot"]);
     } else {
@@ -52,11 +52,13 @@ function UserReviewsPage() {
                 {review.Spot?.city || "N/A"}, {review.Spot?.state || "N/A"}
               </div>
               <div className="user-review">{review.review}</div>
-              <div className="user-review-stars">Stars: {review.stars}</div>
-              <div className="user-review-createdAt">
+              <div className="star-in-date">
+                <div className="user-review-stars">Stars: {review.stars}</div>
+                <div className="user-review-createdAt">
+              </div>
                 CreatedAt: {new Date(review.createdAt).toLocaleDateString()}
               </div>
-              
+
             </div>
           ))}
         </div>

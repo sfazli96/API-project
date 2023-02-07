@@ -15,6 +15,7 @@
   height: auto;
   font-family: 'Sofia Sans', sans-serif;
   font-weight: bold;
+  border-radius: 5%;
 }
 
 .profile-dropdown li {
@@ -29,12 +30,17 @@
   cursor: pointer;
 }
 
+.logout:hover {
+  background-color: rgba(255, 0, 0, 0.692);
+}
+
 .fa-user-circle {
   font-size: 1.5em;
 }
 
 .button-dropdown {
-  background-color: #4CAF50;
+  /* background-color: #4CAF50; */
+  background-color: rgba(235, 91, 8, 0.76);
   color: #fff;
   border-radius: 5px;
   font-size: 1rem;
@@ -45,5 +51,6 @@
 }
 
 .button-dropdown:hover {
-  background-color: #3e8e41;
+  /* background-color: #3e8e41; */
+  background-color: rgb(235, 91, 8);
 }
