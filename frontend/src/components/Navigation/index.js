@@ -46,8 +46,8 @@ function Navigation({ isLoaded }){
         <h2>airSFRents</h2>
       </NavLink>
     <div className='add-spot-div'>
-      <li className='add-spot-button'>
         <button onClick={handleClick} className='user-review-button'>My Reviews</button>
+      <li className='add-spot-button'>
       <OpenModalButton
       buttonText={<div id='spot-button'>Add a Spot</div>}
       modalComponent={<CreateSpotModal />}

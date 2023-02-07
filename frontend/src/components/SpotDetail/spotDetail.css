@@ -17,7 +17,7 @@
     /* margin-top: 2em; */
     margin: 0.5em;
     font-weight: bolder;
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
 
 .rating-div{
@@ -231,6 +231,16 @@
     max-width: -webkit-fill-available;
     height: 200px;
     padding: 10px;
+}
+
+.spot-link {
+    color: black;
+}
+
+.spot-link:hover {
+    border: 1px;
+    border-radius: 5px;
+    background-color: rgb(187, 186, 186);
 }
 
 @media (max-width: 1120px) {

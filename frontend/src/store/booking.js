@@ -63,5 +63,15 @@ export const deleteBooking = (bookingId) => async(dispatch) => {
 const initialState = { user: {}, spot: {} }
 
 export const bookingsReducer = (state= initialState, action) => {
-    let newState;
+    switch(action.type) {
+        case LOAD_BOOKINGS:
+            return {...state, user: action.payload}
+        case ADD_BOOKINGS:
+            return {...state, spot: {...state.spot, [action.payload.id]: action.payload}}
+        case DELETE_BOOKINGS:
+            const { [action.payload.id]: removed, ...rest} = state.spot
+            return {...state, spot: rest}
+        default:
+            return state
+    }
 }

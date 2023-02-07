@@ -1,15 +1,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllReviewsUser } from "../../store/review";
+import { getAllReviewsUser, deleteReview  } from "../../store/review";
 import "./userReviewsPage.css";
+import { Link } from "react-router-dom";
 
 function UserReviewsPage() {
   const dispatch = useDispatch();
   const reviewsObj = useSelector((state) => state.review.userSpecificReviews);
   const { user } = useSelector((state) => state.session);
-  // const reviewsObj = useSelector(state => state.review.reviews)
-  // const reviews = reviewsObj && reviewsObj.reviews && Object.values(reviewsObj.reviews) || [];
   const reviews = Object.values(reviewsObj) || [];
 
   const [validationErrors, setValidationErrors] = useState([]);
@@ -26,7 +25,6 @@ function UserReviewsPage() {
     } else {
       setValidationErrors([]);
     }
-    // setValidationErrors(errors);
   }, [reviews.length, user]);
 
   return (
@@ -43,7 +41,12 @@ function UserReviewsPage() {
         <div className="user-review-container">
           {reviews.reverse()?.map((review) => (
             <div className="single-review" key={review.id}>
-              <div>Spot Name: {review.Spot?.name || "N/A"}</div>
+              {/* <div>Spot Name: {review.Spot?.name || "N/A"}</div> */}
+              <div>
+                <Link to={`/spots/${review.Spot.id}`} className="spot-link">
+                  {review.Spot?.name || "N/A"}
+                </Link>
+              </div>
               <div>
                 Address: {review.Spot?.address || "N/A"},{" "}
                 {review.Spot?.city || "N/A"}, {review.Spot?.state || "N/A"}
@@ -53,6 +56,7 @@ function UserReviewsPage() {
               <div className="user-review-createdAt">
                 CreatedAt: {new Date(review.createdAt).toLocaleDateString()}
               </div>
+              
             </div>
           ))}
         </div>

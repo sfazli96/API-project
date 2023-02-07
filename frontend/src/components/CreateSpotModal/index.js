@@ -163,12 +163,6 @@ export const CreateSpotModal = () => {
       </label>
       <label className="form-label3">
         Price
-        {/* <input className="input"
-          type="text"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          required
-        /> */}
         <input
           type="number"
           name="price"
