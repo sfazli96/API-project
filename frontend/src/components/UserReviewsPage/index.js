@@ -58,7 +58,19 @@ function UserReviewsPage() {
               </div>
                 CreatedAt: {new Date(review.createdAt).toLocaleDateString()}
               </div>
-
+              <div className="delete-review-container">
+                {/* <button className="delete-review-button" onClick={() => dispatch(deleteReview(review.id))}>
+                  <i className="fas fa-trash"></i>
+                </button> */}
+                <button className="delete-review-button" onClick={() => {
+                  dispatch(deleteReview(review.id));
+                  setTimeout(() => {
+                    dispatch(getAllReviewsUser());
+                  }, 1000);
+                }}>
+                  <i className="fas fa-trash"></i>
+                </button>
+              </div>
             </div>
           ))}
         </div>

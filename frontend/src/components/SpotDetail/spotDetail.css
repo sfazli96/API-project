@@ -161,12 +161,6 @@
     background-color: #ccc;
 }
 
-@media only screen and (min-width: 769px) {
-    .review-card {
-        height: 200px;
-        border-radius: 10px;
-    }
-}
 
 
 .spotDetail-price {
@@ -242,6 +236,13 @@
     border-radius: 5px;
     /* background-color: rgba(76, 175, 79, 0.568); */
     background-color: rgba(235, 91, 8, 0.644);
+}
+
+@media only screen and (min-width: 769px) {
+    .review-card {
+        height: 200px;
+        border-radius: 10px;
+    }
 }
 
 @media (max-width: 1120px) {
