@@ -68,7 +68,7 @@ function UserReviewsPage() {
                     dispatch(getAllReviewsUser());
                   }, 1000);
                 }}>
-                  <i className="fas fa-trash"></i>
+                  <i className="fas fa-trash-alt"></i>
                 </button>
               </div>
             </div>

@@ -42,5 +42,18 @@
     align-items: baseline
   }
 
+  /* .fa .fas {
+    cursor: pointer;
+  } */
 
-  
+.delete-review-button {
+    justify-content: flex-end;
+    /* border: 1px red solid; */
+    /* display: flex; */
+    width: 3.5%;
+    cursor: pointer;
+}
+
+.delete-review-button:hover {
+  color: #f44336;
+}
