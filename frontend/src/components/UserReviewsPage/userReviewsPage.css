@@ -3,6 +3,7 @@
     flex-direction: row;
     align-items: center;
     margin-top: 70px;
+    /* justify-content: space-evenly; */
     justify-content: space-around;
     flex-wrap: wrap;
   }
@@ -15,7 +16,7 @@
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     border-radius: 10px;
     text-align: center;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     font-family: Helvetica Neue,sans-serif;
   }
 
@@ -35,6 +36,8 @@
   }
   .user-review {
     overflow-y: scroll;
+    /* width: 150px; */
+    word-break: break-word;
   }
 
   .star-in-date {
@@ -57,3 +60,12 @@
 .delete-review-button:hover {
   color: #f44336;
 }
+
+.edit-review-form {
+  box-sizing: border-box;
+}
+
+/* .review-container-text {
+  max-width: 150px;
+  text-align: center;
+} */

@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllReviewsUser, deleteReview  } from "../../store/review";
+import { getAllReviewsUser, deleteReview, editReview } from "../../store/review";
 import "./userReviewsPage.css";
 import { Link } from "react-router-dom";
 
@@ -10,7 +10,10 @@ function UserReviewsPage() {
   const reviewsObj = useSelector((state) => state.review.userSpecificReviews);
   const { user } = useSelector((state) => state.session);
   const reviews = Object.values(reviewsObj) || [];
-
+  const [newReviewData, setNewReviewData] = useState({});
+  const [isEditing, setIsEditing] = useState(null);
+  const [newReview, setNewReview] = useState("");
+  const [newStars, setNewStars] = useState("");
   const [validationErrors, setValidationErrors] = useState([]);
   useEffect(() => {
     if (user)
@@ -27,6 +30,20 @@ function UserReviewsPage() {
     }
   }, [reviews.length, user]);
 
+  const handleEdit = (reviewId) => {
+    setIsEditing(reviewId);
+  };
+
+  const handleSave = (reviewId) => {
+    setNewReviewData({ review: newReview, stars: newStars });
+    dispatch(editReview(reviewId, newReviewData));
+    setTimeout(() => {
+      dispatch(getAllReviewsUser());
+    }, 1000);
+    setIsEditing(null);
+  };
+
+
   return (
     <>
       <h1>User Reviews</h1>
@@ -41,22 +58,24 @@ function UserReviewsPage() {
         <div className="user-review-container">
           {reviews.reverse()?.map((review) => (
             <div className="single-review" key={review.id}>
-              {/* <div>Spot Name: {review.Spot?.name || "N/A"}</div> */}
-              <div>
-                <Link to={`/spots/${review.Spot.id}`} className="spot-link">
-                  {review.Spot?.name || "N/A"}
-                </Link>
-              </div>
-              <div>
-                Address: {review.Spot?.address || "N/A"},{" "}
-                {review.Spot?.city || "N/A"}, {review.Spot?.state || "N/A"}
-              </div>
-              <div className="user-review">{review.review}</div>
-              <div className="star-in-date">
-                <div className="user-review-stars">Stars: {review.stars}</div>
-                <div className="user-review-createdAt">
-              </div>
-                CreatedAt: {new Date(review.createdAt).toLocaleDateString()}
+              <div className="review-container-text">
+                {/* <div>Spot Name: {review.Spot?.name || "N/A"}</div> */}
+                <div>
+                  <Link to={`/spots/${review.Spot.id}`} className="spot-link">
+                    {review.Spot?.name || "N/A"}
+                  </Link>
+                </div>
+                <div>
+                  Address: {review.Spot?.address || "N/A"},{" "}
+                  {review.Spot?.city || "N/A"}, {review.Spot?.state || "N/A"}
+                </div>
+                <div className="user-review">{review.review}</div>
+                <div className="star-in-date">
+                  <div className="user-review-stars">Stars: {review.stars}</div>
+                  <div className="user-review-createdAt">
+                  </div>
+                  CreatedAt: {new Date(review.createdAt).toLocaleDateString()}
+                </div>
               </div>
               <div className="delete-review-container">
                 {/* <button className="delete-review-button" onClick={() => dispatch(deleteReview(review.id))}>
@@ -70,6 +89,35 @@ function UserReviewsPage() {
                 }}>
                   <i className="fas fa-trash-alt"></i>
                 </button>
+                {/* <button className="edit-review-button" onClick={() => {
+                  dispatch(editReview(review.id, newReviewData));
+                  setTimeout(() => {
+                    dispatch(getAllReviewsUser());
+                  }, 1000);
+                }}>
+                  <i className="fas fa-edit"></i>
+              </button> */}
+                <button onClick={() => handleEdit(review.id)}>
+                  <i className="fas fa-edit"></i>
+                </button>
+
+                {isEditing === review.id ? (
+                  <div className="edit-review-form">
+                    <textarea
+                      value={newReview}
+                      onChange={(e) => setNewReview(e.target.value)}
+                    />
+                    <input
+                      type="number"
+                      min="1"
+                      max="5"
+                      // step="1"
+                      value={newStars}
+                      onChange={(e) => setNewStars(e.target.value)}
+                    />
+                    <button onClick={() => handleSave(review.id)}>Save</button>
+                  </div>
+                ) : null}
               </div>
             </div>
           ))}
