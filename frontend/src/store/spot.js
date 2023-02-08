@@ -6,7 +6,7 @@ const ADD_SPOTS = 'spots/addSpots' // create spots
 const EDIT_SPOTS = 'spots/editSpots' // editing/update a spot
 const DELETE_SPOTS = 'spots/deleteSpots' // deleting a spot
 const LOAD_ONE_SPOT = 'spots/oneSpot' // load one spot
-
+// const USER_SPECIFIC_SPOTS = 'reviews/userSpecificSpots' // get spots of a specific user
 // create POJO action creator to get all spots
 export const loadSpots = (spots) => ({
     type: LOAD_SPOTS,
@@ -35,6 +35,11 @@ export const removeSpots = (id) => ({
     type: DELETE_SPOTS,
     payload: id
 })
+
+// export const loadUserSpecificSpots = (spots) => ({
+//     type: USER_SPECIFIC_SPOTS,
+//     payload: spots
+// })
 
 // thunk action creator (to get all spots, spot details)
 export const getSpots = () => async (dispatch) => {
@@ -107,8 +112,17 @@ export const deleteSpots = (spot) => async (dispatch) => {
     }
 }
 
+// export const getAllSpotUser = () => async (dispatch) => {
+//     const response = await csrfFetch(`/api/spots/current`)
+//     if (response.ok) {
+//         const spots = await response.json()
+//         dispatch(loadUserSpecificSpots(spots.Spots))
+//         return spots
+//     }
+// }
+
 // initial state for reducer with empty 'entries' array
-const initialState = { allSpots: {}, singleSpot: {}}
+const initialState = { allSpots: {}, singleSpot: {}, userSpecificSpots: {}}
 
 // This handles the actions and updates the state
 export const spotsReducer = (state = initialState, action) => {
@@ -125,14 +139,19 @@ export const spotsReducer = (state = initialState, action) => {
             newState = {...state}
             newState.singleSpot = action.payload
             return newState
+        // case USER_SPECIFIC_SPOTS:
+        //     if (!action.payload) return state
+        //         const userSpecificSpots = {}
+        //         action.payload.forEach(spot => {
+        //             userSpecificSpots[spot.id] = spot
+        //         });
+        //     return { ...state, userSpecificSpots }
         case ADD_SPOTS:
             newState = {...state}
             let copy = {...newState.allSpots}
             copy[action.payload.id] = action.payload
             newState.allSpots = copy
             return newState
-            // newState.allSpots = {...newState.allSpots, [action.payload.id]: action.payload};
-            // return newState;
         case EDIT_SPOTS:
             let updateSingleSpot = {...state.singleSpot, ...action.payload}
             return {...state,singleSpot: updateSingleSpot}

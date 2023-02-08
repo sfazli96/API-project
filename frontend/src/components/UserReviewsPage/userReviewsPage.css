@@ -10,7 +10,9 @@
 
   .single-review {
     width: 400px;
-    height: 200px;
+    /* height: 200px; */
+    min-height: 200px;
+    max-height: fit-content;
     padding: 20px;
     margin-top: 20px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -69,3 +71,14 @@
   max-width: 150px;
   text-align: center;
 } */
+
+.text-area {
+  min-height: 100px;
+  width: 250px;
+  max-height: fit-content;
+  margin: 5px;
+}
+
+.input-type {
+  
+}

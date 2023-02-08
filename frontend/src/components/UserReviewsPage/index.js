@@ -32,6 +32,9 @@ function UserReviewsPage() {
 
   const handleEdit = (reviewId) => {
     setIsEditing(reviewId);
+    const reviewToEdit = reviews.find((review) => review.id === reviewId)
+    setNewReview(reviewToEdit.review)
+    setNewStars(reviewToEdit.stars)
   };
 
   const handleSave = (reviewId) => {
@@ -78,9 +81,6 @@ function UserReviewsPage() {
                 </div>
               </div>
               <div className="delete-review-container">
-                {/* <button className="delete-review-button" onClick={() => dispatch(deleteReview(review.id))}>
-                  <i className="fas fa-trash"></i>
-                </button> */}
                 <button className="delete-review-button" onClick={() => {
                   dispatch(deleteReview(review.id));
                   setTimeout(() => {
@@ -104,10 +104,13 @@ function UserReviewsPage() {
                 {isEditing === review.id ? (
                   <div className="edit-review-form">
                     <textarea
+                      placeholder="Edit your review"
+                      className="text-area"
                       value={newReview}
                       onChange={(e) => setNewReview(e.target.value)}
                     />
                     <input
+                      className="input-type"
                       type="number"
                       min="1"
                       max="5"
