@@ -25,25 +25,27 @@ export const removeReview = (reviews) => ({
     payload: reviews
 })
 
+// create POJO action creator to load all reviews for user
 export const loadAllReviewsForUser = (reviews) => ({
     type: LOAD_USER_REVIEWS,
     payload: reviews
 })
 
+// create POJO action creator to load user specific reviews
 export const loadUserSpecificReviews = (reviews) => ({
     type: USER_SPECIFIC_REVIEWS,
     payload: reviews
 })
 
-export const updateReview = (review) => ({
+// create POJO action creator to edit/update reviews
+export const updateReview = (reviews) => ({
     type: EDIT_REVIEWS,
-    payload: review
+    payload: reviews
 })
 
 
 // thunk action creator (to get all reviews for a spot)
 export const getAllReviews = (spotId) => async (dispatch) => {
-    // console.log('spotId to get all', spotId)
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
     if (response.ok) {
         const reviewData = await response.json()
@@ -55,8 +57,6 @@ export const getAllReviews = (spotId) => async (dispatch) => {
 
 // thunk action creator (to create a review)
 export const addOneReview = (review, spotId) => async (dispatch) => {
-    // console.log('review', review)
-
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',
         body: JSON.stringify(review)
@@ -94,7 +94,8 @@ export const getAllReviewsUser = () => async (dispatch) => {
 }
 
 export const editReview = (review) => async (dispatch) => {
-    console.log('reviews', review)
+    console.log('reviewId', review.id)
+    console.log('review', review)
     const response = await csrfFetch(`/api/reviews/${review.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -102,8 +103,8 @@ export const editReview = (review) => async (dispatch) => {
     })
     if (response.ok) {
         const data = await response.json()
+        console.log('before dispatch', data)
         dispatch(updateReview(data))
-        console.log('after dispatch', data)
         return data
     }
 }
@@ -131,21 +132,20 @@ export const reviewsReducer = (state = initialState, action) => {
             return { ...state, allReviews };
         case USER_SPECIFIC_REVIEWS:
             if (!action.payload) return state
-                const userSpecificReviews = {};
-                action.payload.forEach(review => {
-                userSpecificReviews[review.id] = review;
+            const userSpecificReviews = {};
+            action.payload.forEach(review => {
+            userSpecificReviews[review.id] = review;
             });
             return { ...state, userSpecificReviews };
         case ADD_REVIEWS:
-            // newState = {...state}
-            // newState.allReviews[action.payload.id] = action.payload
-            // return newState
             newState = { ...state, allReviews: {...state.allReviews}};
             newState.allReviews[action.payload.id] = action.payload;
             return newState
         case EDIT_REVIEWS:
-            let updatedReview = {...state.reviews[action.payload.id], ...action.payload}
-            return {...state, reviews: {...state.reviews, [action.payload.id]: updatedReview}}
+            let updatedReview = {...state.reviews, ...action.payload}
+            return {...state, reviews: updatedReview}
+            // let updatedReview = {...state.reviews[action.payload.id], ...action.payload}
+            // return {...state, reviews: {...state.reviews, [action.payload.id]: updatedReview}}
         case DELETE_REVIEWS:
             newState = {...state, allReviews: {...state.allReviews}}
             delete newState.allReviews[action.payload.id]

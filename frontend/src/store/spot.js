@@ -66,7 +66,7 @@ export const addSpot = (spots, spotImages) => async (dispatch) => {
     })
     if (response.ok) {
         const data = await response.json()
-        console.log('new spot', data)
+        // console.log('new spot', data)
         const spotId = data.id
         const imageResponse = await csrfFetch(`/api/spots/${spotId}/images`, {
             method: 'POST',
@@ -74,7 +74,7 @@ export const addSpot = (spots, spotImages) => async (dispatch) => {
         })
         if (imageResponse.ok) {
             const imageData = await imageResponse.json();
-            console.log('new spot image', imageData)
+            // console.log('new spot image', imageData)
             const combined = {...data, previewImage: imageData.url}
             combined.avgRating = 'no reviews are found'
             dispatch(createSpots(combined))
@@ -86,7 +86,7 @@ export const addSpot = (spots, spotImages) => async (dispatch) => {
 
 
 export const editSpots = (spots) => async (dispatch) => {
-    console.log('spots', spots)
+    // console.log('spots', spots)
     const response = await csrfFetch(`/api/spots/${spots.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -95,7 +95,7 @@ export const editSpots = (spots) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json()
         dispatch(updateSpots(data))
-        console.log('after dispatch', data)
+        // console.log('after dispatch', data)
         return data
     }
 }

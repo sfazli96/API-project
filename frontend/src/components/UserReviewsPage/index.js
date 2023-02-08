@@ -30,22 +30,17 @@ function UserReviewsPage() {
     }
   }, [reviews.length, user]);
 
-  const handleEdit = (reviewId) => {
-    setIsEditing(reviewId);
-    const reviewToEdit = reviews.find((review) => review.id === reviewId)
-    setNewReview(reviewToEdit.review)
-    setNewStars(reviewToEdit.stars)
-  };
+  const handleEdit = (review) => {
+    setIsEditing(review.id);
+    setNewReviewData(review);
+    setNewReview(review.review);
+    setNewStars(review.stars);
+};
 
-  const handleSave = (reviewId) => {
-    setNewReviewData({ review: newReview, stars: newStars });
-    dispatch(editReview(reviewId, newReviewData));
-    setTimeout(() => {
-      dispatch(getAllReviewsUser());
-    }, 1000);
+const handleSave = () => {
+    dispatch(editReview(newReviewData));
     setIsEditing(null);
-  };
-
+};
 
   return (
     <>
@@ -89,15 +84,7 @@ function UserReviewsPage() {
                 }}>
                   <i className="fas fa-trash-alt"></i>
                 </button>
-                {/* <button className="edit-review-button" onClick={() => {
-                  dispatch(editReview(review.id, newReviewData));
-                  setTimeout(() => {
-                    dispatch(getAllReviewsUser());
-                  }, 1000);
-                }}>
-                  <i className="fas fa-edit"></i>
-              </button> */}
-                <button onClick={() => handleEdit(review.id)}>
+                <button className='edit-review-button' onClick={() => handleEdit(review)}>
                   <i className="fas fa-edit"></i>
                 </button>
 
@@ -114,11 +101,10 @@ function UserReviewsPage() {
                       type="number"
                       min="1"
                       max="5"
-                      // step="1"
                       value={newStars}
                       onChange={(e) => setNewStars(e.target.value)}
                     />
-                    <button onClick={() => handleSave(review.id)}>Save</button>
+                    <button className='save-review' onClick={() => handleSave(review)}>Save</button>
                   </div>
                 ) : null}
               </div>

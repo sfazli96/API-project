@@ -9,6 +9,7 @@ import OpenModalButton from '../OpenModalButton'
 import './spotDetail.css'
 import CreateReviewForm from "../CreateReviewForm";
 import * as reviewActions from "../../store/review";
+import Bookings from "../Bookings";
 
 // the json information for the get all spots
 const SpotDetail = () => {
@@ -81,10 +82,10 @@ const SpotDetail = () => {
             <p className="text-overlay-description">{spotDetail.description}</p>
             <p className="spotDetail-price">${spotDetail.price} night</p>
 
-            {/* <CreateReviewForm /> */}
             {/* User can make a review ONLY on other spots they didn't create but should not leave a review on there spot */}
             {/* Also when user NOT logged in only show all reviews */}
             {user && user.id !== spotDetail?.ownerId && <CreateReviewForm />}
+            <Bookings />
             <div className="reviews-container">
 
                 {/* <h3 className="text-overlay-reviews">Reviews:</h3> */}
