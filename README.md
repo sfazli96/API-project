@@ -33,7 +33,7 @@ https://sam-airsf.onrender.com
 ## Home Page
 - You can access to login, sign up in the modal on top right. There is demo button included in the login modal to test out the website.
 
-![Home page](assets/homepage.PNG)
+![Home page](assets/home-page.PNG)
 
 ## Sign up Modal
 - Here you can see that you can sign up with the required information email, username, first and last name then password.

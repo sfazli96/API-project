@@ -94,8 +94,8 @@ export const getAllReviewsUser = () => async (dispatch) => {
 }
 
 export const editReview = (review) => async (dispatch) => {
-    console.log('reviewId', review.id)
-    console.log('review', review)
+    // console.log('reviewId', review.id)
+    // console.log('review', review)
     const response = await csrfFetch(`/api/reviews/${review.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

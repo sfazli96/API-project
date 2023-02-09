@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllReviewsUser, deleteReview, editReview } from "../../store/review";
 import "./userReviewsPage.css";
 import { Link } from "react-router-dom";
+import * as reviewActions from '../../store/review'
 
 function UserReviewsPage() {
   const dispatch = useDispatch();
   const reviewsObj = useSelector((state) => state.review.userSpecificReviews);
+  // console.log('reviewsOBJ', reviewsObj)
   const { user } = useSelector((state) => state.session);
   const reviews = Object.values(reviewsObj) || [];
   const [newReviewData, setNewReviewData] = useState({});
@@ -30,15 +32,18 @@ function UserReviewsPage() {
     }
   }, [reviews.length, user]);
 
-  const handleEdit = (review) => {
-    setIsEditing(review.id);
-    setNewReviewData(review);
-    setNewReview(review.review);
-    setNewStars(review.stars);
+  // set isEditing state to id of the review being edited
+  // update the state variables 'newReviewData', 'newReview' and 'newStars' with the values of review being edited
+ const handleEdit = (review) => {
+  setIsEditing(review.id);
+  setNewReviewData({ id: review.id, review: review.review, stars: review.stars });
+  setNewReview(review.review);
+  setNewStars(review.stars);
 };
 
+// This function dispatches the editReview action with an object containing the id of the review being edited
 const handleSave = () => {
-    dispatch(editReview(newReviewData));
+    dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars}));
     setIsEditing(null);
 };
 
