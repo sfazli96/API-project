@@ -56,6 +56,9 @@
 
 .edit-review-form {
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .text-area {
@@ -69,15 +72,85 @@
 }
 
 .input-type {
-  margin-top: 20px;
-  margin-left: -50px;
+  /* margin-top: 20px;
+  margin-left: -50px; */
   float: right;
+  text-align: center;
 }
+/*
+.edit-review-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 250px;
+  margin: 10px auto;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+
+}
+
+.edit-review-form input[type="text"] {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+}
+
+.edit-review-form textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  resize: none;
+  min-height: 100px;
+  max-height: 200px;
+  overflow-y: scroll;
+} */
+
 
 .edit-review-button {
   cursor: pointer;
 }
 
-.save-review {
+.edit-review-button:hover {
+  background-color: yellow;
+}
 
+.save-review {
+  background-color: rgba(0, 128, 0, 0.733);
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 155px;
+}
+
+
+.save-review:hover {
+  background-color: rgba(0, 128, 0, 0.671);
+}
+
+.cancel-review {
+  background-color: rgba(255, 0, 0, 0.747);
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: -155px;
+  margin-top: -39px;
+}
+
+.cancel-review:hover {
+  background-color: rgba(255, 0, 0, 0.651);
 }

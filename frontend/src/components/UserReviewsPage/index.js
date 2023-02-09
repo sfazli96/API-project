@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllReviewsUser, deleteReview, editReview } from "../../store/review";
 import "./userReviewsPage.css";
 import { Link } from "react-router-dom";
-import * as reviewActions from '../../store/review'
 
 function UserReviewsPage() {
   const dispatch = useDispatch();
@@ -45,6 +44,12 @@ function UserReviewsPage() {
 const handleSave = () => {
     dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars}));
     setIsEditing(null);
+};
+
+const handleCancel = () => {
+  setIsEditing(null);
+  setNewReview("");
+  setNewStars("");
 };
 
   return (
@@ -110,6 +115,7 @@ const handleSave = () => {
                       onChange={(e) => setNewStars(e.target.value)}
                     />
                     <button className='save-review' onClick={() => handleSave(review)}>Save</button>
+                    <button className="cancel-review" onClick={() => handleCancel(review)}>Cancel</button>
                   </div>
                 ) : null}
               </div>
