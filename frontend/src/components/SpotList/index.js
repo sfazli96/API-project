@@ -22,7 +22,7 @@ const SpotList = () => {
     return (
         <div className="cards-div">
                 {spots.map(({ id, name, previewImage, city, state, price, avgRating }) => {
-                    let rating = parseFloat(avgRating)
+                    let rating = parseFloat(avgRating).toFixed(2)
                     // console.log(rating, 'before if statement')
                     if (isNaN(rating)) {
                         rating = 0
@@ -36,7 +36,7 @@ const SpotList = () => {
                                     <img src={previewImage} alt={name} className="img"/>
                                     <div className="city-rating-div">
                                         <p className="text">{city}, {state}</p>
-                                        <p className="reviews">{rating.toFixed(2)}</p>
+                                        <p className="reviews">{avgRating.toFixed(2)}</p>
                                     </div>
                                     <p className="price">${price} night</p>
                                 </div>

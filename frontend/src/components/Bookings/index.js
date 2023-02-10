@@ -1,27 +1,69 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import * as bookingsAction from "../../store/booking"
+import * as bookingsAction from "../../store/booking";
 import { getAllBookings } from "../../store/booking";
+import Calendar from "react-calendar";
+import "./bookings.css";
+import 'react-calendar/dist/Calendar.css';
 
 const Bookings = () => {
-    const { id } = useParams()
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const { spotId } = useParams();
+  const bookingDetail = useSelector((state) => state.booking.allBookings);
+  const bookingsArr = Object.values(bookingDetail);
+  const user = useSelector((state) => state.session.user);
+  const spotDetail = useSelector((state) => state.spot.singleSpot);
+  const [showCalendar, setShowCalendar] = useState(false);
 
-    const bookingDetail = useSelector(state => state.booking.getAllBookings)
-    // const bookingsArr = Object.values(bookingDetail)
-    const user = useSelector(state => state.session.user)
-    const spotDetail = useSelector(state => state.spot.singleSpot)
+  useEffect(() => {
+    dispatch(getAllBookings(spotId));
+  }, [dispatch, spotId]);
 
-    useEffect(() => {
-        dispatch(getAllBookings(id))
-    }, [dispatch, id])
+  const [selectedRange, setSelectedRange] = useState([null, null]);
 
-    return (
-        <div className="booking-container">
+  const onRangeChange = (range) => {
+    setSelectedRange(range);
+  };
 
-        </div>
-    )
-}
+  return (
+    <div className="booking-container">
+      <button className='show-calendar' onClick={() => setShowCalendar(!showCalendar)}>
+        {showCalendar ? "Hide Calendar" : "Show Calendar"}
+      </button>
+      {showCalendar ? (
+        user.id === spotDetail.userId ? (
+          <>
+            <h2>Bookings for your spot</h2>
+            <ul>
+              {bookingsArr.map(({id, spotId, userId, startDate, endDate, firstName, lastName}) => (
+                  <li key={id}>
+                    <p>
+                      User: {firstName} {lastName}
+                    </p>
+                    <p>Start Date: {startDate}</p>
+                    <p>End Date: {endDate}</p>
+                  </li>
+                )
+              )}
+            </ul>
+          </>
+        ) : (
+          <>
+            <div className="calendar-container">
+              <Calendar
+                onChange={onRangeChange}
+                value={selectedRange}
+                selectRange={true}
+                className="calendar"
+              />
+              <p>Selected range: {selectedRange[0] ? selectedRange[0].toLocaleDateString() : 'None'} to {selectedRange[1] ? selectedRange[1].toLocaleDateString() : 'None'}</p>
+            </div>
+          </>
+        )
+      ) : null}
+    </div>
+  );
+};
 
 export default Bookings;

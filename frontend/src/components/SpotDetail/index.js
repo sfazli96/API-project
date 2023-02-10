@@ -85,7 +85,7 @@ const SpotDetail = () => {
             {/* User can make a review ONLY on other spots they didn't create but should not leave a review on there spot */}
             {/* Also when user NOT logged in only show all reviews */}
             {user && user.id !== spotDetail?.ownerId && <CreateReviewForm />}
-            <Bookings />
+                <Bookings />
             <div className="reviews-container">
 
                 {/* <h3 className="text-overlay-reviews">Reviews:</h3> */}

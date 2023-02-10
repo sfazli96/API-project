@@ -59,18 +59,13 @@ const CreateReviewForm = () => {
                         onChange={handleChange}
                         required
                     />
-                    </label>
-                    <label className="form-label4">
-                        Stars
-                        <input
-                        type="number"
-                        min="1"
-                        max="5"
-                        step="1"
-                        value={stars}
-                        onChange={(e) => setStars(e.target.value)}
-                        required
-                    />
+                    <select className="input-type" value={stars} onChange={(e) => setStars(e.target.value)}>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
                 </label>
                 <button className="add-review-button" type="Create">Submit</button>
                 </form>

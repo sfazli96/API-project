@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 function UserReviewsPage() {
   const dispatch = useDispatch();
+  
   const reviewsObj = useSelector((state) => state.review.userSpecificReviews);
   // console.log('reviewsOBJ', reviewsObj)
   const { user } = useSelector((state) => state.session);
@@ -42,8 +43,8 @@ function UserReviewsPage() {
 
 // This function dispatches the editReview action with an object containing the id of the review being edited
 const handleSave = () => {
-    dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars}));
-    setIsEditing(null);
+  dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars}));
+  setIsEditing(null);
 };
 
 const handleCancel = () => {
@@ -106,14 +107,21 @@ const handleCancel = () => {
                       value={newReview}
                       onChange={(e) => setNewReview(e.target.value)}
                     />
-                    <input
+                    {/* <input
                       className="input-type"
                       type="number"
                       min="1"
                       max="5"
                       value={newStars}
                       onChange={(e) => setNewStars(e.target.value)}
-                    />
+                    /> */}
+                    <select className="input-type" value={newStars} onChange={(e) => setNewStars(e.target.value)}>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
                     <button className='save-review' onClick={() => handleSave(review)}>Save</button>
                     <button className="cancel-review" onClick={() => handleCancel(review)}>Cancel</button>
                   </div>

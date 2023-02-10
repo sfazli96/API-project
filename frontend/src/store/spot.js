@@ -7,6 +7,7 @@ const EDIT_SPOTS = 'spots/editSpots' // editing/update a spot
 const DELETE_SPOTS = 'spots/deleteSpots' // deleting a spot
 const LOAD_ONE_SPOT = 'spots/oneSpot' // load one spot
 // const USER_SPECIFIC_SPOTS = 'reviews/userSpecificSpots' // get spots of a specific user
+
 // create POJO action creator to get all spots
 export const loadSpots = (spots) => ({
     type: LOAD_SPOTS,
