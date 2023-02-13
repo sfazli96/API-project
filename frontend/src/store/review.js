@@ -142,9 +142,9 @@ export const reviewsReducer = (state = initialState, action) => {
             newState.allReviews[action.payload.id] = action.payload;
             return newState
         case EDIT_REVIEWS:
-                const updatedReviews = { ...state.reviews }
-                updatedReviews[action.payload.id] = action.payload
-                return { ...state, reviews: updatedReviews }
+            const updatedReviews = { ...state.reviews }
+            updatedReviews[action.payload.id] = action.payload
+            return { ...state, reviews: updatedReviews }
 
             // let updatedReviews = {...state.reviews}
             // updatedReviews[action.payload.id] = action.payload

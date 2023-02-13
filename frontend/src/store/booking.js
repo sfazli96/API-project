@@ -33,7 +33,6 @@ export const updateBookings = (bookings) => ({
 // thunk action creator (to get all bookings for a spot)
 export const getAllBookings = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/bookings`)
-    // console.log('RESPONSE', response)
     if (response.ok) {
         const bookingData = await response.json()
         // console.log({bookingData})
@@ -56,7 +55,7 @@ export const addBookings = (booking) => async (dispatch) => {
 }
 
 // thunk action creator (to delete a booking)
-export const deleteBooking = (bookingId) => async(dispatch) => {
+export const deleteBooking = (bookingId) => async (dispatch) => {
     const response = await csrfFetch(`/api/bookings/${bookingId}`, {
         method: 'DELETE'
     })
@@ -83,13 +82,13 @@ export const editBookings = (booking) => async (dispatch) => {
 
 // initialState
 // const initialState = { allBookings: {}, user: {}, spot: {} }
-const initialState = { allBookings: {}, singleBooking: {}}
+const initialState = { allBookings: {}, singleBooking: {} }
 
-export const bookingsReducer = (state= initialState, action) => {
+export const bookingsReducer = (state = initialState, action) => {
     let newState;
-    switch(action.type) {
+    switch (action.type) {
         case LOAD_BOOKINGS:
-            newState = {...state}
+            newState = { ...state }
             let copy = {}
             action.payload.Booking.forEach(booking => {
                 copy[booking.id] = booking
@@ -97,17 +96,19 @@ export const bookingsReducer = (state= initialState, action) => {
             newState.allBookings = copy
             return newState
         case ADD_BOOKINGS:
-           newState = {...state}
-           let copy2 = {...newState.allBookings}
-           copy[action.payload.id] = action.payload
-           newState.allBookings = copy2
-           return newState;
+            newState = { ...state }
+            let copy2 = { ...newState.allBookings }
+            copy[action.payload.id] = action.payload
+            newState.allBookings = copy2
+            return newState;
         case EDIT_BOOKINGS:
-            let updateSingleBooking = {...state.singleBooking, ...action.payload}
-            return {...state, singleBooking: updateSingleBooking}
+            const updatedBookings = { ...state.singleBooking }
+            updatedBookings[action.payload.id] = action.payload
+            return { ...state, singleBooking: updatedBookings }
         case DELETE_BOOKINGS:
-            const { [action.payload.id]: removed, ...rest} = state.spot
-            return {...state, spot: rest}
+            newState = { ...state, allBookings: { ...state.allBookings } }
+            delete newState.allBookings[action.payload.id]
+            return newState
         default:
             return state
     }

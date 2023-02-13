@@ -7,7 +7,7 @@ const SET_DEMO_USER = 'session/demoUser'
 // create POJO action creator to get user
 export const setUser = (user) => ({
     type: SET_USER,
-    payload: user,
+    payload: user
 })
 
 // create POJO action creator to logout user
@@ -24,27 +24,30 @@ export const setDemoUser = (user) => ({
 export const restoreUser = () => async dispatch => {
     const response = await csrfFetch('/api/session');
     const data = await response.json();
+    console.log(data, 'data')
     dispatch(setUser(data.user));
     return response;
   };
 
 // thunk action creator (for sign up the user)
 export const signup = (user) => async (dispatch) => {
-    const { username, firstName, lastName, email, password } = user
-    const response = await csrfFetch('/api/users', {
-        method: 'POST',
-        body: JSON.stringify({
-            username,
-            firstName,
-            lastName,
-            email,
-            password
-        })
-    })
+    const { username, firstName, lastName, email, password } = user;
+    const response = await csrfFetch("/api/users", {
+      method: "POST",
+      body: JSON.stringify({
+        username,
+        firstName,
+        lastName,
+        email,
+        password,
+      }),
+    });
     const data = await response.json();
-    dispatch(setUser(data.user))
-    return response
-}
+    console.log(data, 'DATA')
+    // dispatch(setUser(data.user));
+    dispatch(setUser(data))
+    return response;
+  };
 
 // thunk action creator (login for the user)
 export const login = (user) => async (dispatch) => {
