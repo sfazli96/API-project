@@ -206,7 +206,7 @@ router.get('/', validateQueryError, async (req, res, next) => {
             spot.avgRating = average
         }
         if (!spot.avgRating) {
-            spot.avgRating = "no reviews are found"
+            spot.avgRating = 0
         }
         delete spot.SpotImages
         delete spot.Reviews

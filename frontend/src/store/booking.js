@@ -43,10 +43,10 @@ export const getAllBookings = (spotId) => async (dispatch) => {
 }
 
 // thunk action creator (to create a booking)
-export const addBookings = (spot) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spot.id}/bookings`, {
+export const addBookings = (booking) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${booking.id}/bookings`, {
         method: 'POST',
-        body: JSON.stringify(spot)
+        body: JSON.stringify(booking)
     })
     if (response.ok) {
         const booking = await response.json()
@@ -97,7 +97,14 @@ export const bookingsReducer = (state= initialState, action) => {
             newState.allBookings = copy
             return newState
         case ADD_BOOKINGS:
-            return {...state, spot: {...state.spot, [action.payload.id]: action.payload}}
+           newState = {...state}
+           let copy2 = {...newState.allBookings}
+           copy[action.payload.id] = action.payload
+           newState.allBookings = copy2
+           return newState;
+        case EDIT_BOOKINGS:
+            let updateSingleBooking = {...state.singleBooking, ...action.payload}
+            return {...state, singleBooking: updateSingleBooking}
         case DELETE_BOOKINGS:
             const { [action.payload.id]: removed, ...rest} = state.spot
             return {...state, spot: rest}

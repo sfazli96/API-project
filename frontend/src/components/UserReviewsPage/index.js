@@ -7,11 +7,10 @@ import { Link } from "react-router-dom";
 
 function UserReviewsPage() {
   const dispatch = useDispatch();
-  
   const reviewsObj = useSelector((state) => state.review.userSpecificReviews);
   // console.log('reviewsOBJ', reviewsObj)
   const { user } = useSelector((state) => state.session);
-  const reviews = Object.values(reviewsObj) || [];
+  const reviews = Object.values(reviewsObj) || {} || [];
   const [newReviewData, setNewReviewData] = useState({});
   const [isEditing, setIsEditing] = useState(null);
   const [newReview, setNewReview] = useState("");
@@ -42,10 +41,12 @@ function UserReviewsPage() {
 };
 
 // This function dispatches the editReview action with an object containing the id of the review being edited
-const handleSave = () => {
-  dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars}));
+const handleSave = async () => {
+  await dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars}));
+  dispatch(getAllReviewsUser());
   setIsEditing(null);
 };
+
 
 const handleCancel = () => {
   setIsEditing(null);
