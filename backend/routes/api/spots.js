@@ -202,9 +202,8 @@ router.get('/', validateQueryError, async (req, res, next) => {
         if(!spots.previewImage) {
             spots.previewImage = 'no image found'
         }
-        else {
-            spot.avgRating = average
-        }
+        spot.avgRating = average
+
         if (!spot.avgRating) {
             spot.avgRating = 0
         }

@@ -13,7 +13,7 @@ const SpotList = () => {
     // Object.values converts the object to an array
     const spotObj = useSelector(state => state.spot.allSpots)
     const spots = Object.values(spotObj)
-
+    // console.log(spots, 'SPOTS')
     // this useEffect gets called the "getSpots"  action when the component is 1st rendered.
     useEffect(() => {
         dispatch(getSpots())
