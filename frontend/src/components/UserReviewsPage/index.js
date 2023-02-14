@@ -41,10 +41,15 @@ function UserReviewsPage() {
 
 // This function dispatches the editReview action with an object containing the id of the review being edited
 const handleSave = async () => {
-  await dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars}));
-  dispatch(getAllReviewsUser()); // dispatch the action, to retrieve updated data for reviews of user
-  setIsEditing(null); // controls the display of review form
+  if (newReview.length > 100) {
+    window.alert('Review is too long, try again!');
+  } else {
+    await dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars}));
+    dispatch(getAllReviewsUser());
+    setIsEditing(null);
+  }
 };
+
 
 
 const handleCancel = () => {
