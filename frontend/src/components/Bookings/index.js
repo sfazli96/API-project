@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as bookingsAction from "../../store/booking";
-import { getAllBookings } from "../../store/booking";
+// import { getAllBookings } from "../../store/booking";
 import Calendar from "react-calendar";
 import "./bookings.css";
 import 'react-calendar/dist/Calendar.css';
@@ -17,9 +17,9 @@ const Bookings = () => {
   const spotDetail = useSelector((state) => state.spot.singleSpot);
   const [showCalendar, setShowCalendar] = useState(false);
 
-  useEffect(() => {
-    dispatch(getAllBookings(id));
-  }, [dispatch, id]);
+  // useEffect(() => {
+  //   dispatch(getAllBookings(id));
+  // }, [dispatch, id]);
 
   const [selectedRange, setSelectedRange] = useState([null, null]);
 
@@ -58,7 +58,7 @@ const Bookings = () => {
       }
       return false;
     }
-    
+
     if (conflicts) {
       alert("The selected dates conflict with an existing booking");
       return;

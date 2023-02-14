@@ -99,7 +99,6 @@ export const editReview = (review) => async (dispatch) => {
     })
     if (response.ok) {
         const data = await response.json()
-        console.log('before dispatch', data)
         dispatch(updateReview(data))
         return data
     }

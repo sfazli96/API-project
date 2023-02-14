@@ -31,15 +31,15 @@ export const updateBookings = (bookings) => ({
 
 
 // thunk action creator (to get all bookings for a spot)
-export const getAllBookings = (id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${id}/bookings`)
-    if (response.ok) {
-        const bookingData = await response.json()
-        // console.log({bookingData})
-        dispatch(loadBookings(bookingData))
-        return bookingData
-    }
-}
+// export const getAllBookings = (id) => async (dispatch) => {
+//     const response = await csrfFetch(`/api/spots/${id}/bookings`)
+//     if (response.ok) {
+//         const bookingData = await response.json()
+//         // console.log({bookingData})
+//         dispatch(loadBookings(bookingData))
+//         return bookingData
+//     }
+// }
 
 // thunk action creator (to create a booking)
 export const addBookings = (booking) => async (dispatch) => {
