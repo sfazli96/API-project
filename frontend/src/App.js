@@ -27,8 +27,8 @@ function App() {
           exact >
             <SpotDetail />
           </Route>
-          <Route path="/reviews/current" component={UserReviewsPage} />
-          <Route exact path="/spots/current">
+          <Route path="/myReviews" component={UserReviewsPage} />
+          <Route path="/mySpots">
             <UserSpotsPage />
           </Route>
         </Switch>

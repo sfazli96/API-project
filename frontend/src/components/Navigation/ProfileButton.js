@@ -34,11 +34,11 @@ function ProfileButton({ user }) {
     closeMenu();
   };
   const handleClick = () => {
-    history.push("/reviews/current");
+    history.push("/myReviews");
   };
 
   const handleClickSpotPage = () =>{
-    history.push("/spots/current")
+    history.push("/mySpots")
   }
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 

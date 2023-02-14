@@ -1,46 +1,64 @@
 import React, { useEffect, useState } from 'react';
 import { getAllSpotUser } from '../../store/spot';
 import { useDispatch, useSelector } from 'react-redux';
-
+import "./userSpotsPage.css"
 const UserSpotsPage = () => {
   const dispatch = useDispatch();
   const userSpecificSpots = useSelector(state => state.spot.userSpecificSpots);
-  console.log(userSpecificSpots, 'USER')
+  // const spots = Object.values(userSpecificSpots);
+  const spots = userSpecificSpots ? Object.values(userSpecificSpots) : [];
+  console.log('SPOTS', spots)
   const user = useSelector(state => state.session.user);
-  const spots = Object.values(userSpecificSpots);
+  const reviewDetail = useSelector(state => state.review.allReviews)
+  const reviews = Object.values(reviewDetail)
   const [validationErrors, setValidationErrors] = useState([]);
 
   useEffect(() => {
+    if (user) {
       dispatch(getAllSpotUser());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (!user) {
-      setValidationErrors(["You must be logged in to see your spots"]);
-    } else if (spots.length === 0) {
-      setValidationErrors(["No spots here, make a spot"]);
-    } else {
-      setValidationErrors([]);
     }
-  }, [spots.length, user]);
+  }, [dispatch, user]);
+
+  if (!user) {
+    return (
+      <div className='spot-logged-error'>
+        <p>You must be logged in to see your spots!</p>
+      </div>
+    );
+  }
+
+  if (spots.length === 0) {
+    return (
+      <div className='spot-logged-error'>
+        <p>No spots here, make a spot!</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
+    <div className='my-spot-container'>
       <h1>My Spots</h1>
-      {validationErrors.map(error => (
-        <div key={error}>
-          <p>{error}</p>
+      {validationErrors.length > 0 && (
+        <div>
+          {validationErrors.map(error => (
+            <div key={error}>
+              <p>{error}</p>
+            </div>
+          ))}
         </div>
-      ))}
-      {spots.map(spot => {
+      )}
+      {validationErrors.length === 0 && spots.map(spot => (
         <div key={spot.id}>
-          <h2>{spot.name}</h2>
-          <p>{spot.description}</p>
+          <li>
+            <h4 className='my-spot-container'>{spot.name}</h4>
+            <p>{spot.description}</p>
+          </li>
         </div>
-          console.log(spot, 'SPOTS')
-    })}
+
+      ))}
     </div>
   );
+
 };
 
 export default UserSpotsPage;

@@ -110,9 +110,8 @@ export const deleteSpots = (spot) => async (dispatch) => {
 }
 
 export const getAllSpotUser = () => async (dispatch) => {
-    console.log('testestseest')
     const response = await csrfFetch(`/api/spots/current`)
-    console.log(response, 'RESPONSE')
+    // console.log(response, 'RESPONSE')
     const spots = await response.json()
     dispatch(loadUserSpecificSpots(spots))
     return spots
@@ -139,10 +138,12 @@ export const spotsReducer = (state = initialState, action) => {
         case USER_SPECIFIC_SPOTS:
             newState = {...state}
             let userSpecificSpotsCopy = {}
-            action.payload.spot.forEach(spot => {
+            action.payload.Spots.forEach(spot => {
                 userSpecificSpotsCopy[spot.id] = spot
             });
             newState.userSpecificSpots = userSpecificSpotsCopy
+            // console.log(userSpecificSpotsCopy, 'userCOPY')
+            // console.log('newSATE', newState.userSpecificSpots)
             return newState
         case ADD_SPOTS:
             newState = {...state}
