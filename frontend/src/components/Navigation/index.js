@@ -12,13 +12,13 @@ function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
   const history = useHistory()
 
-  const handleClick = () => {
-    history.push("/reviews/current");
-  };
+  // const handleClick = () => {
+  //   history.push("/reviews/current");
+  // };
 
-  const handleClickSpotPage = () =>{
-    history.push("/spots/current")
-  }
+  // const handleClickSpotPage = () =>{
+  //   history.push("/spots/current")
+  // }
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
@@ -49,8 +49,8 @@ function Navigation({ isLoaded }){
         <h2>airSFRents</h2>
       </NavLink>
     <div className='add-spot-div'>
-        <button onClick={handleClickSpotPage} className='user-spot-button'>My Spots</button>
-        <button onClick={handleClick} className='user-review-button'>My Reviews</button>
+        {/* <button onClick={handleClickSpotPage} className='user-spot-button'>My Spots</button> */}
+        {/* <button onClick={handleClick} className='user-review-button'>My Reviews</button> */}
       <li className='add-spot-button'>
       <OpenModalButton
       buttonText={<div id='spot-button'>Add a Spot</div>}
