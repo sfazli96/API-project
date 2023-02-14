@@ -50,7 +50,6 @@ export const getAllReviews = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
     if (response.ok) {
         const reviewData = await response.json()
-        console.log({reviewData})
         dispatch(loadReviews(reviewData))
         return reviewData
     }
@@ -65,7 +64,6 @@ export const addOneReview = (review, spotId) => async (dispatch) => {
     if (response.ok) {
         const review = await response.json()
         dispatch(createReview(review))
-        console.log('after dispatch in thunk', review)
         return review
     }
 }
