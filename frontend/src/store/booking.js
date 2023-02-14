@@ -31,8 +31,8 @@ export const updateBookings = (bookings) => ({
 
 
 // thunk action creator (to get all bookings for a spot)
-export const getAllBookings = (spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotId}/bookings`)
+export const getAllBookings = (id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${id}/bookings`)
     if (response.ok) {
         const bookingData = await response.json()
         // console.log({bookingData})

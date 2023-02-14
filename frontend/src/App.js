@@ -6,7 +6,7 @@ import Navigation from "./components/Navigation";
 import SpotList from "./components/SpotList";
 import SpotDetail from "./components/SpotDetail";
 import UserReviewsPage from "./components/UserReviewsPage";
-// import UserSpotsPage from "./components/UserSpotsPage"
+import UserSpotsPage from "./components/UserSpotsPage"
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -28,7 +28,9 @@ function App() {
             <SpotDetail />
           </Route>
           <Route path="/reviews/current" component={UserReviewsPage} />
-          {/* <Route path="/spots/current" component={UserSpotsPage} /> */}
+          <Route exact path="/spots/current">
+            <UserSpotsPage />
+          </Route>
         </Switch>
       )}
     </>

@@ -14,10 +14,8 @@
     left: -420px;
     bottom: -40px;
     font-family: 'Sofia Sans', sans-serif;
-    /* margin-top: 2em; */
     margin: 0.5em;
     font-weight: bolder;
-    /* text-decoration: underline; */
 }
 
 .rating-div{
@@ -26,8 +24,6 @@
 }
 
 .text-overlay-description {
-    /* text-align: center; */
-    /* position: relative; */
     left: -520px;
     top: 910px;
     font-size: 18px;
@@ -115,24 +111,9 @@
 
 .trashcan {
     justify-content: flex-end;
-    /* border: 1px red solid; */
     display: flex;
     width: 100%;
 }
-
-/* .review-card {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    background-color: #f9f9f9;
-    box-shadow: 2px 2px 2px #ccc;
-    max-width: 400px;
-    height: 140px;
-    max-height: fit-content;
-} */
 
 .review-card {
     border: 1px solid #ccc;
@@ -188,14 +169,6 @@
     width: 800px;
 }
 
-/* .Button2::before {
-    content: "+";
-    font-size: 24px;
-    margin-right: 10px;
-    color: rgb(4, 206, 4);
-} */
-
-
 .Button2 > #edit-spot-modal-detail {
     border-radius: 2px solid red;
     width: 130px;
@@ -212,15 +185,8 @@
     background-color: #3e8e41;
 }
 
-/* .description-container{
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-} */
-
 .review-text {
     word-wrap: break-word;
-    /* overflow-y: scroll; */
     overflow: auto;
     max-width: -webkit-fill-available;
     height: 200px;
@@ -229,12 +195,12 @@
 
 .spot-link {
     color: black;
+    font-weight: bold;
 }
 
 .spot-link:hover {
     border: 1px;
     border-radius: 5px;
-    /* background-color: rgba(76, 175, 79, 0.568); */
     background-color: rgba(235, 91, 8, 0.644);
 }
 

@@ -13,7 +13,6 @@ const SpotList = () => {
     // Object.values converts the object to an array
     const spotObj = useSelector(state => state.spot.allSpots)
     const spots = Object.values(spotObj)
-    // console.log(spots, 'SPOTS')
     // this useEffect gets called the "getSpots"  action when the component is 1st rendered.
     useEffect(() => {
         dispatch(getSpots())
@@ -23,10 +22,8 @@ const SpotList = () => {
         <div className="cards-div">
                 {spots.map(({ id, name, previewImage, city, state, price, avgRating }) => {
                     let rating = parseFloat(avgRating).toFixed(2)
-                    // console.log(rating, 'before if statement')
                     if (isNaN(rating)) {
                         rating = 0
-                        // console.log('rating is NaN')
                     }
                     return (
                     <div key={id} className="li2">

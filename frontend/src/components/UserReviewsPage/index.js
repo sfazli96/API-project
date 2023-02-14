@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 function UserReviewsPage() {
   const dispatch = useDispatch();
   const reviewsObj = useSelector((state) => state.review.userSpecificReviews);
-  // console.log('reviewsOBJ', reviewsObj)
   const { user } = useSelector((state) => state.session);
   const reviews = Object.values(reviewsObj) || {} || [];
   const [newReviewData, setNewReviewData] = useState({});
@@ -42,7 +41,7 @@ function UserReviewsPage() {
 
 // This function dispatches the editReview action with an object containing the id of the review being edited
 const handleSave = async () => {
-  await dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars})); 
+  await dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars}));
   dispatch(getAllReviewsUser()); // dispatch the action, to retrieve updated data for reviews of user
   setIsEditing(null); // controls the display of review form
 };
@@ -81,7 +80,7 @@ const handleCancel = () => {
                 </div>
                 <div className="user-review">{review.review}</div>
                 <div className="star-in-date">
-                  <div className="user-review-stars">Stars: {review.stars}</div>
+                  <div className="user-review-stars">{review.stars}</div>
                   <div className="user-review-createdAt">
                   </div>
                   CreatedAt: {new Date(review.createdAt).toLocaleDateString()}
@@ -108,14 +107,6 @@ const handleCancel = () => {
                       value={newReview}
                       onChange={(e) => setNewReview(e.target.value)}
                     />
-                    {/* <input
-                      className="input-type"
-                      type="number"
-                      min="1"
-                      max="5"
-                      value={newStars}
-                      onChange={(e) => setNewStars(e.target.value)}
-                    /> */}
                     <select className="input-type" value={newStars} onChange={(e) => setNewStars(e.target.value)}>
                       <option value="1">1</option>
                       <option value="2">2</option>

@@ -6,7 +6,7 @@ const ADD_SPOTS = 'spots/addSpots' // create spots
 const EDIT_SPOTS = 'spots/editSpots' // editing/update a spot
 const DELETE_SPOTS = 'spots/deleteSpots' // deleting a spot
 const LOAD_ONE_SPOT = 'spots/oneSpot' // load one spot
-// const USER_SPECIFIC_SPOTS = 'reviews/userSpecificSpots' // get spots of a specific user
+const USER_SPECIFIC_SPOTS = 'spots/userSpecificSpots' // get spots of a specific user
 
 // create POJO action creator to get all spots
 export const loadSpots = (spots) => ({
@@ -37,10 +37,10 @@ export const removeSpots = (id) => ({
     payload: id
 })
 
-// export const loadUserSpecificSpots = (spots) => ({
-//     type: USER_SPECIFIC_SPOTS,
-//     payload: spots
-// })
+export const loadUserSpecificSpots = (spots) => ({
+    type: USER_SPECIFIC_SPOTS,
+    payload: spots
+})
 
 // thunk action creator (to get all spots, spot details)
 export const getSpots = () => async (dispatch) => {
@@ -67,7 +67,6 @@ export const addSpot = (spots, spotImages) => async (dispatch) => {
     })
     if (response.ok) {
         const data = await response.json()
-        // console.log('new spot', data)
         const spotId = data.id
         const imageResponse = await csrfFetch(`/api/spots/${spotId}/images`, {
             method: 'POST',
@@ -75,7 +74,6 @@ export const addSpot = (spots, spotImages) => async (dispatch) => {
         })
         if (imageResponse.ok) {
             const imageData = await imageResponse.json();
-            // console.log('new spot image', imageData)
             const combined = {...data, previewImage: imageData.url}
             combined.avgRating = 'no reviews are found'
             dispatch(createSpots(combined))
@@ -87,7 +85,6 @@ export const addSpot = (spots, spotImages) => async (dispatch) => {
 
 
 export const editSpots = (spots) => async (dispatch) => {
-    // console.log('spots', spots)
     const response = await csrfFetch(`/api/spots/${spots.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -96,7 +93,6 @@ export const editSpots = (spots) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json()
         dispatch(updateSpots(data))
-        // console.log('after dispatch', data)
         return data
     }
 }
@@ -113,14 +109,14 @@ export const deleteSpots = (spot) => async (dispatch) => {
     }
 }
 
-// export const getAllSpotUser = () => async (dispatch) => {
-//     const response = await csrfFetch(`/api/spots/current`)
-//     if (response.ok) {
-//         const spots = await response.json()
-//         dispatch(loadUserSpecificSpots(spots.Spots))
-//         return spots
-//     }
-// }
+export const getAllSpotUser = () => async (dispatch) => {
+    console.log('testestseest')
+    const response = await csrfFetch(`/api/spots/current`)
+    console.log(response, 'RESPONSE')
+    const spots = await response.json()
+    dispatch(loadUserSpecificSpots(spots))
+    return spots
+}
 
 // initial state for reducer with empty 'entries' array
 const initialState = { allSpots: {}, singleSpot: {}, userSpecificSpots: {}}
@@ -140,13 +136,14 @@ export const spotsReducer = (state = initialState, action) => {
             newState = {...state}
             newState.singleSpot = action.payload
             return newState
-        // case USER_SPECIFIC_SPOTS:
-        //     if (!action.payload) return state
-        //         const userSpecificSpots = {}
-        //         action.payload.forEach(spot => {
-        //             userSpecificSpots[spot.id] = spot
-        //         });
-        //     return { ...state, userSpecificSpots }
+        case USER_SPECIFIC_SPOTS:
+            newState = {...state}
+            let userSpecificSpotsCopy = {}
+            action.payload.spot.forEach(spot => {
+                userSpecificSpotsCopy[spot.id] = spot
+            });
+            newState.userSpecificSpots = userSpecificSpotsCopy
+            return newState
         case ADD_SPOTS:
             newState = {...state}
             let copy = {...newState.allSpots}

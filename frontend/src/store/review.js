@@ -7,6 +7,7 @@ const DELETE_REVIEWS = 'reviews/deleteReviews' // delete a review
 const LOAD_USER_REVIEWS = 'reviews/loadUserReviews' // only get reviews of current user
 const USER_SPECIFIC_REVIEWS = 'reviews/userSpecificReviews' // get reviews of a specific user
 const EDIT_REVIEWS = 'spots/editReviews' // editing/update a review
+
 // create POJO action creator to get all reviews
 export const loadReviews = (reviews) => ({
     type: LOAD_REVIEWS,
@@ -86,7 +87,6 @@ export const getAllReviewsUser = () => async (dispatch) => {
     const response = await csrfFetch(`/api/reviews/current`)
     if (response.ok) {
         const reviews = await response.json()
-        console.log({reviews}, 'before dispatch')
         // dispatch(loadAllReviewsForUser(reviews))
         dispatch(loadUserSpecificReviews(reviews.Review))
         return reviews
@@ -94,8 +94,6 @@ export const getAllReviewsUser = () => async (dispatch) => {
 }
 
 export const editReview = (review) => async (dispatch) => {
-    // console.log('reviewId', review.id)
-    // console.log('review', review)
     const response = await csrfFetch(`/api/reviews/${review.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

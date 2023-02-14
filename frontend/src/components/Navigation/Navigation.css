@@ -71,7 +71,6 @@ h2::before {
 #spot-button:hover {
     border: 1px;
     border-radius: 5px;
-    /* background-color: rgba(76, 175, 79, 0.568); */
     background-color: rgba(235, 91, 8, 0.644);
     cursor: pointer;
 }
@@ -108,7 +107,6 @@ Button {
 .user-review-button:hover {
     border: 1px;
     border-radius: 5px;
-    /* background-color: rgba(76, 175, 79, 0.568); */
     background-color: rgba(235, 91, 8, 0.644);
     cursor: pointer;
 }

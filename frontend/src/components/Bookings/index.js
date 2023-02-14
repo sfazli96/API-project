@@ -10,7 +10,7 @@ import { addBookings } from "../../store/booking";
 
 const Bookings = () => {
   const dispatch = useDispatch();
-  const { spotId } = useParams();
+  const { id } = useParams();
   const bookingDetail = useSelector((state) => state.booking.allBookings);
   const bookingsArr = Object.values(bookingDetail);
   const user = useSelector((state) => state.session.user);
@@ -18,8 +18,8 @@ const Bookings = () => {
   const [showCalendar, setShowCalendar] = useState(false);
 
   useEffect(() => {
-    dispatch(getAllBookings(spotId));
-  }, [dispatch, spotId]);
+    dispatch(getAllBookings(id));
+  }, [dispatch, id]);
 
   const [selectedRange, setSelectedRange] = useState([null, null]);
 
@@ -46,16 +46,25 @@ const Bookings = () => {
       return
     }
 
-    const conflicts = bookingsArr.some(({startDate: bookingStart, endDate: bookingEnd}) => {
-      return (startDate >= bookingStart && startDate <= bookingEnd) || (endDate >= bookingStart && endDate <= bookingEnd);
-    });
+    const hasOverlappingDates = (startDate, endDate, bookingStart, bookingEnd) => {
+      return (startDate >= bookingStart && startDate <= bookingEnd) || (endDate >= bookingStart && endDate <= bookingEnd)
+    }
 
+    function conflicts(startDate, endDate, bookingsArr) {
+      for (const {startDate: bookingStart, endDate: bookingEnd} of bookingsArr) {
+        if (hasOverlappingDates(startDate, endDate, bookingStart, bookingEnd)) {
+          return true;
+        }
+      }
+      return false;
+    }
+    
     if (conflicts) {
       alert("The selected dates conflict with an existing booking");
       return;
     }
 
-    dispatch(addBookings(spotId, startDate, endDate, userId));
+    dispatch(addBookings({id, startDate, endDate, userId}));
     setSelectedRange([null, null]);
   }
 
@@ -70,7 +79,7 @@ const Bookings = () => {
             <h2>Bookings for your spot</h2>
             <ul>
               {bookingsArr
-              .filter(booking => booking.spotId === spotId)
+              .filter(booking => booking.spotId === id)
               .map(({id, spotId, userId, startDate, endDate, firstName, lastName}) => (
                   <li key={id}>
                     <p>
