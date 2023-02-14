@@ -77,7 +77,8 @@ Follow these steps to set up AirSfRentals on your local machine:
 
 
 ## My Reviews Page
-- See all the reviews you have created and delete them if you chose too.
+- See all the reviews you have created and delete them if you chose too. Additionally, you can edit your reviews as well, if you chose to.
+![my-reviews](assets/MyReviews.PNG)
 
 
 

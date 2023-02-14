@@ -21,10 +21,11 @@ const SpotList = () => {
     return (
         <div className="cards-div">
                 {spots.map(({ id, name, previewImage, city, state, price, avgRating }) => {
-                    let rating = Math.round(Number(avgRating) * 1000) / 1000;
-                    if (isNaN(rating)) {
-                        rating = 0
-                    }
+                    let rating = avgRating.toFixed(2)
+                    // let rating = Math.round(Number(avgRating) * 1000) / 1000;
+                    // if (isNaN(rating)) {
+                    //     rating = 0
+                    // }
                     return (
                     <div key={id} className="li2">
                         <div className="spot-container">
@@ -33,7 +34,7 @@ const SpotList = () => {
                                     <img src={previewImage} alt={name} className="img"/>
                                     <div className="city-rating-div">
                                         <p className="text">{city}, {state}</p>
-                                        <p className="reviews">{avgRating}</p>
+                                        <p className="reviews">{rating}</p>
                                     </div>
                                     <p className="price">${price} night</p>
                                 </div>
