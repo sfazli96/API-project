@@ -33,7 +33,7 @@ const SpotList = () => {
                                     <img src={previewImage} alt={name} className="img"/>
                                     <div className="city-rating-div">
                                         <p className="text">{city}, {state}</p>
-                                        <p className="reviews">{avgRating.toFixed(2)}</p>
+                                        <p className="reviews">{avgRating}</p>
                                     </div>
                                     <p className="price">${price} night</p>
                                 </div>
