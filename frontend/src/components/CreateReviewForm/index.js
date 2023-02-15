@@ -12,27 +12,42 @@ const CreateReviewForm = () => {
     const spotsObj = useSelector(state => state.spot.singleSpot)
     const id = spotsObj.id
     const [review, setReview] = useState(spotsObj.review)
-    const [stars, setStars] = useState(spotsObj.stars)
+    // const [stars, setStars] = useState(spotsObj.stars)
+    const [stars, setStars] = useState(1);
+    // const [stars, setStars] = useState('1'); // set initial value to 1
     const [errors, setErrors] = useState([])
     const [showForm, setShowForm] = useState(false)
     const history = useHistory()
     const [showErrors, setShowErrors] = useState(true);
 
+    useEffect(() => {
+        if (spotsObj.stars) {
+          setStars(spotsObj.stars);
+        }
+      }, [spotsObj]);
+
     const handleSubmit = (e) => {
         e.preventDefault()
         setErrors([])
-
+        if (!review) {
+            setErrors(["Please enter a review"]);
+            return;
+        }
+        console.log('stars:', stars);
+        console.log('review:', review);
         return dispatch(reviewActions.addOneReview({review, stars, id}, id))
         .then(() => {
             dispatch(getAllReviews(id))
             setReview("")
-            setStars("")
+            // setStars("")
+            setStars(1)
             setShowForm(false)
         })
         .catch(async (res) => {
             const data = await res.json()
             if (data && data.errors) {
                 setErrors(data.errors)
+                setShowForm(true)
                 setTimeout(() => {
                     setErrors([])
                 }, 2000);

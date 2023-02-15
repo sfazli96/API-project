@@ -49,6 +49,7 @@ const validateSpotError = [
       .withMessage('Review text is required'),
     check('stars')
       .exists({ checkFalsy: true })
+    //   .isInt({ min: 1, max: 5 })
       .withMessage('Stars must be an integer from 1 to 5'),
     handleValidationErrors
   ]
@@ -524,6 +525,7 @@ router.post('/:spotId/reviews', requireAuth, reviewValidateError, async(req, res
     const { spotId } = req.params
     const userId = req.user.id
     const { review, stars } = req.body
+    console.log('stars:', stars);
     const spots = await Spot.findByPk(spotId)
     if(!spots) {
         const err = {}
