@@ -1,4 +1,4 @@
-.user-review-container {
+/* .user-review-container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -17,8 +17,26 @@
     border-radius: 10px;
     text-align: center;
     font-family: Helvetica Neue,sans-serif;
+  } */
+  .user-review-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
   }
 
+  .single-review {
+    width: 400px;
+    min-height: 200px;
+    max-height: fit-content;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
+    font-family: Helvetica Neue, sans-serif;
+  }
   .user-review-error {
     display: flex;
     justify-content: center;
@@ -75,45 +93,6 @@
   float: right;
   text-align: center;
 }
-/*
-.edit-review-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 250px;
-  margin: 10px auto;
-  padding: 10px;
-  box-sizing: border-box;
-  background-color: #f2f2f2;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-
-}
-
-.edit-review-form input[type="text"] {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 5px;
-  box-sizing: border-box;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
-}
-
-.edit-review-form textarea {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 5px;
-  box-sizing: border-box;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
-  resize: none;
-  min-height: 100px;
-  max-height: 200px;
-  overflow-y: scroll;
-} */
-
 
 .edit-review-button {
   cursor: pointer;
@@ -151,4 +130,11 @@
 
 .cancel-review:hover {
   background-color: rgba(255, 0, 0, 0.651);
+}
+
+
+.user-reviews {
+  margin-top: 140px;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

@@ -1,5 +1,7 @@
 .my-spot-container {
     margin-top: 140px;
+    text-align: center;
+    padding: 15px;
 }
 
 .spot-logged-error {
@@ -12,3 +14,42 @@
     color: red;
     font-size: x-large;
 }
+.my-spot-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+  }
+
+  .my-spot-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .my-spot-link {
+    text-decoration: none;
+    color: black;
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+  }
+
+  .my-spot-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .my-spot-description {
+    font-size: 18px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+
+  .my-spot-title {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 42px;
+  }
+
+  .my-spot-card:hover {
+    background-color: #dddddda8;
+  }

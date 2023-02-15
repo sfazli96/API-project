@@ -60,7 +60,9 @@ const handleCancel = () => {
 
   return (
     <>
-      <h1>User Reviews</h1>
+    <div className="user-reviews">
+      <h1>My Reviews</h1>
+    </div>
       {validationErrors.length > 0 ? (
         <ul className="user-review-error">
           {validationErrors.map((error) => (
