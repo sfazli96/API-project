@@ -45,6 +45,10 @@
     height: 100vh;
   }
 
+  .error-msg {
+    color: red;
+  }
+
 .user-review-stars::before {
   content:"★";
   font-size: 20px;

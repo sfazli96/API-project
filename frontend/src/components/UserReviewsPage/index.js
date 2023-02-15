@@ -15,6 +15,7 @@ function UserReviewsPage() {
   const [newReview, setNewReview] = useState("");
   const [newStars, setNewStars] = useState("");
   const [validationErrors, setValidationErrors] = useState([]);
+  const [errors, setErrors] = useState([])
   useEffect(() => {
     if (user)
       dispatch(getAllReviewsUser());
@@ -39,34 +40,27 @@ function UserReviewsPage() {
   setNewStars(review.stars);
 };
 
-// This function dispatches the editReview action with an object containing the id of the review being edited
-const handleSave = async () => {
-  if (newReview.length > 100) {
-    window.alert('Review is too long, try again!');
-  } else if (newReview.length === 0) {
-    window.alert('Please enter a review')
-  } else {
-    await dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars}));
-    dispatch(getAllReviewsUser());
-    setIsEditing(null);
+
+const handleSave = async (review) => {
+  const errors = [];
+  if (newReview.length === 0) {
+    errors.push('Please enter a review');
+  } else if (newReview.length > 100) {
+    errors.push('Review is too long, please enter a shorter review');
   }
+  setErrors(errors);
+  if (errors.length === 0) {
+    await dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars}));
+    setIsEditing(null);
+    setTimeout(() => {
+      dispatch(getAllReviewsUser());
+    }, 1000);
+  }
+
+  setTimeout(() => {
+    setErrors([])
+  }, 1000)
 };
-// const handleSave = async (review) => {
-//   const errors = [];
-//   if (newReview.length === 0) {
-//     errors.push('Please enter a review');
-//   } else if (newReview.length > 100) {
-//     errors.push('Review is too long, please enter a shorter review');
-//   }
-//   setValidationErrors(errors);
-//   if (errors.length === 0) {
-//     await dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars}));
-//     setIsEditing(null);
-//     setTimeout(() => {
-//       dispatch(getAllReviewsUser());
-//     }, 1000);
-//   }
-// };
 
 
 
@@ -126,6 +120,9 @@ const handleCancel = () => {
 
                 {isEditing === review.id ? (
                   <div className="edit-review-form">
+                     {errors.map((error, index) => (
+                    <div key={index} className="error-msg">{error}</div>
+                  ))}
                     <textarea
                       placeholder="Edit your review"
                       className="text-area"
