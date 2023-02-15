@@ -43,12 +43,30 @@ function UserReviewsPage() {
 const handleSave = async () => {
   if (newReview.length > 100) {
     window.alert('Review is too long, try again!');
+  } else if (newReview.length === 0) {
+    window.alert('Please enter a review')
   } else {
     await dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars}));
     dispatch(getAllReviewsUser());
     setIsEditing(null);
   }
 };
+// const handleSave = async (review) => {
+//   const errors = [];
+//   if (newReview.length === 0) {
+//     errors.push('Please enter a review');
+//   } else if (newReview.length > 100) {
+//     errors.push('Review is too long, please enter a shorter review');
+//   }
+//   setValidationErrors(errors);
+//   if (errors.length === 0) {
+//     await dispatch(editReview({ id: newReviewData.id, review: newReview, stars: newStars}));
+//     setIsEditing(null);
+//     setTimeout(() => {
+//       dispatch(getAllReviewsUser());
+//     }, 1000);
+//   }
+// };
 
 
 

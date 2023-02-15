@@ -31,10 +31,13 @@ const CreateReviewForm = () => {
         setErrors([])
         if (!review) {
             setErrors(["Please enter a review"]);
+            setTimeout(() => {
+                setErrors([]);
+            }, 2000);
             return;
         }
-        console.log('stars:', stars);
-        console.log('review:', review);
+        // console.log('stars:', stars);
+        // console.log('review:', review);
         return dispatch(reviewActions.addOneReview({review, stars, id}, id))
         .then(() => {
             dispatch(getAllReviews(id))
@@ -63,7 +66,7 @@ const CreateReviewForm = () => {
         <>
             <button className="add-review-button" onClick={() => setShowForm(true)}>Create a Review</button>
             {showForm && (
-                <form className="createReviewForm" onSubmit={handleSubmit}>
+                <form className="createReviewForm" onSubmit={handleSubmit} noValidate>
                     <h1 className="h1">Add a Review</h1>
                     <ul className="ul">
                         {errors.map((error, idx) => <li key={idx}>{error}</li>)}

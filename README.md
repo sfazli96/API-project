@@ -81,6 +81,9 @@ Follow these steps to set up AirSfRentals on your local machine:
 ![my-reviews](assets/MyReviews.PNG)
 
 
+## My Spots Page
+- See all the spots you have created and you are able to click on your spot to find more information about your spot.
+
 
 ## User Authentication
 - New users can sign up with a username, email address, and password.

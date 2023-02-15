@@ -68,4 +68,7 @@ input:focus {
 .ul {
   color: red;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  padding: 10px;
 }
