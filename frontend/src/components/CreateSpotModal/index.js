@@ -54,8 +54,8 @@ export const CreateSpotModal = () => {
           setErrors(errors => [...errors, 'Please enter a valid description (less than 100 characters)'])
           return
         }
-        if (price <= 0 || !price) {
-          setErrors(errors => [...errors, 'Please enter a valid price (must be a positive number)'])
+        if (price <= 0 || !price || price > 9999) {
+          setErrors(errors => [...errors, 'Please enter a valid price (must be a positive number between 0 and 9999)'])
           return
         }
         if (!Number(price)) {
