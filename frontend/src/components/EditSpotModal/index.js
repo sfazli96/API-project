@@ -70,7 +70,7 @@ export const EditSpotModal = () => {
         })
     }
     return (
-        <form className="edit-modal" onSubmit={handleSubmit}>
+        <form className="edit-modal" onSubmit={handleSubmit} noValidate>
             <h1 className="h1">Edit a Spot</h1>
             <ul className="ul">
               {Array.isArray(errors) && errors.map((error, idx) => <li key={idx}>{error}</li>)}
