@@ -1,83 +1,89 @@
-/* .user-review-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 70px;
-    justify-content: space-around;
-    flex-wrap: wrap;
-  }
+.user-review-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  gap: 20px;
+}
 
-  .single-review {
-    width: 400px;
-    min-height: 200px;
-    max-height: fit-content;
-    padding: 20px;
-    margin-top: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    border-radius: 10px;
-    text-align: center;
-    font-family: Helvetica Neue,sans-serif;
-  } */
-  .user-review-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
+/* Single review */
 
-  .single-review {
-    width: 400px;
-    min-height: 200px;
-    max-height: fit-content;
-    padding: 20px;
-    margin: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    text-align: center;
-    font-family: Helvetica Neue, sans-serif;
-  }
-  .user-review-error {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-  }
-
-  .error-msg {
-    color: red;
-  }
+.single-review {
+  width: 400px;
+  min-height: 200px;
+  max-height: fit-content;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  text-align: center;
+  font-family: 'Helvetica Neue', sans-serif;
+  justify-content: space-between;
+}
 
 .user-review-stars::before {
-  content:"★";
+  content: '★';
   font-size: 20px;
   color: #F5A623;
-  margin-right:5px;
+  margin-right: 5px;
 }
 
 .user-review {
   overflow-y: scroll;
   word-break: break-word;
+  margin-top: 10px;
 }
 
 .star-in-date {
-  justify-content: center;
-  align-items: baseline
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* align-items: baseline; */
+  /* margin-top: 10px; */
 }
 
 .delete-review-button {
-    justify-content: flex-end;
-    width: 3.5%;
-    cursor: pointer;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+  cursor: pointer;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  transition: background-color 0.2s;
 }
 
 .delete-review-button:hover {
-  color: #f44336;
+  background-color: #f44336a2;
+  /* color: white; */
 }
 
+.created-at {
+  font-size: 14px;
+  color: gray;
+  margin-top: 10px;
+}
+
+/* Error message */
+
+.user-review-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.error-msg {
+  color: red;
+}
+
+/* Edit review form */
+
 .edit-review-form {
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -85,9 +91,9 @@
 
 .text-area {
   min-height: 100px;
+  max-height: fit-content;
   width: 250px;
   max-width: 100%;
-  max-height: fit-content;
   margin: 5px;
   overflow: auto;
   resize: none;
@@ -98,24 +104,22 @@
   text-align: center;
 }
 
-.edit-review-button {
-  cursor: pointer;
-}
-
-.edit-review-button:hover {
-  background-color: yellow;
-}
-
-.save-review {
-  background-color: rgba(0, 128, 0, 0.733);
+.edit-review-button, .save-review, .cancel-review {
   padding: 10px;
   border-radius: 5px;
   border: none;
   font-size: 16px;
   cursor: pointer;
-  margin-left: 155px;
+  transition: background-color 0.2s;
 }
 
+.edit-review-button:hover {
+  background-color: yellow;
+}
+.save-review {
+  background-color: rgba(0, 128, 0, 0.733);
+  margin-left: 155px;
+}
 
 .save-review:hover {
   background-color: rgba(0, 128, 0, 0.671);
@@ -123,19 +127,15 @@
 
 .cancel-review {
   background-color: rgba(255, 0, 0, 0.747);
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
   margin-left: -155px;
   margin-top: -39px;
 }
 
 .cancel-review:hover {
-  background-color: rgba(255, 0, 0, 0.651);
+  background-color: rgba(219, 33, 33, 0.849);
 }
 
+/* User reviews */
 
 .user-reviews {
   margin-top: 140px;

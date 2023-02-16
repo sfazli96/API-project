@@ -102,7 +102,7 @@ const handleCancel = () => {
                   <div className="user-review-stars">{review.stars}</div>
                   <div className="user-review-createdAt">
                   </div>
-                  CreatedAt: {new Date(review.createdAt).toLocaleDateString()}
+                  Created At: {new Date(review.createdAt).toLocaleDateString()}
                 </div>
               </div>
               <div className="delete-review-container">
