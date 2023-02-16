@@ -16,7 +16,8 @@ textarea.input {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #4CAF50;
+  /* background-color: #4CAF50; */
+  background-color: rgba(235, 91, 8, 0.644);
   color: #fff;
   padding: 12px 20px;
   font-size: 1rem;
@@ -24,7 +25,8 @@ textarea.input {
 }
 
 .add-review-button:hover {
-  background-color: #3e8e41;
+  /* background-color: #3e8e41; */
+  background-color: rgba(235, 91, 8, 0.856);
   cursor: pointer;
 }
 ul {

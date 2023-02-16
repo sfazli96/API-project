@@ -172,7 +172,8 @@
 .Button2 > #edit-spot-modal-detail {
     border-radius: 2px solid red;
     width: 130px;
-    background-color: #4CAF50;
+    /* background-color: #4CAF50; */
+    background-color: rgba(235, 91, 8, 0.719);
     color: #fff;
     padding: 12px 20px;
     margin-right: 1em;
@@ -182,7 +183,8 @@
 }
 
 .Button2 > #edit-spot-modal-detail:hover {
-    background-color: #3e8e41;
+    background-color: rgba(235, 91, 8, 0.918);
+
 }
 
 .review-text {

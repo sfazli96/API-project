@@ -32,7 +32,8 @@ input:focus {
 }
 
 .edit-modal button {
-  background-color: #4CAF50;
+  /* background-color: #4CAF50; */
+  background-color: rgba(235, 91, 8, 0.644);
   color: white;
   padding: 12px 20px;
   border: none;
@@ -45,7 +46,8 @@ input:focus {
 }
 
 .edit-modal button:hover {
-  background-color: #3e8e41;
+  /* background-color: #3e8e41; */
+  background-color: rgba(235, 91, 8, 0.87);
 }
 
 .edit-modal label {

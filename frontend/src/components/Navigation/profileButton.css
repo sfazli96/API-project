@@ -32,7 +32,8 @@
 }
 
 .logout:hover {
-  background-color: rgba(255, 0, 0, 0.692);
+  /* background-color: rgba(255, 0, 0, 0.692); */
+  background-color: rgba(235, 91, 8, 0.644);
 }
 
 .fa-user-circle {
