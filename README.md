@@ -83,7 +83,7 @@ Follow these steps to set up AirSfRentals on your local machine:
 
 ## My Spots Page
 - See all the spots you have created and you are able to click on your spot to find more information about your spot.
-
+![my-spots](assets/MySpots.PNG)
 
 ## User Authentication
 - New users can sign up with a username, email address, and password.
@@ -92,4 +92,4 @@ Follow these steps to set up AirSfRentals on your local machine:
 
 ## Future Plans
 
-In the future, I plan to add CRUD functionality for bookings.
+In the future, I plan to add CRUD functionality for bookings and an external google api maps for the image url.
