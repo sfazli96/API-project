@@ -22,9 +22,9 @@ const SpotList = () => {
         <div className="cards-div">
                 {spots.map(({ id, name, previewImage, city, state, price, avgRating }) => {
                     // let rating = avgRating.toFixed(2)
-                    let rating = Math.round(Number(avgRating) * 1000) / 1000;
-                    if (isNaN(rating)) {
-                        rating = 0
+                    let rating = 0;
+                    if (avgRating !== undefined) {
+                        rating = Math.round(Number(avgRating) * 1000) / 1000;
                     }
                     let ratingString = rating.toFixed(2);
                     return (
