@@ -23,10 +23,10 @@ const SpotList = () => {
                 {spots.map(({ id, name, previewImage, city, state, price, avgRating }) => {
                     // let rating = avgRating.toFixed(2)
                     let rating = Math.round(Number(avgRating) * 1000) / 1000;
+                    if (isNaN(rating)) {
+                        rating = 0
+                    }
                     let ratingString = rating.toFixed(2);
-                    // if (isNaN(rating)) {
-                    //     rating = 0
-                    // }
                     return (
                     <div key={id} className="li2">
                         <div className="spot-container">
