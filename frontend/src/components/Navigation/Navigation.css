@@ -123,6 +123,7 @@ Button {
 }
 
 .user-spot-button:hover {
-    background-color: rgba(0, 128, 0, 0.712);
+    /* background-color: rgba(0, 128, 0, 0.712); */
+    background-color: rgba(235, 91, 8, 0.644);
     cursor: pointer;
 }
