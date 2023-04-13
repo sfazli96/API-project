@@ -17,3 +17,23 @@ input{
     font-family: 'Outfit', sans-serif;
     font-family: 'Sofia Sans', sans-serif;
 }
+
+:root {
+  --background: #fff;
+  --primary: #000;
+}
+
+[data-theme='light'] {
+  --background: #fff;
+  --primary: #000;
+}
+
+[data-theme='dark'] {
+  --background: #282c34;
+  /* --primary: #fff; */
+}
+
+body {
+    background-color: var(--background);
+    color: var(--primary);
+  }

@@ -7,6 +7,8 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import CreateSpotModal from '../CreateSpotModal'
 import './Navigation.css';
+import { Toggle } from 'react-hook-theme';
+import 'react-hook-theme/dist/styles/style.css';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
@@ -49,6 +51,7 @@ function Navigation({ isLoaded }){
         <h2>airSFRents</h2>
       </NavLink>
     <div className='add-spot-div'>
+    <Toggle />
         {/* <button onClick={handleClickSpotPage} className='user-spot-button'>My Spots</button> */}
         {/* <button onClick={handleClick} className='user-review-button'>My Reviews</button> */}
       <li className='add-spot-button'>

@@ -7,6 +7,8 @@ import SpotList from "./components/SpotList";
 import SpotDetail from "./components/SpotDetail";
 import UserReviewsPage from "./components/UserReviewsPage";
 import UserSpotsPage from "./components/UserSpotsPage"
+import { ThemeProvider } from 'react-hook-theme';
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -16,6 +18,12 @@ function App() {
 
   return (
     <>
+    <ThemeProvider
+    options={{
+        theme: 'dark',
+        save: true,
+    }}
+    >
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
@@ -31,10 +39,25 @@ function App() {
           <Route path="/mySpots">
             <UserSpotsPage />
           </Route>
+          <Route path="*">
+            <NotFound />
+          </Route>
         </Switch>
       )}
+      </ThemeProvider>
     </>
   );
 }
 
 export default App;
+
+function NotFound() {
+  return (
+    <div>
+      <h1>404 Not Found</h1>
+      <p>Sorry, the page you are looking for doesn't exist.</p>
+      <img src="https://media1.giphy.com/media/14uQ3cOFteDaU/giphy.gif"></img>
+    </div>
+  )
+}
+

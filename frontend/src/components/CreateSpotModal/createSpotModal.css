@@ -47,7 +47,7 @@ ul {
 }
 
 .add-spot-modal {
-    background-color: white;
+    /* background-color: white; */
     padding: 12px 20px;
     border: none;
     border-radius: 5px;
@@ -98,4 +98,26 @@ input {
   .error-text {
     color: red;
     font-weight: bold;
+  }
+
+  [data-theme='dark'] {
+    --background: #282c34;
+    --primary: white;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--primary);
+  }
+
+  [data-theme='dark'] .add-spot-modal {
+    border-color: white;
+    background-color: #282c34;
+    color: white;
+  }
+
+  [data-theme='dark'] .form-label3{
+    /* border-color: white; */
+    background-color: #282c34;
+    color: white;
   }

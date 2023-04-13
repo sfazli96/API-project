@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const ulRef = useRef();
   const history = useHistory()
   const openMenu = () => {
@@ -40,6 +41,13 @@ function ProfileButton({ user }) {
   const handleClickSpotPage = () =>{
     history.push("/mySpots")
   }
+
+  // const handleSearch = (e) => {
+  //   e.preventDefault();
+  //   history.push(`/search?query=${searchTerm}`);
+  //   setSearchTerm("");
+  // };
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -64,6 +72,17 @@ function ProfileButton({ user }) {
             <li>
               <button class="logout" onClick={logout}>Log Out</button>
             </li>
+            {/* <li>
+              <form onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  placeholder="Search spots..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button type="submit">Search</button>
+              </form>
+            </li> */}
           </>
         ) : (
           <>

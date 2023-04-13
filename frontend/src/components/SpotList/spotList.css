@@ -72,3 +72,35 @@
     color: #F5A623;
     margin-right:5px;
 }
+
+
+
+[data-theme='dark'] {
+    --background: #282c34;
+    --primary: white;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--primary);
+  }
+
+  [data-theme='dark'] .text,
+  [data-theme='dark'] .price,
+  [data-theme='dark'] .reviews {
+    border-color: white;
+    background-color: #282c34;
+    color: white;
+  }
+
+  [data-theme='dark'] .profile-dropdown {
+    /* border-color: white; */
+    background-color: #282c34;
+    color: white;
+  }
+
+  [data-theme='dark'] #spot-button {
+    /* border-color: white; */
+    background-color: #282c34;
+    color: white;
+  }
