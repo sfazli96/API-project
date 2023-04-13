@@ -8,6 +8,7 @@ import SpotDetail from "./components/SpotDetail";
 import UserReviewsPage from "./components/UserReviewsPage";
 import UserSpotsPage from "./components/UserSpotsPage"
 import { ThemeProvider } from 'react-hook-theme';
+import Search from "./components/Search";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,9 @@ function App() {
           <Route path="/mySpots">
             <UserSpotsPage />
           </Route>
+          <Route path="/search">
+            <Search />
+          </Route>
           <Route path="*">
             <NotFound />
           </Route>
@@ -60,4 +64,3 @@ function NotFound() {
     </div>
   )
 }
-
