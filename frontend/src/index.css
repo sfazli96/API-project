@@ -1,4 +1,48 @@
 /* TODO Add site wide styles */
+footer {
+  background-color: rgba(25, 223, 101, 0.842);
+  color: black;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 20px;
+  /* margin-top: auto; */
+  /* width: 140%; */
+  /* margin-left: -22%; */
+  width: 100%;
+  margin: 0;
+}
+
+.Footer-div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.dev {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+}
+
+.dev div {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.dev a {
+  color: rgb(84, 58, 236);
+  text-decoration: none;
+  margin: 2px;
+}
+
+.dev a:hover {
+  text-decoration: underline;
+}
 
 body{
     font-family: 'Open Sans', sans-serif;

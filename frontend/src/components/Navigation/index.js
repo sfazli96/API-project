@@ -74,11 +74,6 @@ function Navigation({ isLoaded }){
         <button type="submit-search-button">Search</button>
       </form>
     </li>
-    {filteredSpots && filteredSpots.map(spot => (
-        <li key={spot.id}>
-          <NavLink to={`/spots/${spot.id}`}>{spot.name}</NavLink>
-        </li>
-    ))}
     <div className='add-spot-div'>
     <Toggle />
         {/* <button onClick={handleClickSpotPage} className='user-spot-button'>My Spots</button> */}

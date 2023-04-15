@@ -9,6 +9,8 @@ import UserReviewsPage from "./components/UserReviewsPage";
 import UserSpotsPage from "./components/UserSpotsPage"
 import { ThemeProvider } from 'react-hook-theme';
 import Search from "./components/Search";
+import Footer from "./components/Footer";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -49,6 +51,8 @@ function App() {
         </Switch>
       )}
       </ThemeProvider>
+    <Footer/>
+
     </>
   );
 }

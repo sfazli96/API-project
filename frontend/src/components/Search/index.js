@@ -10,21 +10,29 @@ function Search() {
   const spotObj = useSelector(state => state.spot.allSpots)
   const [filteredSpots, setFilteredSpots] = useState([])
   useEffect(() => {
-    const filtered = Object.values(spotObj).filter(spot => spot.name.toLowerCase().includes(query.toLowerCase()));
-    setFilteredSpots(filtered);
+    if (query) {
+      const filtered = Object.values(spotObj).filter(
+        (spot) => spot.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredSpots(filtered);
+    }
   }, [spotObj, query]);
 
   return (
     <div className='search-root-container'>
       <h1>Search Results</h1>
-      <ul className='filter-spots'>
-      {filteredSpots.map(spot => (
-        <NavLink className='filtered-spots-link' key={spot.id} to={`/spots/${spot.id}`}>
-            <li>{spot.name}</li>
-            <li>${spot.price}</li>
-        </NavLink>
-        ))}
-      </ul>
+      {filteredSpots.length > 0 ? (
+        <ul className='filter-spots'>
+          {filteredSpots.map(spot => (
+            <NavLink className='filtered-spots-link' key={spot.id} to={`/spots/${spot.id}`}>
+              <li>{spot.name}</li>
+              <li>${spot.price}</li>
+            </NavLink>
+          ))}
+        </ul>
+      ) : (
+        <p>No results found for "{query}"</p>
+      )}
     </div>
   );
 }
