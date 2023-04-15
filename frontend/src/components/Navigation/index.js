@@ -14,7 +14,7 @@ import { useState } from 'react';
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
   const spotObj = useSelector(state => state.spot.allSpots)
-  console.log('spots', spotObj)
+  // console.log('spots', spotObj)
   const history = useHistory()
   const [searchTerm, setSearchTerm] = useState("");
 
