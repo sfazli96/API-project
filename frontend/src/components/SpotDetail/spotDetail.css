@@ -27,6 +27,8 @@
     left: -520px;
     top: 910px;
     font-size: 18px;
+    word-break: break-all;
+    max-width: 1200px;
 }
 
 .text-overlay-reviews {

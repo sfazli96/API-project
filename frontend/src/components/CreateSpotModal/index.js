@@ -182,6 +182,23 @@ export const CreateSpotModal = () => {
           required
         />
       </label>
+      {/* <label className="form-label3">
+        Add an Image
+        <input className="file"
+          type="file"
+          accept="image/jpeg"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const imageData = reader.result;
+              setImage(imageData);
+            };
+            reader.readAsDataURL(file);
+          }}
+          required
+        />
+      </label> */}
       <button className="Button" type="Create">Create</button>
     </form>
     )

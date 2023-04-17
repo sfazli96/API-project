@@ -79,8 +79,8 @@ const SpotDetail = () => {
                 return <img src={image.url} alt={spotDetail.name} className="spot-image" key={index}/>
 
             })}
-            <p className="text-overlay-description">{spotDetail.description}</p>
             <p className="spotDetail-price">${spotDetail.price} night</p>
+            <p className="text-overlay-description">{spotDetail.description}</p>
 
             {/* User can make a review ONLY on other spots they didn't create but should not leave a review on there spot */}
             {/* Also when user NOT logged in only show all reviews */}
