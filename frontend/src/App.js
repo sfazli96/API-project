@@ -11,7 +11,6 @@ import { ThemeProvider } from 'react-hook-theme';
 import Search from "./components/Search";
 import Footer from "./components/Footer";
 
-
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);

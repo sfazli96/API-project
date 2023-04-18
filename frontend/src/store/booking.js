@@ -43,7 +43,7 @@ export const getAllBookings = (id) => async (dispatch) => {
 
 // thunk action creator (to create a booking)
 export const addBookings = (booking) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${booking.id}/bookings`, {
+    const response = await csrfFetch(`/api/spots/${booking.spotId}/bookings`, {
         method: 'POST',
         body: JSON.stringify(booking)
     })
@@ -90,15 +90,22 @@ export const bookingsReducer = (state = initialState, action) => {
         case LOAD_BOOKINGS:
             newState = { ...state }
             let copy = {}
+            // console.log('newState', newState)
+            // console.log('ACTION2', action.payload.id)
             action.payload.Booking.forEach(booking => {
-                copy[booking.id] = booking
+                // console.log('ACTION', action.payload)
+
+                copy[booking.spotId] = booking
             });
             newState.allBookings = copy
             return newState
         case ADD_BOOKINGS:
             newState = { ...state }
             let copy2 = { ...newState.allBookings }
-            copy[action.payload.id] = action.payload
+            // console.log('ACTION', action.payload)
+            // console.log('newState', newState)
+            // console.log('ACTION2', action.payload.id)
+            copy2[action.payload.id] = action.payload
             newState.allBookings = copy2
             return newState;
         case EDIT_BOOKINGS:
@@ -106,8 +113,10 @@ export const bookingsReducer = (state = initialState, action) => {
             updatedBookings[action.payload.id] = action.payload
             return { ...state, singleBooking: updatedBookings }
         case DELETE_BOOKINGS:
-            newState = { ...state, allBookings: { ...state.allBookings } }
-            delete newState.allBookings[action.payload.id]
+            newState = {...state}
+            let copy3 = {...newState.allBookings}
+            delete copy3[action.payload.id]
+            newState.allBookings = copy3
             return newState
         default:
             return state

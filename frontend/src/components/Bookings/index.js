@@ -75,8 +75,19 @@ const Bookings = () => {
       return;
     }
 
-    dispatch(addBookings({spotId: id, startDate, endDate, userId}));
+    dispatch(addBookings({ spotId, startDate, endDate, userId }));
     setSelectedRange([null, null]);
+  }
+  if (!bookingDetail) {
+    return null
+}
+
+  if (!user) {
+    return (
+      <div>
+        <h1>Sign in to see your bookings</h1>
+      </div>
+    )
   }
 
   return (

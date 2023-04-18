@@ -42,11 +42,9 @@ function ProfileButton({ user }) {
     history.push("/mySpots")
   }
 
-  // const handleSearch = (e) => {
-  //   e.preventDefault();
-  //   history.push(`/search?query=${searchTerm}`);
-  //   setSearchTerm("");
-  // };
+  // const handleClickBookings = () => {
+  //   history.push("/myBookings")
+  // }
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
@@ -69,20 +67,12 @@ function ProfileButton({ user }) {
             <li>
               <button onClick={handleClick} className='user-review-button'>My Reviews</button>
             </li>
+            {/* <li>
+              <button onClick={handleClickBookings} className="user-booking-button">My Bookings</button>
+            </li> */}
             <li>
               <button class="logout" onClick={logout}>Log Out</button>
             </li>
-            {/* <li>
-              <form onSubmit={handleSearch}>
-                <input
-                  type="text"
-                  placeholder="Search spots..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <button type="submit">Search</button>
-              </form>
-            </li> */}
           </>
         ) : (
           <>

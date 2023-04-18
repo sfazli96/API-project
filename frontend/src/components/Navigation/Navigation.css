@@ -129,6 +129,10 @@ Button {
     cursor: pointer;
 }
 
+.user-booking-button:hover {
+    background-color: rgba(235, 91, 8, 0.644);
+    cursor: pointer;
+}
 
 [data-theme='dark'] {
     --background: #212121;
