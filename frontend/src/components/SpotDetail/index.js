@@ -33,12 +33,22 @@ const SpotDetail = () => {
         }
     }, [dispatch, spotDetail])
 
-    if (!spotDetail || !spotDetail.name) {
-        return <h1>Spot doesn't exist</h1>
-    }
+    // if (!spotDetail || !spotDetail.name) {
+    //     return <h1 style={{ paddingTop: "100px" }}>Spot doesn't exist</h1>
+    // }
 
     if (!reviewDetail) {
         return <h1>Review doesn't exist</h1>
+    }
+
+    if (Object.values(spotDetail).length === 0) {
+        return (
+            <div className="root-404-page" style={{ paddingTop: "100px", textAlign: "center", paddingBottom: "125px" }}>
+                <h1 className="404-title-notFound">404 Not Found</h1>
+                <p className="404-paragraph">Sorry, the page you are looking for doesn't exist.</p>
+                <img src="https://media.tenor.com/IHdlTRsmcS4AAAAC/404.gif"></img>
+            </div>
+        )
     }
     let totalRating=0;
     reviews?.forEach(review=> {

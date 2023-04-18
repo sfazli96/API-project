@@ -43,7 +43,11 @@
   .my-spot-description {
     font-size: 18px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    overflow-y: auto;
+    max-height: 100px;
+    word-break: break-word;
   }
+
 
   .my-spot-title {
     font-family: 'Courier New', Courier, monospace;

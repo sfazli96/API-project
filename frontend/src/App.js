@@ -61,7 +61,7 @@ export default App;
 
 function NotFound() {
   return (
-    <div className="root-404-page" style={{ paddingTop: "100px", textAlign: "center" }}>
+    <div className="root-404-page" style={{ paddingTop: "100px", textAlign: "center", paddingBottom: "125px" }}>
       <h1 className="404-title-notFound">404 Not Found</h1>
       <p className="404-paragraph">Sorry, the page you are looking for doesn't exist.</p>
       <img src="https://media.tenor.com/IHdlTRsmcS4AAAAC/404.gif"></img>
