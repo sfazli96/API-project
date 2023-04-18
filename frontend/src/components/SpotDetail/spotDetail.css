@@ -240,6 +240,12 @@
     color: #fff;
   }
 
+  [data-theme='dark'] .fa-trash-alt:hover {
+    color: #f44336;
+    cursor: pointer;
+  }
+
+
 @media only screen and (min-width: 769px) {
     .review-card {
         height: 200px;

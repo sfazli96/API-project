@@ -9,8 +9,10 @@ const { ValidationError } = require('sequelize');
 const { environment } = require('./config');
 const isProduction = environment === 'production';
 const routes = require('./routes');
+const bodyParser = require('body-parser');
 
 const app = express();
+app.use(bodyParser.json({ limit: '10mb' }));
 
 // Middleware for logging information about requests and response=es
 app.use(morgan('dev'));
