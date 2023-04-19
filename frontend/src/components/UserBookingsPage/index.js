@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./userBookingsPage.css"
-import { getAllBookingUser } from "../../store/booking";
+import { deleteBooking, getAllBookingUser } from "../../store/booking";
 
 
 const UserBookingsPage = () => {
@@ -20,6 +20,18 @@ const UserBookingsPage = () => {
     }
   }, [dispatch, user]);
 
+  if (!bookingDetail) {
+    return null
+  }
+
+  if (!user) {
+    return (
+      <div>
+        <h1 className="sign-in-user-bookings">Sign in to see your bookings</h1>
+      </div>
+    )
+  }
+
   return (
     <div className="booking-upper-root">
       <h1 className="bookings-root">My Bookings</h1>
@@ -27,6 +39,14 @@ const UserBookingsPage = () => {
         <div key={booking.id}>
           <p className="booking-startDate">StartDate: {booking.startDate}</p>
           <p className="booking-endDate">EndDate: {booking.endDate}</p>
+          <button className="delete-booking-button" onClick={() => {
+              dispatch(deleteBooking(booking.id));
+              setTimeout(() => {
+                dispatch(getAllBookingUser());
+              }, 1000);
+            }}>
+              Delete Booking
+          </button>
         </div>
       ))}
     </div>
