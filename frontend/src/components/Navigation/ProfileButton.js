@@ -42,9 +42,9 @@ function ProfileButton({ user }) {
     history.push("/mySpots")
   }
 
-  // const handleClickBookings = () => {
-  //   history.push("/myBookings")
-  // }
+  const handleClickBookings = () => {
+    history.push("/myBookings")
+  }
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 

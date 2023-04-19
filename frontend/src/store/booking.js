@@ -92,10 +92,10 @@ export const bookingsReducer = (state = initialState, action) => {
             let copy = {}
             // console.log('newState', newState)
             // console.log('ACTION2', action.payload.id)
-            action.payload.Booking.forEach(booking => {
+            action.payload.Booking.forEach((booking, index) => {
                 // console.log('ACTION', action.payload)
 
-                copy[booking.spotId] = booking
+                copy[index] = booking
             });
             newState.allBookings = copy
             return newState

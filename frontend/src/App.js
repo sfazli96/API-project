@@ -10,6 +10,7 @@ import UserSpotsPage from "./components/UserSpotsPage"
 import { ThemeProvider } from 'react-hook-theme';
 import Search from "./components/Search";
 import Footer from "./components/Footer";
+import UserBookingsPage from "./components/UserBookingsPage"
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +44,9 @@ function App() {
           </Route>
           <Route path="/search">
             <Search />
+          </Route>
+          <Route path="/myBookings">
+            <UserBookingsPage />
           </Route>
           <Route path="*">
             <NotFound />
