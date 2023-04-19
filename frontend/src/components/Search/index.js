@@ -27,6 +27,7 @@ function Search() {
             <NavLink className='filtered-spots-link' key={spot.id} to={`/spots/${spot.id}`}>
               <li>{spot.name}</li>
               <li>${spot.price}</li>
+              {/* <img src={spot.previewImage}></img> */}
             </NavLink>
           ))}
         </ul>
