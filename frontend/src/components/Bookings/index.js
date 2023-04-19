@@ -37,25 +37,6 @@ const Bookings = () => {
       return;
     }
 
-    if (endDate <= startDate) {
-      alert("End Date must be after start date")
-      return
-    }
-
-    if (userId === spotDetail.userId) {
-      alert("You cannot create a booking for a spot that belongs to you");
-      return
-    }
-
-    const hasOverlappingDates = (startDate, endDate, bookingStart, bookingEnd) => {
-      return (
-        (startDate >= bookingStart && startDate < bookingEnd) ||
-        (endDate > bookingStart && endDate <= bookingEnd) ||
-        (startDate <= bookingStart && endDate >= bookingEnd)
-      );
-    };
-
-
     const conflicts = (startDate, endDate, bookingsArr) => {
       for (const { startDate: bookingStart, endDate: bookingEnd } of bookingsArr) {
         const start = new Date(startDate);
@@ -68,11 +49,27 @@ const Bookings = () => {
       }
       return false;
     };
+    
+    const hasOverlappingDates = (startDate, endDate, bookingStart, bookingEnd) => {
+      return (
+        (startDate >= bookingStart && startDate < bookingEnd) ||
+        (endDate > bookingStart && endDate <= bookingEnd) ||
+        (startDate <= bookingStart && endDate >= bookingEnd)
+      );
+    };
 
-
-    if (conflicts(startDate, endDate, bookingsArr)) {
+    if (userId == spotDetail.ownerId) {
+      alert("You cannot create a booking for a spot that belongs to you");
+      return
+    } else if (endDate <= startDate) {
+      alert("End Date must be after start date")
+      return
+    } else if (conflicts(startDate, endDate, bookingsArr)) {
       alert("The selected dates conflict with an existing booking");
       return;
+    }
+    else {
+      alert("Booking has been created, check my bookings page")
     }
 
     dispatch(addBookings({ spotId, startDate, endDate, userId }));
