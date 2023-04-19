@@ -5,6 +5,7 @@ const LOAD_BOOKINGS = 'bookings/loadBookings' // get/read all bookings from a sp
 const ADD_BOOKINGS = 'bookings/addBookings' // create/add a booking
 const EDIT_BOOKINGS = 'bookings/editBookings' // edit bookings
 const DELETE_BOOKINGS = 'bookings/deleteBooking' // delete bookings
+const LOAD_USER_BOOKINGS = 'bookings/loadUserBookings'
 
 // create POJO action creator to get all bookings
 export const loadBookings = (bookings) => ({
@@ -29,6 +30,11 @@ export const updateBookings = (bookings) => ({
     payload: bookings
 })
 
+export const loadUserBookings = (bookings) => ({
+    type: LOAD_USER_BOOKINGS,
+    payload: bookings
+})
+
 
 // thunk action creator (to get all bookings for a spot)
 export const getAllBookings = (id) => async (dispatch) => {
@@ -38,6 +44,17 @@ export const getAllBookings = (id) => async (dispatch) => {
         // console.log({bookingData})
         dispatch(loadBookings(bookingData))
         return bookingData
+    }
+}
+
+export const getAllBookingUser = () => async (dispatch) => {
+    const response = await csrfFetch(`/api/bookings/current`)
+    if (response.ok) {
+        const bookings = await response.json()
+        // dispatch(loadAllReviewsForUser(reviews))
+        // dispatch(loadBookings(bookings))
+        dispatch(loadUserBookings(bookings))
+        return bookings
     }
 }
 
@@ -98,6 +115,18 @@ export const bookingsReducer = (state = initialState, action) => {
                 copy[index] = booking
             });
             newState.allBookings = copy
+            return newState
+        case LOAD_USER_BOOKINGS:
+            newState = { ...state }
+            let copy4 = {}
+            // console.log('newState', newState)
+            // console.log('ACTION2', action.payload.id)
+            action.payload.Bookings.forEach((booking, index) => {
+                // console.log('ACTION', action.payload)
+
+                copy4[index] = booking
+            });
+            newState.allBookings = copy4
             return newState
         case ADD_BOOKINGS:
             newState = { ...state }

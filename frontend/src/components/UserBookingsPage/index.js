@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./userBookingsPage.css"
-import { getAllBookings } from "../../store/booking";
+import { getAllBookingUser } from "../../store/booking";
 
 
 const UserBookingsPage = () => {
@@ -15,14 +15,22 @@ const UserBookingsPage = () => {
   const spotId = spotDetail.id
 
   useEffect(() => {
-    dispatch(getAllBookings(spotId));
-  }, [dispatch, spotId]);
+    if (user) {
+      dispatch(getAllBookingUser(user.id));
+    }
+  }, [dispatch, user]);
 
   return (
-    <div>
-        <h1 className="bookings-root">TEST</h1>
+    <div className="booking-upper-root">
+      <h1 className="bookings-root">My Bookings</h1>
+      {bookingDetail && bookingsArr.map((booking) => (
+        <div key={booking.id}>
+          <p className="booking-startDate">StartDate: {booking.startDate}</p>
+          <p className="booking-endDate">EndDate: {booking.endDate}</p>
+        </div>
+      ))}
     </div>
-  )
+  );
 
 }
 

@@ -67,9 +67,9 @@ function ProfileButton({ user }) {
             <li>
               <button onClick={handleClick} className='user-review-button'>My Reviews</button>
             </li>
-            {/* <li>
+            <li>
               <button onClick={handleClickBookings} className="user-booking-button">My Bookings</button>
-            </li> */}
+            </li>
             <li>
               <button class="logout" onClick={logout}>Log Out</button>
             </li>
