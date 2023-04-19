@@ -174,15 +174,15 @@ export const CreateSpotModal = () => {
         />
 
       </label>
-      {/* <label className="form-label3">
+      <label className="form-label3">
         Add an Image
         <input className="file"
           type="text"
           onChange={(e) => setImage(e.target.value)}
           required
         />
-      </label> */}
-      <label className="form-label3">
+      </label>
+      {/* <label className="form-label3">
         Add an Image
         <input className="file"
           type="file"
@@ -199,7 +199,7 @@ export const CreateSpotModal = () => {
           required
           maxSize={5000000}
         />
-      </label>
+      </label> */}
       <button className="Button" type="Create">Create</button>
     </form>
     )
