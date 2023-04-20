@@ -49,7 +49,7 @@ const Bookings = () => {
       }
       return false;
     };
-    
+
     const hasOverlappingDates = (startDate, endDate, bookingStart, bookingEnd) => {
       return (
         (startDate >= bookingStart && startDate < bookingEnd) ||
@@ -96,7 +96,7 @@ const Bookings = () => {
         user.id === spotDetail.userId ? (
           <>
             <h2>Bookings for your spot</h2>
-            <ul>
+            <ul className="booking-mapped">
               {bookingsArr
               .filter(booking => booking.spotId === id)
               .map(({id, spotId, userId, startDate, endDate, firstName, lastName}) => (
