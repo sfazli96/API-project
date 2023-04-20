@@ -36,7 +36,7 @@ const UserBookingsPage = () => {
     <div className="booking-upper-root">
       <h1 className="bookings-root">My Bookings</h1>
       {bookingDetail && bookingsArr.map((booking) => (
-        <div key={booking.id}>
+        <div key={booking.id} className="booking-info">
           <p className="booking-startDate">StartDate: {booking.startDate}</p>
           <p className="booking-endDate">EndDate: {booking.endDate}</p>
           <button className="delete-booking-button" onClick={() => {

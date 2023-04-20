@@ -1,9 +1,50 @@
-.bookings-root {
-    padding-top: 60px;
-    margin-top: 50px;
-}
+/* .booking-upper-root {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  } */
 
-.sign-in-user-bookings {
+  .booking-upper-root {
+    gap: 20px;
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+  }
+
+  .bookings-root {
+    margin-top: 60px;
     padding-top: 60px;
-    margin-top: 50px;
-}
+  }
+
+  .sign-in-user-bookings {
+    margin-top: 150px;
+    padding-top: 60px;
+  }
+
+  .booking-info {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .booking-startDate,
+  .booking-endDate {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  .delete-booking-button {
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .delete-booking-button:hover {
+    background-color: rgba(236, 16, 16, 0.623);
+  }
