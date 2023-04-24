@@ -1,25 +1,117 @@
+.booking-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+.show-calendar {
+  margin-top: 20px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.show-calendar:hover {
+  background-color: #2980b9;
+}
+
 .calendar-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    float: right;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
 
-  .calendar {
-    width: 80%;
-    height: 400px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-  }
+.calendar {
+  width: 100%;
+  max-width: 600px;
+  height: 400px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
 
-  .calendar-container p {
-    margin-top: 20px;
-    font-size: 16px;
-    color: #333;
-  }
+.calendar-container p {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+}
 
-  .show-calendar {
-    float: right;
-  }
+.create-booking-btn {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.create-booking-button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.create-booking-btn:hover {
+  background-color: #2980b9;
+}
+
+.booking-mapped {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.booking-mapped li {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.booking-mapped li p {
+  margin: 0;
+  font-size: 16px;
+}
+
+
+
+[data-theme='dark'] {
+  --background: #212121;
+  --primary: #fff;
+}
+
+
+body {
+  background-color: var(--background);
+  color: var(--primary);
+}
+
+[data-theme='dark'] .calendar-container p {
+  background-color: #282c34;
+  color: #fff;
+}
+
+[data-theme='dark'] .calendar  {
+  background-color: #282c34;
+  color: #fff;
+}

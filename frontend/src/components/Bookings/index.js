@@ -122,7 +122,7 @@ const Bookings = () => {
               />
               <p>Selected range: {selectedRange[0] ? selectedRange[0].toLocaleDateString() : 'None'} to {selectedRange[1] ? selectedRange[1].toLocaleDateString() : 'None'}</p>
             </div>
-            <button onClick={handleCreateBooking}>Create Booking</button>
+            <button onClick={handleCreateBooking} className="create-booking-button">Create Booking</button>
           </>
         )
       ) : null}
