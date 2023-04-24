@@ -71,7 +71,7 @@ function Navigation({ isLoaded }){
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button type="submit-search-button">Search</button>
+        <button type="submit" className='submit-search-button'>Search</button>
       </form>
     </li>
     <div className='add-spot-div'>

@@ -37,6 +37,34 @@ ol {
     list-style-type: none;
 }
 
+li form {
+    display: flex;
+    align-items: center;
+  }
+
+  li form input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  li form button[type="submit"] {
+    padding: 10px;
+    background-color: #008CBA;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  li form button[type="submit"]:hover {
+    background-color: #0077B5;
+  }
+
+
 
 h2 {
     position: absolute;
