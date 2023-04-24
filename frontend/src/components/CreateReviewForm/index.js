@@ -5,6 +5,7 @@ import * as reviewActions from "../../store/review"
 import { useParams, useHistory } from "react-router-dom";
 import "./createReviewForm.css"
 import { useEffect } from "react";
+import ReactStars from "react-rating-stars-component";
 
 const CreateReviewForm = () => {
     const dispatch = useDispatch()
@@ -62,6 +63,10 @@ const CreateReviewForm = () => {
             setReview(e.target.value);
         }
     };
+
+    const ratingChanged = (newRating) => {
+        setStars(newRating)
+      }
     return (
         <>
             <button className="add-review-button" onClick={() => setShowForm(true)}>Create a Review</button>
@@ -77,13 +82,25 @@ const CreateReviewForm = () => {
                         onChange={handleChange}
                         required
                     />
-                    <select className="input-type" value={stars} onChange={(e) => setStars(e.target.value)}>
+                    {/* <select className="input-type" value={stars} onChange={(e) => setStars(e.target.value)}>
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
                       <option value="4">4</option>
                       <option value="5">5</option>
-                    </select>
+                    </select> */}
+                     <ReactStars
+                        count={5}
+                        value={stars}
+                        onChange={ratingChanged}
+                        size={24}
+                        // isHalf={true}
+                        decimalPlaces={1}
+                        emptyIcon={<i className="far fa-star"></i>}
+                        // halfIcn={<i className="fa fa-star-half-alt"></i>}
+                        fullIcon={<i className="fa fa-star"></i>}
+                        activeColor="#ffd700"
+                    />
                 </label>
                 <button className="add-review-button" type="Create">Submit</button>
                 </form>
