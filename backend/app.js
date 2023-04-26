@@ -12,13 +12,14 @@ const routes = require('./routes');
 const bodyParser = require('body-parser');
 
 const app = express();
-app.use(bodyParser.json({ limit: '10mb' }));
+// app.use(bodyParser.json({ limit: '10mb' }));
 
 // Middleware for logging information about requests and response=es
 app.use(morgan('dev'));
 
 // Middleware for parsing cookies and JSON bodies of json
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: false })); 
 app.use(express.json());
 
 // Security Middleware
