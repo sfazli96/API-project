@@ -67,6 +67,7 @@ function Navigation({ isLoaded }){
       <form onSubmit={handleSearch}>
         <input
           type="text"
+          className='search-input'
           placeholder="Search spots..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -75,7 +76,7 @@ function Navigation({ isLoaded }){
       </form>
     </li>
     <div className='add-spot-div'>
-    <Toggle />
+    <Toggle className='toggle-button'/>
         {/* <button onClick={handleClickSpotPage} className='user-spot-button'>My Spots</button> */}
         {/* <button onClick={handleClick} className='user-review-button'>My Reviews</button> */}
       <li className='add-spot-button'>
