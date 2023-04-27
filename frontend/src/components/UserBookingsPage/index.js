@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./userBookingsPage.css"
 import { deleteBooking, getAllBookingUser } from "../../store/booking";
+import { Link } from 'react-router-dom';
 
 
 const UserBookingsPage = () => {
@@ -37,15 +38,18 @@ const UserBookingsPage = () => {
       <h1 className="bookings-root">My Bookings</h1>
       {bookingDetail && bookingsArr.map((booking) => (
         <div key={booking.id} className="booking-info">
-          <p className="booking-startDate">StartDate: {booking.startDate}</p>
-          <p className="booking-endDate">EndDate: {booking.endDate}</p>
+          <Link to={`/spots/${booking?.Spot?.id}`} className="booking-spotName">
+            Name: {booking?.Spot?.name}
+          </Link>
+          <p className="booking-startDate">Start Date: {booking.startDate}</p>
+          <p className="booking-endDate">End Date: {booking.endDate}</p>
           <button className="delete-booking-button" onClick={() => {
-              dispatch(deleteBooking(booking.id));
-              setTimeout(() => {
-                dispatch(getAllBookingUser());
-              }, 1000);
-            }}>
-              Delete Booking
+            dispatch(deleteBooking(booking.id));
+            setTimeout(() => {
+              dispatch(getAllBookingUser());
+            }, 1000);
+          }}>
+            Delete Booking
           </button>
         </div>
       ))}

@@ -12,11 +12,13 @@ function Search() {
   useEffect(() => {
     if (query) {
       const filtered = Object.values(spotObj).filter(
-        (spot) => spot.name.toLowerCase().includes(query.toLowerCase())
+        (spot) => spot.city.toLowerCase().includes(query.toLowerCase()) ||
+                   spot.state.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredSpots(filtered);
     }
   }, [spotObj, query]);
+
 
   return (
     <div className='search-root-container'>
@@ -25,8 +27,8 @@ function Search() {
         <ul className='filter-spots'>
           {filteredSpots.map(spot => (
             <NavLink className='filtered-spots-link' key={spot.id} to={`/spots/${spot.id}`}>
-              <li>{spot.name}</li>
-              <li>${spot.price}</li>
+              {/* <li>{spot.name}</li>
+              <li>${spot.price}</li> */}
               <img src={spot.previewImage}></img>
             </NavLink>
           ))}
