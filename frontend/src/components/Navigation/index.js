@@ -68,7 +68,7 @@ function Navigation({ isLoaded }){
         <input
           type="text"
           className='search-input'
-          placeholder="Search spots..."
+          placeholder="Search by city or state"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />

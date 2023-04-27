@@ -22,6 +22,8 @@
   .sign-in-user-bookings {
     margin-top: 150px;
     padding-top: 60px;
+    text-align: center;
+    margin-bottom: 530px;
   }
 
   .booking-info {
@@ -47,4 +49,14 @@
 
   .delete-booking-button:hover {
     background-color: rgba(236, 16, 16, 0.623);
+  }
+
+  .booking-spotName {
+    color: #0077cc;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .booking-spotName:hover {
+    text-decoration: underline;
   }
