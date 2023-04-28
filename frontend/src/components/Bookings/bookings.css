@@ -5,6 +5,8 @@
   padding: 20px;
   align-items: center;
   font-family: Arial, sans-serif;
+  position: relative;
+  gap: 15px;
 }
 
 .show-calendar {
@@ -29,6 +31,8 @@
   align-items: center;
   padding: 20px;
   font-family: Arial, sans-serif;
+  position: absolute;
+  right: 0;
 }
 
 .calendar {
