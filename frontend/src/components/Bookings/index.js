@@ -117,14 +117,14 @@ const Bookings = () => {
           </>
         ) : (
           <>
+            <p className="date-calendar-range">Selected range: {selectedRange[0] ? selectedRange[0].toLocaleDateString() : 'None'} to {selectedRange[1] ? selectedRange[1].toLocaleDateString() : 'None'}</p>
             <div className="calendar-container">
               <Calendar
                 onChange={onRangeChange}
                 value={selectedRange}
                 selectRange={true}
                 className="calendar"
-              />
-              <p>Selected range: {selectedRange[0] ? selectedRange[0].toLocaleDateString() : 'None'} to {selectedRange[1] ? selectedRange[1].toLocaleDateString() : 'None'}</p>
+                />
             </div>
             <button onClick={handleCreateBooking} className="create-booking-button">Create Booking</button>
           </>
